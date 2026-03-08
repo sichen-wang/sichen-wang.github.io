@@ -13,7 +13,7 @@ sections:
   - block: resume-biography-3
     content:
       # Choose a user profile to display (a folder name within `content/authors/`)
-      username: me
+      username: home
       text: ''
       # Show a call-to-action button under your biography? (optional)
       button:
@@ -21,10 +21,10 @@ sections:
         url: uploads/CV.pdf
       headings:
         about: ''
-        # education: ''
+        education: ''
         interests: ''
-        awards: ''
     design:
+      
       # Use the new Gradient Mesh which automatically adapts to the selected theme colors
       background:
         gradient_mesh:
@@ -38,13 +38,4 @@ sections:
       avatar:
         size: medium # Options: small (150px), medium (200px, default), large (320px), xl (400px), xxl (500px)
         shape: circle # Options: circle (default), square, rounded
-
-  - block: accomplishments
-    content:
-      title: 'Major Awards'
-      subtitle:
-      date_format: 'Jan 2006'
-      items: [] 
-    design:
-      columns: '1'
 ---

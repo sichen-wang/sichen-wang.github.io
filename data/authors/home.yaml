@@ -41,21 +41,6 @@ interests:
   - Violin
   - Drum Kit
 
-education:
-  - degree: B.Eng. in Electronic and Computer Engineering
-    institution: Shenzhen MSU-BIT University
-    start: 2024-09-01
-    end: 2028-06-30
-    # summary: |
-    #   [关于这段教育经历的简短补充，如核心课程、GPA或主要学术方向。不需要可删除]
-
-experience:
-  - role: Research Assistant
-    org: The Chinese University of Hong Kong, Shenzhen
-    start: 2024-12-03
-    # summary: |
-    #   [简要介绍你在这个项目中负责的具体工作。]
-
 skills:
   - name: Technical Skills
     items:
@@ -87,14 +72,14 @@ awards:
     date: "2025-07"
     summary: "Led the development of an automated smart factory architecture orchestrated entirely by Multi-Agent collaboration within 72 hours."
     icon: hero/trophy
-  - title: ICPC EC-Final Silver Medal
+  - title: ICPC EC-Final Rank 31
     awarder: Top 11% of The 2024 ICPC Asia-East Continent Final
     date: "2024-12"
     summary: ""
     icon: hero/trophy
   - title: ICPC Gold Medal
     awarder: Top 3% of The 2024 ICPC Asia Regional Contest (Kunming)
-    date: "2024-12"
+    date: "2024"
     summary: ""
     icon: hero/trophy
   - title: ICPC Gold Medal
@@ -104,7 +89,7 @@ awards:
     icon: hero/trophy
   - title: CCPC Gold Medal
     awarder: Top 4% of China Collegiate Programming Contest (Zhengzhou)
-    date: "2024-11"
+    date: "2024"
     summary: ""
     icon: hero/trophy
   - title: CSP Outstanding Performance
@@ -119,6 +104,6 @@ awards:
     icon: hero/trophy
   - title: "NOIp & CSP-S First Prize"
     awarder: "National Olympiad in Informatics, Provincial Contest & CCF Certified Software Professional Senior"
-    date: "2019/2020/2021 (For 3 years)"
-    summary: ""
+    date: "2019-2021"
+    summary: "For 3 consecutive years"
     icon: hero/trophy

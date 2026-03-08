@@ -1,5 +1,5 @@
 ---
-title: 'Experience'
+title: 'Background'
 date: 2023-10-24
 type: landing
 
@@ -10,6 +10,10 @@ design:
 
 # Page sections
 sections:
+  - block: resume-awards
+    content:
+      title: Major Awards
+      username: me
   - block: resume-experience
     content:
       username: me
@@ -21,10 +25,6 @@ sections:
   - block: resume-skills
     content:
       title: Skills
-      username: me
-  - block: resume-awards
-    content:
-      title: Awards
       username: me
   - block: resume-languages
     content:

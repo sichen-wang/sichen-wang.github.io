@@ -21,7 +21,7 @@ sections:
         url: uploads/CV.pdf
       headings:
         about: ''
-        education: null
+        # education: ''
         interests: ''
     design:
       # Use the new Gradient Mesh which automatically adapts to the selected theme colors

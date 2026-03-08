@@ -15,12 +15,10 @@ bio: |
   [在此输入你的个人简介。支持多行。你可以简述你的专业背景、在机器学习和双线性可达性等方向的研究兴趣，以及你对算法和音乐的探索。]
 
 affiliations:
-  - name: Shenzhen MSU-BIT University,
-      Faculty of Engineering
-    url: "smbu.edu.cn"
-  - name: The Chinese University of Hong Kong, Shenzhen,
-      School of Science and Engineering
-    url: "cuhk.edu.cn"
+  - name: "Shenzhen MSU-BIT University<br>Faculty of Engineering"
+    url: "https://smbu.edu.cn/"
+  - name: "The Chinese University of Hong Kong, Shenzhen<br>School of Science and Engineering"
+    url: "https://cuhk.edu.cn/"
 
 links:
   - icon: at-symbol
@@ -112,7 +110,7 @@ awards:
     summary: ""
     icon: hero/trophy
   - title: "NOIp & CSP-S First Prize"
-    awarder: "National Olympiad in Informatics, Provincial Contest & CCF Certified Software Professional Senior"
+    awarder: "National Olympiad in Informatics, Provincial Contest<br>CCF Certified Software Professional Senior"
     date: "2019-2021"
     summary: "For 3 consecutive years"
     icon: hero/trophy

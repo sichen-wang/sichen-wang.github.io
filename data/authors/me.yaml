@@ -45,7 +45,7 @@ education:
   - degree: B.Eng. in Electronic and Computer Engineering
     institution: Shenzhen MSU-BIT University
     start: 2024-09-01
-    # end: 2028-06-30
+    end: 2028-06-30
     # summary: |
     #   [关于这段教育经历的简短补充，如核心课程、GPA或主要学术方向。不需要可删除]
 

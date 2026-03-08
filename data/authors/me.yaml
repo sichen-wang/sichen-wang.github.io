@@ -35,7 +35,9 @@ interests:
   - Algorithm Design
   - Theoretical Computer Science
   - Machine Learning
-  - Piano & Violin & Drum Kit
+  - Piano
+  - Violin
+  - Drum Kit
 
 education:
   - degree: B.Eng. in Electronic and Computer Engineering
@@ -84,7 +86,7 @@ awards:
     summary: "Led the development of an automated smart factory architecture orchestrated entirely by Multi-Agent collaboration within 72 hours."
     icon: hero/trophy
   - title: ICPC EC-Final Rank 31
-    awarder: Top 11% of The 2024 ICPC Asia-East Continent Final (EC-Final)
+    awarder: Top 11% of The 2024 ICPC Asia-East Continent Final
     date: "2024-12"
     summary: ""
     icon: hero/trophy

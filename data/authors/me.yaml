@@ -63,6 +63,8 @@ skills:
     items:
       - label: LaTeX
         level: 3
+      - label: MATLAB
+        level: 2
 
 languages:
   - name: Chinese
@@ -112,7 +114,7 @@ awards:
     summary: ""
     icon: hero/trophy
   - title: "NOIp & CSP-S First Prize"
-    awarder: "National Olympiad in Informatics, Provincial Contest<br>CCF Certified Software Professional Senior"
+    awarder: "National Olympiad in Informatics, Provincial Contest & CCF Certified Software Professional Senior"
     date: "2019-2021"
     summary: "For 3 consecutive years"
     icon: hero/trophy

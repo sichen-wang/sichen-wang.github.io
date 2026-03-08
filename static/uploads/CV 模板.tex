@@ -1,0 +1,224 @@
+\documentclass[a4paper, 10.5pt]{ctexart}
+
+% !!!重要提示!!! 请使用 XeLaTeX 编译此文件以获得最佳字体和排版效果。
+
+% --- 导包 Preamble ---
+% 1. 页面布局 Layout
+% 调整页边距，优化空间利用率
+\usepackage[left=1.4cm, right=1.4cm, top=1.8cm, bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% 2. 字体与排版 Typography
+\usepackage{fontspec}
+\usepackage{enumitem}
+\usepackage[explicit]{titlesec}
+\usepackage{microtype} % 引入 microtype 以优化微观排版和对齐
+
+% 3. 功能增强 Utilities
+\usepackage{fontawesome5}
+\usepackage{hyperref}
+
+% --- 颜色定义 Colors ---
+% 定义主色调和描述文字颜色
+\definecolor{PrimaryColor}{HTML}{003366} % 深海蓝，专业稳重
+\definecolor{DescriptionGray}{HTML}{444444} % 优化灰度，提高可读性
+
+% --- 字体设置 Fonts (XeLaTeX) ---
+% 设置中英文字体，并提供鲁棒的备用选项
+% 提升中文 AutoFakeBold 到 2.0，以在缺少粗体字重时获得更明显的加粗对比
+
+% 中文（优先使用 方正新书宋简体 → 思源宋体 CN → Windows SimSun → macOS Songti SC）
+\IfFontExistsTF{方正新书宋简体}{
+  \setCJKmainfont[AutoFakeBold=2.0]{方正新书宋简体}
+  \message{^^J INFO: Using Founder New Song (方正新书宋简体).^^J}
+}{
+  \IfFontExistsTF{思源宋体 CN}{
+      \setCJKmainfont[AutoFakeBold=2.0]{思源宋体 CN}
+      \message{^^J INFO: Using Source Han Serif (思源宋体 CN).^^J}
+  }{
+    \IfFontExistsTF{SimSun}{
+      % Windows 系统自带宋体
+      \setCJKmainfont[AutoFakeBold=2.0]{SimSun}
+      \message{^^J INFO: Using Windows SimSun (宋体).^^J}
+    }{
+      % 最终备用（macOS 自带，命名为 Songti SC）
+      \setCJKmainfont[AutoFakeBold=2.0]{Songti SC}
+      \message{^^J WARNING: Preferred CJK fonts not found, falling back to Songti SC.^^J}
+    }
+  }
+}
+
+% 英文（指定为 CMU Serif；无衬线优先 CMU Sans Serif，不在则回退 Arial/Helvetica Neue）
+\IfFontExistsTF{CMU Serif}{
+  \setmainfont{CMU Serif}
+  % 无衬线：若存在 CMU Sans Serif 则使用，否则回退到 Arial 或 Helvetica Neue
+  \IfFontExistsTF{CMU Sans Serif}{
+    \setsansfont{CMU Sans Serif}
+  }{
+    \IfFontExistsTF{Arial}{
+      \setsansfont{Arial}
+      \message{^^J WARNING: CMU Sans Serif not found, using Arial as sans-serif.^^J}
+    }{
+      \setsansfont{Helvetica Neue}
+      \message{^^J WARNING: CMU Sans Serif not found, using Helvetica Neue as sans-serif.^^J}
+    }
+  }
+}{
+  \setmainfont{Times New Roman}
+  \IfFontExistsTF{Arial}{
+    \setsansfont{Arial}
+  }{
+    \setsansfont{Helvetica Neue}
+  }
+  \message{^^J WARNING: CMU Serif not found, falling back to Times New Roman / Arial.^^J}
+}
+
+% --- 设置与自定义 Configuration ---
+
+% 超链接样式 (使用主色调)
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PrimaryColor,
+  urlcolor=PrimaryColor,
+  citecolor=PrimaryColor,
+  pdfborder={0 0 0},
+}
+
+% 全局设置
+\pagestyle{empty}
+\setlength{\parindent}{0pt} % 无首行缩进
+\setlength{\parskip}{0.5em} % 段落间距
+
+% 列表紧凑设置
+\setlist{itemsep=0.3em, parsep=0pt, topsep=0.5em, leftmargin=1.5em}
+
+% --- 标题样式重定义 Section Styling ---
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{PrimaryColor}}
+  {}
+  {0em}
+  {#1}
+  [\vspace{0.2ex}\hrule height 0.8pt]
+\titlespacing*{\section}{0pt}{1.8ex}{0.8ex}
+
+% --- 自定义命令 Commands ---
+% 工作经历条目
+\newcommand{\experienceEntry}[4]{%
+  \noindent\textbf{#1} @ \textrm{#2} \hfill {\color{DescriptionGray}\small #3}\\
+  \vspace{0.2em}%
+  \begingroup
+  \color{DescriptionGray}#4
+  \endgroup
+  \vspace{0.8em}%
+}
+
+% 中栏“经验”字号（可自定义）
+% 默认与正文一致；如需自定义大小，请在导言区添加：
+% \renewcommand{\ExperienceSize}{\fontsize{11pt}{13pt}\selectfont}
+% 或使用 \large / \small 等字号命令：
+% \renewcommand{\ExperienceSize}{\large}
+\newcommand{\ExperienceSize}{10pt}
+\renewcommand{\ExperienceSize}{\fontsize{10.5pt}{10.5pt}\selectfont}
+
+\begin{document}
+
+% --- 抬头 Header：姓名独占一行 + 下方三栏（基本信息 | 经验 | 照片） ---
+\begin{center}
+  {\fontsize{22pt}{24pt}\selectfont\bfseries\color{PrimaryColor} 姓名 (Your Name)}
+\end{center}
+\vspace{-0.3em}
+\begin{tabular*}{\textwidth}{@{}p{0.45\textwidth}
+  p{0\textwidth}
+  p{0.20\textwidth}
+  @ {\extracolsep{\fill}} p{0.20\textwidth}@{}}
+  % 左列：基本信息（左对齐）
+  \begin{minipage}[t]{\linewidth}
+    \vspace{0pt}% 对齐三栏顶部
+    {\color{DescriptionGray}
+    \begin{minipage}{0.96\textwidth}
+    \raggedright
+    \begin{tabular}{@{}ll}
+      %\faIcon{map-marker-alt} 城市名 &
+      \faIcon{graduation-cap}\ 专业名称 &
+      \faIcon{calendar-alt}\ 本科X年级
+    \end{tabular}\\[0.2em]
+    \begin{tabular}{@{}l}
+      \faIcon{award}\ 均分 XX，均绩 \textbf{X.XX}/4.00，X等奖学金
+    \end{tabular}\\[0.2em]
+    \begin{tabular}{@{}ll}
+       \faIcon{phone} +86 138XXXXXXXX &
+       \faIcon{envelope} \href{mailto:exp@exp.com}{exp@exp.com}
+    \end{tabular}
+    \end{minipage}}
+  \end{minipage}
+  &
+  % 短竖线列（固定高度）
+  \begin{minipage}[t]{\linewidth}
+    \vspace{0pt}\centering
+    {\color{DescriptionGray}\rule{0.5pt}{2.0cm}}
+  \end{minipage}
+  &
+  % 中列：纵向经验信息
+  \begin{minipage}[t]{\linewidth}
+    \vspace{0pt}% 对齐三栏顶部
+    {\ExperienceSize\color{DescriptionGray}
+    \begin{tabular}{@{}l @ {\hspace{0.4em}·\ } r@{}}
+      \faIcon{trophy}\ 竞赛经验 & X 年 \\
+      \faIcon{microscope}\ 科研经验 & X 年 \\
+      \faIcon{code}\ 开发经验 & X 年 \\
+    \end{tabular}}
+  \end{minipage}
+  &
+  % 右列：头像
+  \begin{minipage}[t]{\linewidth}
+    \vspace{-5.5em}% 对齐三栏顶部
+    \begin{flushright}
+      \includegraphics[height=3.8cm, keepaspectratio]{yourphoto.png}
+    \end{flushright}
+  \end{minipage}
+\end{tabular*}
+
+\vspace{0.3em}
+
+% --- 单栏布局开始 ---
+
+% 研究兴趣
+\section{研究兴趣 (Research Interests)}
+\vspace{-0.8em}
+\begin{tabular*}{\textwidth}{@{}p{0.40\textwidth} @ {\extracolsep{\fill}} p{0.505\textwidth}@{}}
+  % 左列：传统方向（逐行）
+  \begin{minipage}[t]{\linewidth}
+    \color{DescriptionGray}
+    算法设计 (Algorithm Design)\\
+  \end{minipage}
+  &
+  % 右列：AI 方向（先列两项，再附说明）
+  \begin{minipage}[t]{\linewidth}
+    \color{DescriptionGray}
+    AI 推理 (AI Reasoning)\\% [0.4em]
+    目前正在进行的工作与课题
+  \end{minipage}
+\end{tabular*}
+\color{black}
+
+% 竞赛获奖（赛事 | 奖项 | Top x%）
+\section{竞赛获奖 (Awards)}
+\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} l r@{}}
+  XXXX 年 竞赛 & \textbf{某奖} & \\
+  XXXX 年 某区域赛 (某站) & \textbf{某奖} & Top X\% \\
+\end{tabular*}
+
+% 工作与实践经历
+\section{工作与实践经历 (Experience)}
+\experienceEntry{某某职位}{某某公司/机构}{}{%
+完成的工作与承担的职责描述，突出成就与贡献。%
+}
+
+% 其他
+\section{其他爱好与活动 (Misc.)}
+\begin{itemize}[itemsep=0.5em, leftmargin=1.2em]
+  \item 体育：
+\end{itemize}
+
+\end{document}

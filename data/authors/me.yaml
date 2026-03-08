@@ -15,19 +15,21 @@ bio: |
   [在此输入你的个人简介。支持多行。你可以简述你的专业背景、在机器学习和双线性可达性等方向的研究兴趣，以及你对算法和音乐的探索。]
 
 affiliations:
-  - name: Shenzhen MSU-BIT University, Faculty of Engineering
+  - name: Shenzhen MSU-BIT University,
+      Faculty of Engineering
     url: "smbu.edu.cn"
-  - name: The Chinese University of Hong Kong, Shenzhen, School of Science and Engineering
+  - name: The Chinese University of Hong Kong, Shenzhen,
+      School of Science and Engineering
     url: "cuhk.edu.cn"
 
 links:
   - icon: at-symbol
-    url: 'mailto:wsc@smbu.edu.cn'
+    url: "mailto:wsc@smbu.edu.cn"
     label: E-mail Me
   - icon: brands/github
-    url: 'https://github.com/sichen-wang'
-  - icon: academicons/cv  
-    url: '/uploads/CV.pdf'
+    url: "https://github.com/sichen-wang"
+  - icon: academicons/cv
+    url: "/uploads/CV.pdf"
 
 interests:
   - Algorithm Design
@@ -60,7 +62,7 @@ skills:
   - name: Research & Academic
     items:
       - label: LaTeX
-        level: 4
+        level: 3
 
 languages:
   - name: Chinese
@@ -74,43 +76,43 @@ languages:
     label: Basic
 
 awards:
-  - title: Champion
+  - title: Hackathon Champion
     awarder: AdventureX 2025 Hackathon
     date: "2025-07"
     summary: "Led the development of an automated smart factory architecture orchestrated entirely by Multi-Agent collaboration within 72 hours."
     icon: hero/trophy
-  - title: Rank 31 (Top 11%)
-    awarder: The 2024 ICPC Asia-East Continent Final (EC-Final)
+  - title: ICPC EC-Final Rank 31
+    awarder: Top 11% of The 2024 ICPC Asia-East Continent Final (EC-Final)
     date: "2024-12"
     summary: ""
     icon: hero/trophy
-  - title: Gold Medal (Top 3%)
-    awarder: The 2024 ICPC Asia Regional Contest (Kunming)
+  - title: ICPC Gold Medal
+    awarder: Top 3% of The 2024 ICPC Asia Regional Contest (Kunming)
     date: "2024"
     summary: ""
     icon: hero/trophy
-  - title: Gold Medal (Top 4%)
-    awarder: The 2024 ICPC Asia Regional Contest (Shenyang)
+  - title: ICPC Gold Medal
+    awarder: Top 4% of The 2024 ICPC Asia Regional Contest (Shenyang)
     date: "2024-11"
     summary: ""
     icon: hero/trophy
-  - title: Gold Medal (Top 4%)
-    awarder: China Collegiate Programming Contest
+  - title: CCPC Gold Medal
+    awarder: Top 4% of China Collegiate Programming Contest (Zhengzhou)
     date: "2024"
     summary: ""
     icon: hero/trophy
-  - title: "Outstanding Performance (Score: 480/500, Top 0.1%)"
-    awarder: CCF Computer Software Ability Certification
+  - title: CSP Outstanding Performance
+    awarder: "Top 0.1% of CCF Certified Software Professional (Score: 480/500)"
     date: "2024-06"
     summary: ""
     icon: hero/trophy
-  - title: "Silver Medal"
-    awarder: "National Olympiad in Informatics (NOI) Winter Camp"
+  - title: "NOI Winter Camp Silver Medal"
+    awarder: "National Olympiad in Informatics Winter Camp"
     date: "2022-01"
     summary: ""
     icon: hero/trophy
-  - title: "First Prize (for 3 consecutive years)"
-    awarder: "NOIp & CSP-S"
+  - title: "NOIp & CSP-S First Prize"
+    awarder: "National Olympiad in Informatics, Provincial Contest & CCF Certified Software Professional Senior"
     date: "2019-2021"
-    summary: ""
+    summary: "For 3 consecutive years"
     icon: hero/trophy

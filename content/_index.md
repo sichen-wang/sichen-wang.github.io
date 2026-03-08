@@ -24,6 +24,7 @@ sections:
         education: ''
         interests: ''
     design:
+      columns: '1'
       # Use the new Gradient Mesh which automatically adapts to the selected theme colors
       background:
         gradient_mesh:

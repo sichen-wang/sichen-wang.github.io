@@ -65,6 +65,7 @@ experience:
       - AI Reasoning
   - role: Algorithm Researcher
     org: RobustMotion
+    start: 2025-05-27
     summary: |-
       Independently completed the paper *Data Transmission Scheduling on Grid Graph* and proposed a turn-potential avoidance method to address a complex data scheduling problem on planar grid graphs.
     tags:
@@ -73,6 +74,8 @@ experience:
       - Scheduling
   - role: Competitive Programming Coach
     org: Shenzhen No.33 Senior High School
+    start: 2023-08
+    end: 2025-02
     summary: |-
       Invited to serve as a coach for the informatics competition team, responsible for teaching advanced algorithm courses to high-level students.
     tags:
@@ -81,6 +84,8 @@ experience:
       - Algorithms
   - role: Competitive Programming Lecturer
     org: China Computer Federation (CCF)
+    start: 2023-08-06
+    end: 2023-08-12
     summary: |-
       Delivered lectures, held after-class Q&A sessions, and provided post-exam solution analysis in the 2023 Greater Bay Area Youth Informatics Summer Camp.
     tags:
@@ -89,6 +94,8 @@ experience:
       - Informatics
   - role: Problem Setter
     org: Nowcoder
+    start: 2019
+    end: 2022
     summary: |-
       Invited six times to design problems and deliver editorials for contests on ac.nowcoder.com, with around 2,000 participants per contest on average. These included one CSP-S mock contest, one NOIp mock contest, two practice contests, and two challenge contests.
     tags:

@@ -34,9 +34,10 @@ links:
     url: "/uploads/CV.pdf"
 
 interests:
-  - Algorithm Design
   - Theoretical Computer Science
   - Machine Learning
+  - Machine Proving
+  - Combinatorics
   - Piano
   - Violin
   - Drum Kit
@@ -46,15 +47,54 @@ education:
     institution: Shenzhen MSU-BIT University
     start: 2024-09-01
     end: 2028-06-30
-    # summary: |
-    #   [关于这段教育经历的简短补充，如核心课程、GPA或主要学术方向。不需要可删除]
+    summary: |
+      - First-Class Scholarship (Top 5% academically)
+      - Outstanding Student Award (1 of 12 recipients)
+      - Excellence in Sci-Tech Innovation Award (1 of 4 recipients)
+
 
 experience:
   - role: Research Assistant
     org: The Chinese University of Hong Kong, Shenzhen
     start: 2024-12-03
-    # summary: |
-    #   [简要介绍你在这个项目中负责的具体工作。]
+    summary: |-
+      Conducting research on the foundations of large language models under the supervision of Prof. Xiaoying Tang, currently focusing on LLM prompt optimization.
+    tags:
+      - LLMs
+      - Prompt Optimization
+      - AI Reasoning
+  - role: Algorithm Researcher
+    org: RobustMotion
+    summary: |-
+      Independently completed the paper *Data Transmission Scheduling on Grid Graph* and proposed a turn-potential avoidance method to address a complex data scheduling problem on planar grid graphs.
+    tags:
+      - Algorithms
+      - Graph Theory
+      - Scheduling
+  - role: Competitive Programming Coach
+    org: Shenzhen No.33 Senior High School
+    summary: |-
+      Invited to serve as a coach for the informatics competition team, responsible for teaching advanced algorithm courses to high-level students.
+    tags:
+      - Teaching
+      - Competitive Programming
+      - Algorithms
+  - role: Competitive Programming Lecturer
+    org: China Computer Federation (CCF)
+    summary: |-
+      Delivered lectures, held after-class Q&A sessions, and provided post-exam solution analysis in the 2023 Greater Bay Area Youth Informatics Summer Camp.
+    tags:
+      - Teaching
+      - CCF
+      - Informatics
+  - role: Problem Setter
+    org: Nowcoder
+    summary: |-
+      Invited six times to design problems and deliver editorials for contests on ac.nowcoder.com, with around 2,000 participants per contest on average. These included one CSP-S mock contest, one NOIp mock contest, two practice contests, and two challenge contests.
+    tags:
+      - Problem Setting
+      - Contest Design
+      - Nowcoder
 
 skills:
   - name: Technical Skills

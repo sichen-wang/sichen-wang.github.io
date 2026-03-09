@@ -1,0 +1,13 @@
+{{ $current := .current }}
+{{ $tabs := .tabs }}
+
+<nav class="blog-section-tabs not-prose" aria-label="Blog sections">
+  <div class="blog-section-tabs-inner">
+    {{ range $tabs }}
+      {{ $is_active := eq .key $current }}
+      <a class="blog-section-tab{{ if $is_active }} is-active{{ end }}" href="{{ .url | relURL }}">
+        {{ .label }}
+      </a>
+    {{ end }}
+  </div>
+</nav>

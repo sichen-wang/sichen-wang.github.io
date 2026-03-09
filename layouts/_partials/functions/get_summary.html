@@ -1,0 +1,32 @@
+{{/* Safe page summary fallback: Params.summary > Params.description > Params.abstract > plain text from raw content. */}}
+{{ $summary := "" }}
+
+{{ with .Params.summary }}
+  {{ $summary = . }}
+{{ end }}
+
+{{ if not $summary }}
+  {{ with .Params.description }}
+    {{ $summary = . }}
+  {{ end }}
+{{ end }}
+
+{{ if not $summary }}
+  {{ with .Params.abstract }}
+    {{ $summary = . }}
+  {{ end }}
+{{ end }}
+
+{{ if not $summary }}
+  {{ $plain := .RawContent }}
+  {{ $plain = replaceRE `(?s)<!--.*?-->` ` ` $plain }}
+  {{ $plain = replaceRE "(?s)```.*?```" " " $plain }}
+  {{ $plain = replaceRE `!\[[^\]]*\]\([^)]+\)` ` ` $plain }}
+  {{ $plain = replaceRE `\[(.*?)\]\([^)]+\)` `$1` $plain }}
+  {{ $plain = replaceRE `(?m)^#+\s*` `` $plain }}
+  {{ $plain = plainify $plain }}
+  {{ $plain = replaceRE `\s+` ` ` $plain }}
+  {{ $summary = truncate 180 $plain }}
+{{ end }}
+
+{{ return $summary }}

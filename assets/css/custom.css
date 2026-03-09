@@ -1,0 +1,411 @@
+@font-face {
+  font-family: "SiteText";
+  src: url("/fonts/newcm/NewCM10-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteText";
+  src: url("/fonts/newcm/NewCM10-BookItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteText";
+  src: url("/fonts/newcm/NewCM10-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteText";
+  src: url("/fonts/newcm/NewCM10-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteTextCJK";
+  src: url("/fonts/chinese/FZNewShuSongS-R-GB.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteMono";
+  src: url("/fonts/newcm/NewCMMono10-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteMono";
+  src: url("/fonts/newcm/NewCMMono10-BookItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteMono";
+  src: url("/fonts/newcm/NewCMMono10-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SiteMono";
+  src: url("/fonts/newcm/NewCMMono10-BoldOblique.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --site-font-text: "SiteText", "SiteTextCJK", serif;
+  --site-font-mono: "SiteMono", ui-monospace, monospace;
+}
+
+html,
+body,
+.page-wrapper,
+button,
+input,
+textarea,
+select {
+  font-family: var(--site-font-text);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--site-font-mono);
+}
+
+.page-body .blog-article-content {
+  font-size: 1rem;
+  max-width: 50rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-body .blog-page-footer {
+  font-size: 0.98rem;
+  max-width: 50rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-body .blog-page-footer .max-w-prose {
+  max-width: 100%;
+}
+
+.page-body .blog-article-content code,
+.page-body .blog-article-content kbd,
+.page-body .blog-article-content samp {
+  font-size: 1.08em;
+}
+
+.page-body .blog-article-content pre code {
+  font-size: 1.04em;
+}
+
+.page-body .blog-page-footer .blog-author-card {
+  font-size: 1.03rem;
+}
+
+.page-body .blog-page-footer .blog-author-card .text-sm {
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.page-body .blog-page-footer .blog-author-card .font-semibold.leading-6 {
+  font-size: 1.16rem;
+  line-height: 1.5;
+}
+
+.page-body .blog-page-footer .blog-author-card .font-semibold.leading-6 a {
+  color: rgb(37 99 235);
+}
+
+.page-body .blog-page-footer .blog-author-card .font-semibold.leading-6 a:hover {
+  color: rgb(29 78 216);
+  text-decoration: none;
+}
+
+.dark .page-body .blog-page-footer .blog-author-card .font-semibold.leading-6 a {
+  color: rgb(147 197 253);
+}
+
+.dark .page-body .blog-page-footer .blog-author-card .font-semibold.leading-6 a:hover {
+  color: rgb(191 219 254);
+}
+
+.page-body .blog-native-toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-body .blog-native-toc li {
+  margin: 0.5rem 0;
+}
+
+.page-body .blog-native-toc ul ul {
+  padding-left: 1rem;
+}
+
+.page-body .blog-native-toc a {
+  display: inline-block;
+  width: 100%;
+  color: rgb(107 114 128);
+  line-height: 1.5;
+  text-decoration: none;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.page-body .blog-native-toc a:hover {
+  color: rgb(17 24 39);
+}
+
+.dark .page-body .blog-native-toc a {
+  color: rgb(156 163 175);
+}
+
+.dark .page-body .blog-native-toc a:hover {
+  color: rgb(209 213 219);
+}
+
+.page-body .blog-card-summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.page-body .blog-card-summary p,
+.page-body .blog-card-summary ul,
+.page-body .blog-card-summary ol {
+  margin: 0;
+}
+
+.page-body .blog-card-summary .katex-display {
+  margin: 0.35rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.page-body .blog-section-page h3[id^="card-title-"] {
+  font-size: 1.6rem;
+  line-height: 1.22;
+}
+
+@media (min-width: 768px) {
+  .page-body .blog-section-page h3[id^="card-title-"] {
+    font-size: 1.7rem;
+  }
+}
+
+.page-body .blog-section-page {
+  padding-top: 1.5rem;
+}
+
+.page-body .blog-section-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-body .blog-section-page .blog-masonry {
+  width: 100%;
+}
+
+.page-body .blog-section-page .blog-masonry > [role="article"] {
+  width: 100%;
+}
+
+.page-body .blog-section-page .blog-masonry.blog-masonry-single > [role="article"] {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .page-body .blog-section-page .blog-masonry:not(.blog-masonry-single) {
+    column-count: 2;
+    column-gap: 2rem;
+  }
+
+  .page-body .blog-section-page .blog-masonry:not(.blog-masonry-single) > [role="article"] {
+    break-inside: avoid;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+}
+
+.page-body .blog-section-tabs {
+  width: min(100%, 1024px);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.page-body .blog-section-tabs-inner {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.25rem 0 0.75rem;
+}
+
+.page-body .blog-section-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(226 232 240);
+  border-radius: 9999px;
+  padding: 0.55rem 1.1rem;
+  color: rgb(71 85 105);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.page-body .blog-section-tab:hover {
+  border-color: rgb(148 163 184);
+  background: rgb(248 250 252);
+  color: rgb(15 23 42);
+}
+
+.page-body .blog-section-tab.is-active {
+  border-color: rgb(15 23 42);
+  background: rgb(15 23 42);
+  color: rgb(248 250 252);
+}
+
+.awards-masonry {
+  width: 100%;
+}
+
+.awards-masonry-item {
+  width: 100%;
+}
+
+@media (min-width: 1280px) {
+  .awards-masonry {
+    column-count: 2;
+    column-gap: 1.5rem;
+  }
+
+  .awards-masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+  }
+}
+
+.dark .page-body .blog-section-tab {
+  border-color: rgb(71 85 105);
+  color: rgb(203 213 225);
+}
+
+.dark .page-body .blog-section-tab:hover {
+  border-color: rgb(148 163 184);
+  background: rgb(30 41 59);
+  color: rgb(241 245 249);
+}
+
+.dark .page-body .blog-section-tab.is-active {
+  border-color: rgb(226 232 240);
+  background: rgb(226 232 240);
+  color: rgb(15 23 42);
+}
+
+.page-body .blog-section-empty {
+  width: min(100% - 4rem, 1024px);
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid rgb(226 232 240);
+  border-radius: 1rem;
+  color: rgb(100 116 139);
+  text-align: center;
+}
+
+.page-body .blog-pdf-embeds {
+  margin-top: 2.5rem;
+}
+
+.page-body .blog-pdf-embed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.page-body .blog-pdf-embed + .blog-pdf-embed {
+  margin-top: 1.5rem;
+}
+
+.page-body .blog-pdf-embed-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.page-body .blog-pdf-embed-label {
+  margin: 0;
+  color: rgb(75 85 99);
+  font-size: 0.95rem;
+}
+
+.page-body .blog-pdf-embed-action {
+  color: rgb(37 99 235);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.page-body .blog-pdf-embed-action:hover {
+  text-decoration: underline;
+}
+
+.dark .page-body .blog-pdf-embed-label {
+  color: rgb(156 163 175);
+}
+
+.dark .page-body .blog-pdf-embed-action {
+  color: rgb(147 197 253);
+}
+
+.page-body .blog-pdf-frame {
+  display: block;
+  width: 100%;
+  min-height: 70vh;
+  height: 78vh;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 0.75rem;
+  background: rgb(255 255 255);
+}
+
+.dark .page-body .blog-pdf-frame {
+  border-color: rgb(55 65 81);
+  background: rgb(17 24 39);
+}
+
+.page-body .blog-pdf-embed-fallback {
+  margin: 0;
+  color: rgb(75 85 99);
+  font-size: 0.95rem;
+}

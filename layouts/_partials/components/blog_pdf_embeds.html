@@ -1,0 +1,30 @@
+{{ $pdfs := .Resources.Match "*.pdf" }}
+{{ if and (eq .Type "blog") (gt (len $pdfs) 0) }}
+  <section class="not-prose blog-pdf-embeds" aria-label="PDF previews">
+    {{ range $index, $pdf := $pdfs }}
+      <div class="blog-pdf-embed">
+        <div class="blog-pdf-embed-toolbar">
+          <p class="blog-pdf-embed-label">PDF Preview{{ if gt (len $pdfs) 1 }} {{ add $index 1 }}{{ end }}</p>
+          <a class="blog-pdf-embed-action" href="{{ $pdf.RelPermalink }}" target="_blank" rel="noopener">
+            Open PDF
+          </a>
+        </div>
+
+        <object
+          class="blog-pdf-frame"
+          data="{{ $pdf.RelPermalink }}#view=FitH"
+          type="application/pdf"
+          aria-label="PDF preview">
+          <iframe
+            class="blog-pdf-frame"
+            src="{{ $pdf.RelPermalink }}#view=FitH"
+            title="PDF preview"
+            loading="lazy"></iframe>
+          <p class="blog-pdf-embed-fallback">
+            Your browser does not support embedded PDFs. Please <a href="{{ $pdf.RelPermalink }}" target="_blank" rel="noopener">open the PDF</a>.
+          </p>
+        </object>
+      </div>
+    {{ end }}
+  </section>
+{{ end }}

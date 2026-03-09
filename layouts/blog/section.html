@@ -1,0 +1,59 @@
+{{ define "main" }}
+
+{{ $current := .Params.blog_section | default "CP" }}
+{{ $tab_candidates := slice
+  (dict "key" "CP" "label" "CP" "url" "/blog/")
+  (dict "key" "Research" "label" "Research" "url" "/blog/research/")
+  (dict "key" "Courses" "label" "Courses" "url" "/blog/courses/")
+  (dict "key" "Essays" "label" "Essays" "url" "/blog/essays/")
+  (dict "key" "Development" "label" "Development" "url" "/blog/development/")
+}}
+
+{{ $view := .Params.view | default "article-grid" }}
+{{ $all_blog_pages := where site.RegularPages "Type" "blog" }}
+{{ $pages := where $all_blog_pages "Params.categories" "intersect" (slice $current) }}
+{{ $pages = $pages.ByDate.Reverse }}
+{{ $grid_len := cond (eq (len $pages) 1) 2 (len $pages) }}
+{{ $tabs := slice }}
+{{ range $tab_candidates }}
+  {{ $count := len (where $all_blog_pages "Params.categories" "intersect" (slice .key)) }}
+  {{ if or (gt $count 0) (eq .key $current) }}
+    {{ $tabs = $tabs | append . }}
+  {{ end }}
+{{ end }}
+
+{{ $config := dict
+  "columns" (.Params.columns | default 2)
+  "len" $grid_len
+  "fill_image" (.Params.fill_image | default true)
+  "show_date" (.Params.show_date | default true)
+  "show_read_time" (.Params.show_read_time | default true)
+  "show_read_more" (.Params.show_read_more | default true)
+}}
+
+{{ range $pages }}
+  {{ if isset .Params "author_notes" }}
+    {{ $.Store.Set "has_alpine" true }}
+    {{ break }}
+  {{ end }}
+{{ end }}
+
+<div class="blog-section-page" data-pagefind-ignore>
+  <div class="blog-section-shell">
+    {{ partial "components/blog_section_tabs.html" (dict "tabs" $tabs "current" $current) }}
+
+    {{ if gt (len $pages) 0 }}
+      {{ partial "functions/render_view" (dict "fragment" "start" "page" . "item" . "view" $view "config" $config) }}
+      {{ range $index, $item := $pages }}
+        {{ partial "functions/render_view" (dict "page" $ "item" $item "view" $view "index" $index "config" $config) }}
+      {{ end }}
+      {{ partial "functions/render_view" (dict "fragment" "end" "page" . "item" . "view" $view) }}
+    {{ else }}
+      <div class="blog-section-empty">
+        No posts yet.
+      </div>
+    {{ end }}
+  </div>
+</div>
+
+{{ end }}

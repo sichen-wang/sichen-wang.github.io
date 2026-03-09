@@ -1,0 +1,82 @@
+{{/* Table of Contents */}}
+
+{{- $toc := .Params.toc | default true -}}
+{{- $headings := slice -}}
+{{- if $toc -}}
+  {{- $raw := replaceRE "(?s)```.*?```" "" .RawContent -}}
+  {{- $matches := findRESubmatch "(?m)^(#{1,6})\\s+(.+?)\\s*$" $raw -}}
+  {{- range $matches -}}
+    {{- $level := len (index . 1) -}}
+    {{- $title := index . 2 -}}
+    {{- $title = replaceRE "\\[(.*?)\\]\\((.*?)\\)" "$1" $title -}}
+    {{- $title = replaceRE "\\\\[\\(\\)\\[\\]]" "" $title -}}
+    {{- $title = replaceRE "\\\\[A-Za-z]+" "" $title -}}
+    {{- $title = replaceRE "[{}*_]" "" $title -}}
+    {{- $title = replaceRE "\\s+" " " $title | strings.TrimSpace -}}
+    {{- $id := $title | anchorize -}}
+    {{- if and $id $title -}}
+      {{- $headings = $headings | append (dict "level" $level "id" $id "title" $title) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $has_toc := gt (len $headings) 0 -}}
+
+{{/* UI Text */}}
+{{- $on_this_page := T "on_this_page" }}
+{{- $edit_this_page := T "edit_page" }}
+
+<nav class="hb-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+  {{ partial "functions/get_hook" (dict "hook" "toc-start" "context" .) }}
+  {{- if $toc }}
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4">
+    {{- if $has_toc -}}
+    <p class="mb-4 font-semibold tracking-tight">{{ $on_this_page }}</p>
+    <div class="blog-native-toc">
+      <ul>
+        {{- range $headings -}}
+          {{- $link_class := "inline-block w-full break-words" -}}
+          {{- if eq .level 2 -}}
+            {{- $link_class = printf "%s ml-3" $link_class -}}
+          {{- else if eq .level 3 -}}
+            {{- $link_class = printf "%s ml-6" $link_class -}}
+          {{- else if eq .level 4 -}}
+            {{- $link_class = printf "%s ml-9" $link_class -}}
+          {{- else if ge .level 5 -}}
+            {{- $link_class = printf "%s ml-12" $link_class -}}
+          {{- end -}}
+        <li>
+          <a class="{{ $link_class }}" href="#{{ .id }}">
+            {{- .title -}}
+          </a>
+        </li>
+        {{- end -}}
+      </ul>
+    </div>
+    {{- end -}}
+
+    {{- $class := "" -}}
+    {{- if $has_toc -}}
+      {{- $class = "mt-8 border-t dark:border-neutral-700 pt-8" -}}
+    {{- end -}}
+
+    {{/* Page Features */}}
+    {{- if site.Params.hugoblox.repository.url | and .Params.editable -}}
+    <div class="{{ $class }} sticky bottom-0 flex flex-col items-start gap-2 pb-8">
+
+        {{ $edit_url := site.Params.hugoblox.repository.url | default "" }}
+        {{ $branch := site.Params.hugoblox.repository.branch | default "main" }}
+        {{ $dir := site.Params.hugoblox.repository.content_dir | default "content" }}
+        {{- with .File -}}{{ $edit_url = urls.JoinPath $edit_url "edit" $branch $dir (replace .Path "\\" "/") }}{{- end -}}
+        {{- with .Params.edit_url -}}{{ $edit_url = . }}{{- end -}}
+        <a class="text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 contrast-more:text-gray-800 contrast-more:dark:text-gray-50" href="{{ $edit_url }}" target="_blank" rel="noreferer">{{ $edit_this_page }}</a>
+
+    </div>
+    {{- end -}}
+
+    {{ partial "components/backlinks" . }}
+
+    {{ partial "functions/get_hook" (dict "hook" "toc-end" "context" .) }}
+
+  </div>
+  {{ end -}}
+</nav>

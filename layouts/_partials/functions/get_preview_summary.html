@@ -1,0 +1,30 @@
+{{/* Preview summary for cards: prefer explicit card_summary, else standard summary fields, else content before <!--more-->, else first meaningful paragraph. */}}
+{{ $summary := .Params.card_summary | default .Params.summary | default .Params.description | default .Params.abstract | default "" }}
+
+{{ if not $summary }}
+  {{ $raw := .RawContent }}
+  {{ $raw = replaceRE "(?s)```.*?```" " " $raw }}
+  {{ if strings.Contains $raw "<!--more-->" }}
+    {{ $parts := split $raw "<!--more-->" }}
+    {{ $before := strings.TrimSpace (index $parts 0) }}
+    {{ if $before }}
+      {{ $summary = $before }}
+    {{ else if gt (len $parts) 1 }}
+      {{ $raw = index $parts 1 }}
+    {{ end }}
+  {{ end }}
+
+  {{ if and (not $summary) $raw }}
+    {{ $blocks := split $raw "\n\n" }}
+    {{ range $blocks }}
+      {{ $block := strings.TrimSpace . }}
+      {{ if and (not $summary) $block (not (hasPrefix $block "#")) (not (hasPrefix $block "---")) (not (hasPrefix $block "![")) }}
+        {{ $summary = $block }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $summary = replaceRE `(?m)^---+$` `` $summary }}
+{{ $summary = strings.TrimSpace $summary }}
+{{ return $summary }}

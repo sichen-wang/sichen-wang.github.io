@@ -234,6 +234,7 @@ samp {
 
 .page-body .blog-section-page .blog-masonry > [role="article"] {
   width: 100%;
+  max-width: 32rem;
 }
 
 .page-body .blog-section-page .blog-masonry.blog-masonry-single > [role="article"] {
@@ -242,7 +243,7 @@ samp {
 
 @media (min-width: 768px) {
   .page-body .blog-section-page .blog-masonry:not(.blog-masonry-single) {
-    column-count: 2;
+    columns: 3 28rem;
     column-gap: 2rem;
   }
 

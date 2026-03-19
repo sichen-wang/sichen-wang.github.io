@@ -3,7 +3,7 @@
 {{ $is_blog_section := and (eq .page.Type "blog") (eq .page.Kind "section") }}
 
 {{ if $is_blog_section }}
-<div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 {{ if eq $len 1 }}max-w-[500px]{{ else }}max-w-screen-lg{{ end }}">
+<div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 {{ if eq $len 1 }}max-w-[500px]{{ else }}max-w-[96rem]{{ end }}">
   <div class="blog-masonry{{ if eq $len 1 }} blog-masonry-single{{ end }}">
 {{ else }}
 {{/* NOTE: dynamic `md:grid-cols-{{$columns}}` class requires Tailwind exception */}}

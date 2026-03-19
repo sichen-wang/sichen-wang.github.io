@@ -15,12 +15,25 @@
   {{ end }}
 
   {{ if and (not $summary) $raw }}
+    {{ $minLen := 100 }}
+    {{ $maxLen := 300 }}
+    {{ $truncLen := 200 }}
     {{ $blocks := split $raw "\n\n" }}
     {{ range $blocks }}
       {{ $block := strings.TrimSpace . }}
-      {{ if and (not $summary) $block (not (hasPrefix $block "#")) (not (hasPrefix $block "---")) (not (hasPrefix $block "![")) }}
-        {{ $summary = $block }}
+      {{ if and $block (not (hasPrefix $block "#")) (not (hasPrefix $block "---")) (not (hasPrefix $block "![")) }}
+        {{ if not $summary }}
+          {{ $summary = $block }}
+        {{ else if lt (len $summary) $minLen }}
+          {{ $candidate := printf "%s\n\n%s" $summary $block }}
+          {{ if le (len $candidate) $maxLen }}
+            {{ $summary = $candidate }}
+          {{ end }}
+        {{ end }}
       {{ end }}
+    {{ end }}
+    {{ if and $summary (gt (len $summary) $maxLen) }}
+      {{ $summary = printf "%s..." (substr $summary 0 $truncLen) }}
     {{ end }}
   {{ end }}
 {{ end }}

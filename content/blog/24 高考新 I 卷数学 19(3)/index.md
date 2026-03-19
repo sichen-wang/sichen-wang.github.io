@@ -17,15 +17,14 @@ categories:
 
 注意到 \(a_{1 \sim 4m + 2}\) 中任意长度为 \(4l + 2\) 的子区间对应的答案均为 \(f_{l}\), 则取分界点 \(p_{1} = 4, p_{2} = 4m - 2\) 进行容斥.
 
-<div>
 \[
 \begin{aligned}
 f_m &= f_m[i \not\in [1, p_1]~\textrm{or}~j \not\in [p_2 + 1, 4m + 2]] + f_m[i \in [1, p_1]~\textrm{and}~j \in [p_2 + 1, 4m + 2]]\\
-&= f_m[i, j \in [p_1 + 1, 4m + 2]] + f_m[i, j \in [1, p_2]] - f_m[i, j \in [p_1 + 1, p_2]] \\&~~~~+ f_m[i \in [1, p_1]~\textrm{and}~j \in [p_2 + 1, 4m + 2]]\\
+&= f_m[i, j \in [p_1 + 1, 4m + 2]] + f_m[i, j \in [1, p_2]] - f_m[i, j \in [p_1 + 1, p_2]] \\
+&~~~~+ f_m[i \in [1, p_1]~\textrm{and}~j \in [p_2 + 1, 4m + 2]]\\
 &= 2f_{m - 1} - f_{m - 2} + f_m[i \in [1, p_1]~\textrm{and}~j \in [p_2 + 1, 4m + 2]]
 \end{aligned}
 \]
-</div>
 
 考虑求 \(f_{m}[i \in [1, p_{1}]\ \textrm{and}\ j \in [p_{2} + 1, 4m + 2]]\) 的下界.
 

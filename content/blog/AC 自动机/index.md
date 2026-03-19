@@ -28,14 +28,12 @@ categories:
 
 具体来说，可以以 \(\rm BFS\) 序遍历 Trie 树，在遍历的同时更新答案，转移式如下：
 
-<div>
 \[
 \begin{cases}
 fail_u = Auto_{fail_{fa_u}, c} \\
 Auto_{u, c} = Auto_{fail_u, c}
 \end{cases}
 \]
-</div>
 
 建 \(\rm AC\) 自动机复杂度为 \(\Theta(|\Sigma|n)\)。
 
@@ -49,11 +47,9 @@ Auto_{u, c} = Auto_{fail_u, c}
 
 首先有一个显然的 \(\Theta(|s|\sum|t|)\) 暴力，枚举文本串的转移点，显然其不能超过最大串长，转移式为：
 
-<div>
 \[
 f_i=\bigvee_{j=i-|s|}^{i-1}\{f_j\wedge[t_{j+1\sim i}\in s]\}
 \]
-</div>
 
 这个式子的核心在于，\(f_{i}=true\) 当且仅当它存在一个后缀，这个后缀是某个模式串，并且删去这个后缀以后的文本串仍合法。
 

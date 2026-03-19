@@ -16,11 +16,9 @@ categories:
 
 考虑 \(\rm EGF\) 的组合意义，可以发现若设任意图方案数的 \(\rm EGF\) 为 \(F(x)\)，连通图的 \(\rm EGF\) 为 \(G(x)\)，显然任意图计数可以被看做先将 \(n\) 个点分进若干个非空子集，然后做连通图计数的方案数，那么根据之前的结论，有 ：
 
-<div>
 \[
 F(x) = \exp G(x) \iff G(x) = \ln F(x)
 \]
-</div>
 
 显然有 \(F(x) = \sum_{n} 2^{\binom{n}{2}} x^{n}\)，于是只需直接对其求 \(\ln\) 即可。
 
@@ -34,37 +32,29 @@ F(x) = \exp G(x) \iff G(x) = \ln F(x)
 
 容易发现，这个式子可以用三个多项式的卷积来拟合，设 \(F(x) = \sum_{n} f_{n} x^{n}, G(x) = \sum_{n} [n \in C] x^{n}\)，于是有 ：
 
-<div>
 \[
 F = F ^ 2 G + 1
 \]
-</div>
 
 最后的 \(+1\) 是为了补齐常数项，因为 \(f_{0}\) 为 \(1.\)
 
 解方程可以得到 ：
 
-<div>
 \[
 F = \frac{1 \pm \sqrt{1 - 4G}}{2G}
 \]
-</div>
 
 由于有两个解，显然不可能都成立，于是考虑 \(x \to 0\) 时的特殊情况。
 
 当 \(x \to 0\) 时，\(F(x) \to 1,G(x) \to 0.\)
 
-<div>
 \[
 \lim _ {x \to 0} \frac{1 + \sqrt{1 - 4G}}{2G} = +\infty \not= \lim _ {x \to 0} F
 \]
-</div>
 
-<div>
 \[
 \lim _ {x \to 0} \frac{1 - \sqrt{1 - 4G}}{2G} = 1 = \lim _ {x \to 0} F
 \]
-</div>
 
 于是选取 \(F= \frac{1 - \sqrt{1 - 4G}}{2G}\) 作为方程的解。
 
@@ -72,11 +62,9 @@ F = \frac{1 \pm \sqrt{1 - 4G}}{2G}
 
 考虑对解做变换，这里选取分子有理化 ：
 
-<div>
 \[
 F = \frac{\left(1 - \sqrt{1 - 4G}\right)\left(1 + \sqrt{1 - 4G}\right)}{2G\left(1 + \sqrt{1 - 4G}\right)} = \frac{2}{1 + \sqrt{1 - 4G}}
 \]
-</div>
 
 可以发现分母的常数项必定不为 \(0\)，于是做多项式开方和多项式求逆即可。
 
@@ -90,63 +78,47 @@ F = \frac{\left(1 - \sqrt{1 - 4G}\right)\left(1 + \sqrt{1 - 4G}\right)}{2G\left(
 
 显然有斐波那契数列的生成函数 ：
 
-<div>
 \[
 F(x) = \frac{x}{1 - x - x ^ 2}
 \]
-</div>
 
 而对于 \(G(x)\)，可以发现如果 \(g_{i}\) 已经被求出来了，那么给所有的拆分加上一个数 \(n - i\) 即可得到 \(g_{n}\) 的所有拆分，\(g_{i}\) 对 \(g_{n}\) 的贡献为 \(g_{i} \times f_{n - i}.\) 于是有 \(g_{n}\) 的递推式 ：
 
-<div>
 \[
 g_n = \sum _ {i = 0} ^ {n- 1} g_i \times f_{n - i}
 \]
-</div>
 
 将 \(\{g_{n}\}\) 带入 \(G(x)\) 可得 ：
 
-<div>
 \[
 G(x) = \sum _ n x ^ n \sum _ {i = 0} ^ {n - 1} g_i f_{n - i}
 \]
-</div>
 
 可以发现等式右边实际上是卷积的形式，于是有 ：
 
-<div>
 \[
 G = GF
 \]
-</div>
 
 但是我们发现这样的话 \(G(x) = 0\)，原因是 \(g_{0} = 0\)，于是我们强制 \(g_{0} = 1\)，得到 ：
 
-<div>
 \[
 G = GF + 1
 \]
-</div>
 
-<div>
 \[
 G(x) = \frac{1}{1 - F(x)} = 1 + \frac{x}{1 - 2x - x ^ 2}
 \]
-</div>
 
 可以发现现在求出的 \(G(x)\) 比实际值多了 \(1\)，因为我们将 \(g_{0} = 0\) 强制变成了 \(g_{0} = 1\)，修正后有 ：
 
-<div>
 \[
 G(x) = \frac{x}{1 - 2x - x ^ 2} = \frac{\frac{\sqrt{2}}{4}}{1 - (1 + \sqrt{2})x} + \frac{-\frac{\sqrt{2}}{4}}{1 - (1 - \sqrt{2})x}
 \]
-</div>
 
-<div>
 \[
 [x ^ n]G(x) = \frac{\sqrt{2}}{4}(1 + \sqrt{2}) ^ n - \frac{\sqrt{2}}{4}(1 - \sqrt{2}) ^ n
 \]
-</div>
 
 最后求出 \(\sqrt{2}\) 在模 \(10^{9} + 7\) 意义下的二次剩余，并且用拓展欧拉定理即可计算出答案。
 
@@ -160,34 +132,26 @@ G(x) = \frac{x}{1 - 2x - x ^ 2} = \frac{\frac{\sqrt{2}}{4}}{1 - (1 + \sqrt{2})x}
 
 设 \(f_{i}\) 表示恰好有 \(i\) 个数的数量为 \(S\) 的方案数，\(g_{i}\) 表示钦点 \(i\) 个数的数量为 \(S\) 的方案数，显然有 ：
 
-<div>
 \[
 g_k = \dbinom{m}{k} \times \frac{n ^ {\underline{kS}}}{(S!) ^ k} \times (m - k) ^ {n - kS}
 \]
-</div>
 
-<div>
 \[
 g_k = \sum_{i = k} ^ m \dbinom{i}{k} f_i \iff f_k = \sum _ {i = k} ^ m (-1) ^ {i - k} \dbinom{i}{k} g_i
 \]
-</div>
 
-<div>
 \[
 Ans = \sum _ {i = 0} ^ m w_if_i
 \]
-</div>
 
 于是我们考虑如何对于每个 \(i \in [0, m]\) 求出 \(f_{i}\)，这里有个技巧 ：
 
-<div>
 \[
 \begin{aligned}
     f_k &= \sum _ {i = k} ^ m (-1) ^ {i - k} \frac{i!}{k!(i - k)!} g_i\\
     &= k! \sum _ {i = k} ^ m i! g_i \times \frac{(-1) ^ {i - k}}{(i - k)!}
 \end{aligned}
 \]
-</div>
 
 容易发现上式可以用差值卷积计算，时间复杂度 \(\Theta(n \log n).\)
 
@@ -195,11 +159,9 @@ Ans = \sum _ {i = 0} ^ m w_if_i
 
 容易发现若设每种大小的物品的数量为 \(f_{i}\)，那么答案的生成函数为 ：
 
-<div>
 \[
 \prod _ i \left (\sum _ j x ^ {ji}\right) ^ {f _ i} = \prod _ i \left(\frac{1}{1 - x ^ i}\right) ^ {f _ i}
 \]
-</div>
 
 可以直接使用欧拉变换的求解方式。
 
@@ -211,69 +173,53 @@ Ans = \sum _ {i = 0} ^ m w_if_i
 
 可以发现，如果将一颗大小为 \(n\) 的无标号有根树的根去除，那么剩下的子树是一个个相同的子问题，只要子树大小的和为 \(n - 1\)，再加上根结点就可以唯一确定地拼出一颗无标号有根树。于是有生成函数方程 ：
 
-<div>
 \[
 F(x) = x \cdot \varepsilon \circ F(x)
 \]
-</div>
 
 求解这个生成函数方程有两种方法，第一种是直接化简，分治多项式乘法求解 ：
 
-<div>
 \[
 F(x) = x \prod _ i (1 - x ^ i) ^ {-f_i}
 \]
-</div>
 
 考虑对两边取 \(\ln\)，将连乘转连加 ：
 
-<div>
 \[
 \ln F(x) = \ln x - \sum _ i f_i \ln (1 - x ^ i)
 \]
-</div>
 
 对数不好处理，考虑求导 ：
 
-<div>
 \[
 \frac{F'(x)}{F(x)} = \frac{1}{x} + \sum _ i if_i \times \frac{x ^ {i - 1}}{1 - x ^ i}
 \]
-</div>
 
 将两边同时乘以 \(xF(x)\) ：
 
-<div>
 \[
 xF'(x) = F(x) + F(x) \sum _ i if_i \frac{x ^ i}{1 - x ^ i}
 \]
-</div>
 
 考虑将右半部分还原成 \(F(x)\) 表示 ：
 
-<div>
 \[
 xF'(x) = F(x) + F(x)\left(\sum _ {i \geqslant 1} x ^ i F'(x ^ i)\right)
 \]
-</div>
 
 设 \(G(x) = \sum_{k} x^{k} F'(x^{k})\)，简单推一推 ：
 
-<div>
 \[
 G(x) = \sum _ k x ^ k \sum _ {i\geqslant 1} if _ i \left(x ^ {k}\right) ^ {i - 1} = \sum _ k \sum _ i i f _ i x ^ {ik} = \sum _ n x ^ n \sum _ {d | n} d f _ d
 \]
-</div>
 
 故 \(g_{n} = \sum_{d | n} df_{d},g_{1} = f_{1} = 1.\)
 
 因此 ：
 
-<div>
 \[
 f_n = \frac{1}{n - 1} \sum _ {k = 1} ^ {n - 1} f _ k g _ {n - k}
 \]
-</div>
 
 \(f\) 使用分治多项式乘法求解，\(g\) 暴力求解即可做到 \(\Theta(n \log^{2} n).\)
 
@@ -283,19 +229,15 @@ f_n = \frac{1}{n - 1} \sum _ {k = 1} ^ {n - 1} f _ k g _ {n - k}
 
 假设当前已经求出了方程在模 \(x^{n}\) 意义下的解 \(F_{0}(x)\)，设方程在模 \(x^{2n}\) 意义下的解为 \(F(x)\)，众所周知有 ：
 
-<div>
 \[
 F(x) = F_0(x) - \frac{G \circ F_0(x)}{G' \circ F_0(x)}
 \]
-</div>
 
 我们知道，\(\varepsilon \circ F(x)\) 可以在 \(\Theta(n \log n)\) 的时间复杂度内求出，\(F'(x)\) 可以 \(\Theta(n)\) 求，所以可以在 \(\Theta(n \log n)\) 的时间复杂度内求下式 ：
 
-<div>
 \[
 F(x) = F_0(x) - \frac{F_0(x)  - x \cdot \varepsilon \circ F_0(x)}{[F_0(x)  - x \cdot \varepsilon \circ F_0(x)]'}
 \]
-</div>
 
 用上式迭代即可算出 \(F(x)\)，时间复杂度 \(\Theta(n \log n).\)
 
@@ -317,31 +259,25 @@ F(x) = F_0(x) - \frac{F_0(x)  - x \cdot \varepsilon \circ F_0(x)}{[F_0(x)  - x \
 
 容易发现有 ：
 
-<div>
 \[
 F(x) = \frac{(1 - x ^ {m_1 + 1})(1 - x ^ {m_2 + 1})\cdots(1 - x ^ {m_n + 1})}{(1 - x) ^ {n + 1}}
 \]
-</div>
 
 观察到 \(n\) 很小，考虑暴力将分子拆开，于是分式变成了 \(2^{n}\) 个形如 \(\frac{x^{k}}{(1 - x)^{n + 1}}\) 的部分之和。
 
 容易发现 ：
 
-<div>
 \[
 [x ^ L]\frac{x ^ k}{(1 - x) ^ {n + 1}} = \dbinom{n + L - k}{n}
 \]
-</div>
 
 于是只需要求 \(2^{n + 1}\) 次形如 \(\binom{t}{n}\) 的组合数即可。
 
 到这里我们又发现模数 \(p\) 不是质数，于是考虑将式子变形 ：
 
-<div>
 \[
 \dbinom{t}{n}~\bmod~p = \frac{t^{\underline{n}}}{n!}~\bmod~p = \frac{t ^ {\underline{n}}~\bmod~n!\cdot p}{n!}~\bmod~p
 \]
-</div>
 
 于是这样就可以 \(\Theta(n)\) 求解组合数了，总时间复杂度 \(\Theta(2^{n} n).\)
 
@@ -349,11 +285,9 @@ F(x) = \frac{(1 - x ^ {m_1 + 1})(1 - x ^ {m_2 + 1})\cdots(1 - x ^ {m_n + 1})}{(1
 
 简化题意 ：求有多少个从 \(\{1,2,\cdots,n\}\) 到 \(\{1,2,\cdots,n\}\) 的映射 \(f\)，满足 ：
 
-<div>
 \[
 \underbrace{f \circ f \circ \cdots \circ f}_{k}=\underbrace{f \circ f \circ \cdots \circ f}_{k-1}
 \]
-</div>
 
 保证 \(nk \leqslant 2 \times 10^{6},1\leqslant k \leqslant 3.\)
 
@@ -361,11 +295,9 @@ F(x) = \frac{(1 - x ^ {m_1 + 1})(1 - x ^ {m_2 + 1})\cdots(1 - x ^ {m_n + 1})}{(1
 
 考虑设树高不超过 \(k\) 的有标号有根树数量的 \(\rm EGF\) 为 \(\hat{F}_{k}(x).\) 计算考虑递推，深度不超过 \(k\) 的树可以看作若干棵深度不超过 \(k - 1\) 的树全部接在一个点上，于是有 ：
 
-<div>
 \[
 \hat{F}_k(x) = x\cdot \exp \hat{F}_{k - 1}(x)
 \]
-</div>
 
 考虑到需要求的是森林的数量，于是答案的指数型生成函数为 \(\exp \hat{F}_{k}(x).\)
 
@@ -381,17 +313,14 @@ F(x) = \frac{(1 - x ^ {m_1 + 1})(1 - x ^ {m_2 + 1})\cdots(1 - x ^ {m_n + 1})}{(1
 
 假设有两个集合 \(S,T,S \cap T = \varnothing\)，\(f_{i}\) 表示 \(\sum b_{k} = i,k\in S\) 对答案的贡献，\(g_{i}\) 表示 \(\sum b_{k} = i,k\in T\) 对答案的贡献，\(h_{i}\) 表示 \(\sum b_{k} = i,k\in S \cup T\) 对答案的贡献，那么显然有 ：
 
-<div>
 \[
 g_n = \sum _ {i = 0} ^ n \dbinom{n}{i} f_i \times g_{n - i}
 \]
-</div>
 
 因为 \(f_{i}\) 和 \(g_{n - i}\) 联合起来的贡献是它们的乘积，并且由于操作有序，所以将 \(n\) 次操作分配到它们还导致要乘上 \(\binom{n}{i}\) 的方案数。
 
 很明显，这个式子可以用 \(\rm EGF\) 来拟合，设 \(\hat{F}_{i}(x) = \sum_{j} (a_{i} - j) \frac{x^{j}}{j!}\)，那么答案的生成函数为 ：
 
-<div>
 \[
 \begin{aligned}
     \hat{F}(x) &= \prod _ i F_i(x)\\
@@ -401,7 +330,6 @@ g_n = \sum _ {i = 0} ^ n \dbinom{n}{i} f_i \times g_{n - i}
     &= e ^ {nx} \prod _ i (a_i - x)
 \end{aligned}
 \]
-</div>
 
 \(\prod_{i} (a_{i} - x)\) 直接分治乘可以做到 \(\Theta(n \log^{2} n)\)，\(e^{nx}\) 的系数可以直接求，由于 \(\prod_{i} (a_{i} - x)\) 的最高次数为 \(n\)，所以直接枚举计算即可。
 

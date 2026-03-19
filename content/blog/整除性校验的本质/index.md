@@ -16,7 +16,6 @@ categories:
 
 长大一点后, 我们可以用数学语言来刻画这个规律 :
 
-<div>
 \[
 \begin{cases}
 \overline{a_ta_{t - 1}\cdots a_2a_1} \equiv a_1 + a_2 + \cdots + a_t \pmod 3 \\
@@ -25,7 +24,6 @@ categories:
 \overline{a_ta_{t - 1}\cdots a_2a_1} \equiv \overline{a_3a_2a_1} - \overline{a_6a_5a_4} + \cdots + (-1)^{\frac{t}{3} - 1} \overline{a_ta_{t - 1}a_{t - 2}} \pmod 7
 \end{cases}
 \]
-</div>
 
 容易发现, 其分为 \(3\) 类 :
 

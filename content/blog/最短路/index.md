@@ -22,11 +22,9 @@ categories:
 
 可以把 Floyd 算法做一些调整：
 
-<div>
 \[
 dis_{i,j}=dis_{i,j}~|~(dis_{i,k}~\mathbin{\&}~dis_{k,j})
 \]
-</div>
 
 时间复杂度还是 \(\Theta(n^{3})\)，但由于位运算的特殊性，有些时候可以使用 `bitset` 优化到 \(\Theta\left(\frac{n^{3}}{\omega}\right)\)。
 
@@ -38,11 +36,9 @@ dis_{i,j}=dis_{i,j}~|~(dis_{i,k}~\mathbin{\&}~dis_{k,j})
 
 具体来说，我们新建一个 \(0\) 号点，并且从这个点出发向所有点连一条边权为 \(0\) 的边，然后跑单源最短路(SPFA 或者 Bellman-Ford)。设距离数组为 \(h\)， 接下来对于每条边 \((u, v)\)， 令
 
-<div>
 \[
 w^{\prime}(u, v)=w(u, v)+h(u)-h(v)
 \]
-</div>
 
 这样所有的边权都变成非负的，我们就可以跑 Dijkstra 算法了。
 
@@ -52,7 +48,6 @@ w^{\prime}(u, v)=w(u, v)+h(u)-h(v)
 
 设新图上的最短路径为 \(d^{\prime}\)，原图上的最短路径为 \(d\)。
 
-<div>
 \[
 \begin{aligned}
 d^{\prime}(u, v) &= \min_{a_{1}, a_{2}, \ldots, a_{k}} w^{\prime}\left(u, a_{1}\right)+w^{\prime}\left(a_{1}, a_{2}\right)+\cdots+w^{\prime}\left(a_{k}, v\right) \\
@@ -61,7 +56,6 @@ d^{\prime}(u, v) &= \min_{a_{1}, a_{2}, \ldots, a_{k}} w^{\prime}\left(u, a_{1}\
 &= h(u)-h(v)+d(u, v)
 \end{aligned}
 \]
-</div>
 
 这个证明用到了势能分析的思想，如果想进一步了解话可以参考本站《「杂项」复杂度分析》一文。
 

@@ -16,11 +16,9 @@ categories:
 
 序列 \(a\) 的普通生成函数 \(\rm(Ordinary\ Generating\ Function,OGF)\) 被定义为形式幂级数 ：
 
-<div>
 \[
 F(x) = \sum _n a_n x ^ n \tag{1.0.1}
 \]
-</div>
 
 \(a\) 既可以是有穷序列也可以是无穷序列，\(x\) 不具有实际意义，仅作为一个形式上的变量参与运算。
 
@@ -32,55 +30,42 @@ F(x) = \sum _n a_n x ^ n \tag{1.0.1}
 
 加减不必多说 ：
 
-<div>
 \[
 F(x) \pm G(x) = \sum _n (a_n \pm b_n) x ^ n \tag{1.1.1}
 \]
-</div>
 
 乘法用卷积定义 ：
 
-<div>
 \[
 F(x)G(x) = \sum _n x ^ n \sum _{i = 0} ^n a_ib_{n - i} \tag{1.1.2}
 \]
-</div>
 
 #### 封闭形式
 
 在使用生成函数的过程中，我们不会一直使用形式幂级数形式，有时候会为了计算方便将其替换成封闭形式。
 
-- \(F(x) = \sum_{n} x^{n}\)
+\(F(x) = \sum_{n} x^{n}\)
 
-<div>
 \[
 F(x) - xF(x) = 1
 \]
-</div>
 
-<div>
 \[
 F(x) = \frac{1}{1 - x} \tag{1.2.1}
 \]
-</div>
 
-- \(F(x) = \sum_{n} q^{n} x^{n}\)
+\(F(x) = \sum_{n} q^{n} x^{n}\)
 
-<div>
 \[
 F(x) - qxF(x) = 1
 \]
-</div>
 
-<div>
 \[
 F(x) = \frac{1}{1 - qx} \tag{1.2.2}
 \]
-</div>
 
-- \(F(x) = \sum_{n} (n + 1)x^{n}\)
+\(F(x) = \sum_{n} (n + 1)x^{n}\)
 
-<div>
 \[
 \begin{aligned}
     F(x) &= \sum _{n \geqslant 1} nx ^ {n - 1}\\
@@ -88,29 +73,22 @@ F(x) = \frac{1}{1 - qx} \tag{1.2.2}
     &= \left(\frac{1}{1 - x}\right)'
 \end{aligned}
 \]
-</div>
 
-<div>
 \[
 F(x) = \frac{1}{(1 - x) ^ 2} \tag{1.2.3}
 \]
-</div>
 
-- \(F(x) = \sum_{n} \binom{m}{n} x^{n}\)
+\(F(x) = \sum_{n} \binom{m}{n} x^{n}\)
 
-<div>
 \[
 F(x) = (1 + x) ^ m \tag{1.2.4}
 \]
-</div>
 
-- \(F(x) = \sum_{n} \binom{n + m}{n} x^{n}\)
+\(F(x) = \sum_{n} \binom{n + m}{n} x^{n}\)
 
-<div>
 \[
 F(x) = \frac{1}{(1 - x) ^ {m + 1}} \tag{1.2.5}
 \]
-</div>
 
 考虑归纳证明 ：
 
@@ -118,7 +96,6 @@ F(x) = \frac{1}{(1 - x) ^ {m + 1}} \tag{1.2.5}
 
 当 \(m \gt 0\) 时 ：
 
-<div>
 \[
 \begin{aligned}
     \frac{1}{(1 - x) ^ {m + 1}} &= \frac{1}{(1 - x) ^ m}\frac{1}{1 - x}\\
@@ -127,15 +104,12 @@ F(x) = \frac{1}{(1 - x) ^ {m + 1}} \tag{1.2.5}
     &= \sum _ n \dbinom{m + n}{n} x ^ n
 \end{aligned}
 \]
-</div>
 
 关于上述推导过程中最后一步用到的组合恒等式 ：
 
-<div>
 \[
 \sum _ {i = 0} ^ n \dbinom{m + i - 1}{i} = \dbinom{m + n}{n} \tag{1.2.6}
 \]
-</div>
 
 考虑其组合意义，左边相当于将 \(i\) 个无标号石子放进 \(m\) 个有标号盒子里，盒子允许为空的方案数。
 
@@ -161,31 +135,24 @@ F(x) = \frac{1}{(1 - x) ^ {m + 1}} \tag{1.2.5}
 
 设 \(F(x) = \sum_{n} a_{n} x^{n}\)，显然有 ：
 
-<div>
 \[
 F(x) = xF(x) + x ^ 2 F(x) - a_0x + a_1x + a_0
 \]
-</div>
 
 解得 ：
 
-<div>
 \[
 F(x) = \frac{x}{1 - x - x ^ 2} \tag{1.3.1}
 \]
-</div>
 
 考虑使用部分分式定理，观察到分母多项式次数为 \(2\)，那么设 ：
 
-<div>
 \[
 \frac{A}{1 - ax} + \frac{B}{1 - bx} = \frac{x}{1 - x - x ^ 2}
 \]
-</div>
 
 解得 ：
 
-<div>
 \[
 \begin{aligned}
     F(x) &= \frac{x}{1 - x - x ^ 2}\\
@@ -193,7 +160,6 @@ F(x) = \frac{x}{1 - x - x ^ 2} \tag{1.3.1}
     &= \sum _ n x ^ n \frac{\sqrt{5}}{5}\left[\left(\frac{1 + \sqrt{5}}{2}\right) ^ n - \left(\frac{1 - \sqrt{5}}{2}\right) ^ n\right]
 \end{aligned}
 \]
-</div>
 
 于是上式即为斐波那契数列的形式幂级数形式和通项。
 
@@ -203,19 +169,15 @@ F(x) = \frac{x}{1 - x - x ^ 2} \tag{1.3.1}
 
 让我们重定义组合数的运算 ：
 
-<div>
 \[
 \dbinom{r}{k} = \frac{r ^ {\underline{k}}}{k!}~~(r \in \mathbb{C}, k \in \mathbb{N}) \tag{1.3.3}
 \]
-</div>
 
 在这种情况下，对于 \(\alpha \in \mathbb{C}\)，有 ：
 
-<div>
 \[
 (1 + x) ^ {\alpha} = \sum _n \dbinom{\alpha}{n} x ^ n \tag{1.3.4}
 \]
-</div>
 
 对于卡特兰数序列，令 \(a_{0} = a_{1} = 1, a_{n} = \sum\limits_{i = 0}^{n - 1} a_{i} \times a_{n - i - 1}(n \gt 1)\)
 
@@ -223,19 +185,15 @@ F(x) = \frac{x}{1 - x - x ^ 2} \tag{1.3.1}
 
 不难发现其递推式是一个卷积的形式，于是有：
 
-<div>
 \[
 xF ^ 2(x) + 1 = F(x)
 \]
-</div>
 
 解之得：
 
-<div>
 \[
 F(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x} \tag{1.3.5}
 \]
-</div>
 
 要保留哪个根呢？
 
@@ -243,39 +201,30 @@ F(x) = \frac{1 \pm \sqrt{1 - 4x}}{2x} \tag{1.3.5}
 
 原因是：
 
-<div>
 \[
 F(x) = \dfrac{1 + \sqrt{1 - 4x}}{2x} = \frac{2}{1 - \sqrt{1 - 4x}}
 \]
-</div>
 
 则有：
 
-<div>
 \[
 \lim\limits_{x \to 0 ^ {+}} \frac{2}{1 - \sqrt{1 - 4x}} = \infty
 \]
-</div>
 
-<div>
 \[
 \lim\limits_{x \to 0 ^ {-}} \frac{2}{1 - \sqrt{1 - 4x}} = -\infty
 \]
-</div>
 
 故此时 \(x \to 0\) 时极限不存在。
 
 因此可以得到：
 
-<div>
 \[
 F(x) = \dfrac{1 - \sqrt{1 - 4x}}{2x} \tag{1.3.6}
 \]
-</div>
 
 将分子部分单独拿出来考虑，令 \(G(x) = 1 - \sqrt{1 - 4x} = 1 - (1 - 4x)^{\frac{1}{2}}\)，使用牛顿二项式定理展开：
 
-<div>
 \[
 \begin{aligned}
 G(x) &= 1 - \sum\limits_{n \geqslant 0} \dbinom{\frac{1}{2}}{n} (-4x) ^ n \\
@@ -283,11 +232,9 @@ G(x) &= 1 - \sum\limits_{n \geqslant 0} \dbinom{\frac{1}{2}}{n} (-4x) ^ n \\
 &= 1 - \sum\limits_{n \geqslant 0} \frac{\frac{1}{2} \times (-\frac{1}{2}) \times (-\frac{3}{2}) \times \cdots \times (-\frac{2n - 3}{2})}{n!} (-4x) ^ n \\
 \end{aligned}
 \]
-</div>
 
 特别要注意的是 \(\binom{\frac{1}{2}}{0} = \frac{\frac{1}{2}^{0}}{0!} = 1\) 但是用上面那个式子是不正确的，因此需要特别考虑：
 
-<div>
 \[
 \begin{aligned}
 G(x) &= \sum\limits_{n \geqslant 1} (-1) ^ {2n - 1} \frac{(2n - 3)!!}{n!2 ^ n} (4x) ^ n \\
@@ -296,11 +243,9 @@ G(x) &= \sum\limits_{n \geqslant 1} (-1) ^ {2n - 1} \frac{(2n - 3)!!}{n!2 ^ n} (
 &= \sum\limits_{n \geqslant 1} \frac{\binom{2n - 1}{n}}{2n - 1} 2x ^ n
 \end{aligned}
 \]
-</div>
 
 带回原式有：
 
-<div>
 \[
 \begin{aligned}
 F(x) &= \frac{\sum\limits_{n \geqslant 1} \frac{\binom{2n - 1}{n}}{2n - 1} 2x ^ n}{2x} \\
@@ -309,7 +254,6 @@ F(x) &= \frac{\sum\limits_{n \geqslant 1} \frac{\binom{2n - 1}{n}}{2n - 1} 2x ^ 
 \end{aligned}
 \tag{1.3.9}
 \]
-</div>
 
 因此可知 \(a_{n} = \dfrac{\binom{2n}{n}}{n + 1}\)。
 
@@ -317,23 +261,18 @@ F(x) &= \frac{\sum\limits_{n \geqslant 1} \frac{\binom{2n - 1}{n}}{2n - 1} 2x ^ 
 
 考虑求解形如下式的 \(\rm OGF\) ：
 
-<div>
 \[
 F_i(x) = \left(\sum _ j x ^ {ji}\right) ^ {f _ i} =  \left(\frac{1}{1 - x ^ i}\right) ^ {f _ i} \tag{2.3.1}
 \]
-</div>
 
-<div>
 \[
 \varepsilon\circ F(x) = \prod _ i F_i(x) = \prod _ i \left(\frac{1}{1 - x ^ i}\right) ^ {f _ i} \tag{2.3.2}
 \]
-</div>
 
 这个 \(\rm OGF\) 的组合意义是将 \(n\) 个互不区分的小球分进若干个非空集合，大小为 \(i\) 的集合有 \(f_{i}\) 种方案的总方案数。
 
 注意到式 \((2.3.2)\) 右边是连乘，于是对其取 \(\ln :\)
 
-<div>
 \[
 \begin{aligned}
     \ln \varepsilon \circ F(x) &= \sum _ i \ln \left(\frac{1}{1 - x ^ i}\right) ^ {f _ i}\\
@@ -342,7 +281,6 @@ F_i(x) = \left(\sum _ j x ^ {ji}\right) ^ {f _ i} =  \left(\frac{1}{1 - x ^ i}\r
     &= \sum _ i \sum _ j \frac{f_i}{j + 1} x ^ {i(j + 1)}
 \end{aligned}
 \]
-</div>
 
 关于上式中化简 \(\ln (1 - x^{i})\) 的步骤可以参考后文中式 \((2.1.5)\)。
 
@@ -356,11 +294,9 @@ F_i(x) = \left(\sum _ j x ^ {ji}\right) ^ {f _ i} =  \left(\frac{1}{1 - x ^ i}\r
 
 序列 \(a\) 的指数型生成函数 \(\rm(Exponential\ Generating\ Function,EGF)\) 被定义为形式幂级数 ：
 
-<div>
 \[
 \hat{F}(x) = \sum _n a_n \frac{x ^ n}{n!}\tag{2.0.1}
 \]
-</div>
 
 ### 两种基本形式
 
@@ -370,7 +306,6 @@ F_i(x) = \left(\sum _ j x ^ {ji}\right) ^ {f _ i} =  \left(\frac{1}{1 - x ^ i}\r
 
 乘法被定义为 ：
 
-<div>
 \[
 \begin{aligned}
     \hat{F}(x)\hat{G}(x) &= \sum _ i a _ i \frac{x ^ i}{i!} \sum _ j b _ j \frac{x ^ j}{j!}\\
@@ -378,37 +313,29 @@ F_i(x) = \left(\sum _ j x ^ {ji}\right) ^ {f _ i} =  \left(\frac{1}{1 - x ^ i}\r
     &= \sum _ n \frac{x ^ n}{n!} \sum _ {i = 0} ^ n\dbinom{n}{i} a _ i b _ {n - i}
 \end{aligned}
 \]
-</div>
 
 #### 麦克劳林级数
 
 众所周知有泰勒展开 ：
 
-<div>
 \[
 F(x) = \sum _ n \frac{F^{(n)}(x _ 0)}{n!}(x - x _ 0) ^ n \tag{2.1.2}
 \]
-</div>
 
 取 \(x_{0} = 0\) 时的特殊情况可以得到麦克劳林级数 ：
 
-<div>
 \[
 F(x) = \sum _ n F^{(n)}(0)\frac{x ^ n}{n!} \tag{2.1.3}
 \]
-</div>
 
 有 \(\exp(0) = 1\)，故 \(e^{x}\) 的 \(\rm EGF\) 为 ：
 
-<div>
 \[
 \hat{\exp}(x) = \sum _ n \frac{x ^ n}{n!} \tag{2.1.4}
 \]
-</div>
 
 #### 常见幂级数的封闭形式
 
-<div>
 \[
 \begin{aligned}
 e ^ {qx} &= \sum _ n q ^ n \frac{x ^ n}{n!}\\
@@ -419,45 +346,35 @@ e ^ {qx} &= \sum _ n q ^ n \frac{x ^ n}{n!}\\
 (1+x)^{\alpha}&=\sum_{n} \alpha^{\underline{n}} \frac{x^{n}}{n !}
 \end{aligned}
 \]
-</div>
 
 ### 组合意义
 
 **结论：设 \(\hat{G}(x)\) 表示集合内部分配方案数关于集合大小的 \(\rm EGF\)，\(\hat{F}(x)\) 表示将问题划分成若干个无标号非空子问题，子问题的方案数为 \(\hat{G}(x)\) 的关于问题总规模的方案数的 \(\rm EGF\)。那么有关系式 ：**
 
-<div>
 \[
 \hat{F}(x) = \exp \hat{G}(x) \tag{2.2.1}
 \]
-</div>
 
 考虑证明上述结论，设 \(f_{i, j}\) 表示将 \(j\) 个**有标号**小球放进 \(i\) 个**有标号**盒子中的方案数，\(g_{i}\) 表示集合内有 \(i\) 个元素的方案数，显然有 ：
 
-<div>
 \[
 f_{i, j} = \sum _{k = 1} ^ {j - i + 1} \dbinom{j}{k} f_{i - 1, j - k} \times g_k
 \]
-</div>
 
 考虑到 \(f_{i - 1, j - k}\) 在 \(k \gt j - i + 1\) 时的值为 \(0\)，所以可以将 \(k\) 的枚举上界换成 \(j\)，发现有 ：
 
-<div>
 \[
 \hat{F}_i(x) = \hat{F}_{i - 1}(x)\hat{G}(x)
 \]
-</div>
 
 化简得到并根据 \(\hat{F}_{i}(x)\) 的定义得到 ：
 
-<div>
 \[
 \hat{F}_i(x) = \sum _ j f_{i, j} \frac{x ^ j}{j!} = \hat{G}^i(x) \tag{2.2.2}
 \]
-</div>
 
 于是有 ：
 
-<div>
 \[
 \begin{aligned}
     \exp \hat{G}(x) &= \sum_n \frac{\hat{G}^n(x)}{n!}\\
@@ -465,6 +382,5 @@ f_{i, j} = \sum _{k = 1} ^ {j - i + 1} \dbinom{j}{k} f_{i - 1, j - k} \times g_k
     &= \sum _ i \left(\sum _ n \frac{f _ {n, i}}{n!}\right) \frac{x ^ i}{i!}
 \end{aligned}
 \]
-</div>
 
 这恰好对应了 \(\hat{F}(x)\) 的定义，于是 \(\hat{F}(x) = \exp \hat{G}(x)\)。

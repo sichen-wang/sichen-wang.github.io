@@ -15,9 +15,9 @@
   {{ end }}
 
   {{ if and (not $summary) $raw }}
-    {{ $minLen := 100 }}
-    {{ $maxLen := 300 }}
-    {{ $truncLen := 200 }}
+    {{ $minLen := 200 }}
+    {{ $maxLen := 500 }}
+    {{ $truncLen := 300 }}
     {{ $blocks := split $raw "\n\n" }}
     {{ range $blocks }}
       {{ $block := strings.TrimSpace . }}

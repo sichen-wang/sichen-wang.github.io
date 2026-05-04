@@ -27,3 +27,6 @@ mounts:
     target: layouts
   - source: assets
     target: assets
+  # 项目根 fonts/ 作为站点字体源，Hugo serve 到 /fonts/...
+  - source: fonts
+    target: static/fonts

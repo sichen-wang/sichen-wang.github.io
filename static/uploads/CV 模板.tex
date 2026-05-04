@@ -25,54 +25,34 @@
 \definecolor{DescriptionGray}{HTML}{444444} % 优化灰度，提高可读性
 
 % --- 字体设置 Fonts (XeLaTeX) ---
-% 设置中英文字体，并提供鲁棒的备用选项
-% 提升中文 AutoFakeBold 到 2.0，以在缺少粗体字重时获得更明显的加粗对比
+% 字体源：项目根目录 fonts/（站点统一字体集）。
+% 当前文件位于 static/uploads/，相对路径为 ../../fonts/。
 
-% 中文（优先使用 方正新书宋简体 → 思源宋体 CN → Windows SimSun → macOS Songti SC）
-\IfFontExistsTF{方正新书宋简体}{
-  \setCJKmainfont[AutoFakeBold=2.0]{方正新书宋简体}
-  \message{^^J INFO: Using Founder New Song (方正新书宋简体).^^J}
-}{
-  \IfFontExistsTF{思源宋体 CN}{
-      \setCJKmainfont[AutoFakeBold=2.0]{思源宋体 CN}
-      \message{^^J INFO: Using Source Han Serif (思源宋体 CN).^^J}
-  }{
-    \IfFontExistsTF{SimSun}{
-      % Windows 系统自带宋体
-      \setCJKmainfont[AutoFakeBold=2.0]{SimSun}
-      \message{^^J INFO: Using Windows SimSun (宋体).^^J}
-    }{
-      % 最终备用（macOS 自带，命名为 Songti SC）
-      \setCJKmainfont[AutoFakeBold=2.0]{Songti SC}
-      \message{^^J WARNING: Preferred CJK fonts not found, falling back to Songti SC.^^J}
-    }
-  }
-}
+% 中文：方正新书宋简体
+\setCJKmainfont[
+  Path = ../../fonts/方正新书宋简体/ ,
+  AutoFakeBold = 2.0
+]{方正新书宋简体.ttf}
 
-% 英文（指定为 CMU Serif；无衬线优先 CMU Sans Serif，不在则回退 Arial/Helvetica Neue）
-\IfFontExistsTF{CMU Serif}{
-  \setmainfont{CMU Serif}
-  % 无衬线：若存在 CMU Sans Serif 则使用，否则回退到 Arial 或 Helvetica Neue
-  \IfFontExistsTF{CMU Sans Serif}{
-    \setsansfont{CMU Sans Serif}
-  }{
-    \IfFontExistsTF{Arial}{
-      \setsansfont{Arial}
-      \message{^^J WARNING: CMU Sans Serif not found, using Arial as sans-serif.^^J}
-    }{
-      \setsansfont{Helvetica Neue}
-      \message{^^J WARNING: CMU Sans Serif not found, using Helvetica Neue as sans-serif.^^J}
-    }
-  }
-}{
-  \setmainfont{Times New Roman}
-  \IfFontExistsTF{Arial}{
-    \setsansfont{Arial}
-  }{
-    \setsansfont{Helvetica Neue}
-  }
-  \message{^^J WARNING: CMU Serif not found, falling back to Times New Roman / Arial.^^J}
-}
+% 英文衬线：CMU Serif
+\setmainfont[
+  Path = ../../fonts/cmu-serif/ ,
+  Extension = .ttf,
+  UprightFont = cmunrm,
+  BoldFont = cmunbx,
+  ItalicFont = cmunti,
+  BoldItalicFont = cmunbi
+]{CMU Serif}
+
+% 英文无衬线：CMU Sans Serif
+\setsansfont[
+  Path = ../../fonts/cmu-sans-serif/ ,
+  Extension = .ttf,
+  UprightFont = cmunss,
+  BoldFont = cmunsx,
+  ItalicFont = cmunsi,
+  BoldItalicFont = cmunso
+]{CMU Sans Serif}
 
 % --- 设置与自定义 Configuration ---
 

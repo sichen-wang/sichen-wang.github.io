@@ -60,7 +60,9 @@ hugoblox:
   # ────────────────────────────────────────────────────────────────────────────
   typography:
     # Font: 'sans' (Inter), 'serif' (Roboto Slab), or 'native' (system fonts)
-    font: "sans"
+    # 设为 native 让主题不加载自带字体；实际字体由 assets/css/custom.css 提供
+    # （SiteText = CMU Serif, SiteTextCJK = 方正新书宋简体, SiteMono = Fira Code）
+    font: "native"
     # Size: 'sm', 'md', 'lg', or 'xl' (affects base font size and scale)
     size: "md"
 

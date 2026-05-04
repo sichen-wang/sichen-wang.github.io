@@ -1,6 +1,7 @@
+/* 西文衬线：CMU Serif */
 @font-face {
   font-family: "SiteText";
-  src: url("/fonts/newcm/NewCM10-Book.otf") format("opentype");
+  src: url("/fonts/cmu-serif/cmunrm.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -8,7 +9,7 @@
 
 @font-face {
   font-family: "SiteText";
-  src: url("/fonts/newcm/NewCM10-BookItalic.otf") format("opentype");
+  src: url("/fonts/cmu-serif/cmunti.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -16,7 +17,7 @@
 
 @font-face {
   font-family: "SiteText";
-  src: url("/fonts/newcm/NewCM10-Bold.otf") format("opentype");
+  src: url("/fonts/cmu-serif/cmunbx.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -24,15 +25,25 @@
 
 @font-face {
   font-family: "SiteText";
-  src: url("/fonts/newcm/NewCM10-BoldItalic.otf") format("opentype");
+  src: url("/fonts/cmu-serif/cmunbi.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 
+/* CJK：方正新书宋简体 */
 @font-face {
   font-family: "SiteTextCJK";
-  src: url("/fonts/chinese/FZNewShuSongS-R-GB.ttf") format("truetype");
+  src: url("/fonts/方正新书宋简体/方正新书宋简体.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 西文等宽：Fira Code */
+@font-face {
+  font-family: "SiteMono";
+  src: url("/fonts/Fira_Code/static/FiraCode-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -40,33 +51,9 @@
 
 @font-face {
   font-family: "SiteMono";
-  src: url("/fonts/newcm/NewCMMono10-Book.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SiteMono";
-  src: url("/fonts/newcm/NewCMMono10-BookItalic.otf") format("opentype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SiteMono";
-  src: url("/fonts/newcm/NewCMMono10-Bold.otf") format("opentype");
+  src: url("/fonts/Fira_Code/static/FiraCode-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "SiteMono";
-  src: url("/fonts/newcm/NewCMMono10-BoldOblique.otf") format("opentype");
-  font-weight: 700;
-  font-style: italic;
   font-display: swap;
 }
 

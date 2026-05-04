@@ -3,65 +3,54 @@
 % !!!重要提示!!! 请使用 XeLaTeX 编译此文件以获得最佳字体和排版效果。
 
 % --- 导包 Preamble ---
-% 1. 页面布局 Layout
-% 调整页边距，优化空间利用率
-\usepackage[left=1.4cm, right=1.4cm, top=1.8cm, bottom=2cm]{geometry}
+\usepackage[left=1.4cm, right=1.4cm, top=1.4cm, bottom=1.4cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
-
-% 2. 字体与排版 Typography
 \usepackage{fontspec}
 \usepackage{enumitem}
 \usepackage[explicit]{titlesec}
-\usepackage{microtype} % 引入 microtype 以优化微观排版和对齐
-
-% 3. 功能增强 Utilities
+\usepackage{microtype}
 \usepackage{fontawesome5}
 \usepackage{hyperref}
+\usepackage{etoolbox}
+\usepackage{array}
+\usepackage{tikz}
+\newsavebox{\headerbox}
 
 % --- 颜色定义 Colors ---
-% 定义主色调和描述文字颜色
-\definecolor{PrimaryColor}{HTML}{003366} % 深海蓝，专业稳重
-\definecolor{DescriptionGray}{HTML}{444444} % 优化灰度，提高可读性
+\definecolor{PrimaryColor}{HTML}{003366}
+\definecolor{DescriptionGray}{HTML}{444444}
 
 % --- 字体设置 Fonts (XeLaTeX) ---
-% 设置中英文字体，并提供鲁棒的备用选项
-% 提升中文 AutoFakeBold 到 2.0，以在缺少粗体字重时获得更明显的加粗对比
+% 字体源：项目根目录 fonts/（站点统一字体集）。
+% 当前文件位于 static/uploads/CV.tex，相对路径为 ../../fonts/。
+% 中文：方正新书宋简体
+\setCJKmainfont[
+  Path = ../../fonts/方正新书宋简体/ ,
+  AutoFakeBold = 2.0
+]{方正新书宋简体.ttf}
 
-% 中文（优先使用 方正新书宋简体 → 思源宋体 CN → macOS 自带 Songti SC）
-\IfFontExistsTF{方正新书宋简体}{
-  \setCJKmainfont[AutoFakeBold=2.0]{方正新书宋简体}
-  \message{^^J INFO: Using Founder New Song (方正新书宋简体).^^J}
-}{
-  \IfFontExistsTF{思源宋体 CN}{
-      \setCJKmainfont[AutoFakeBold=2.0]{思源宋体 CN}
-      \message{^^J INFO: Using Source Han Serif (思源宋体 CN).^^J}
-  }{
-      % 最终备用（macOS 自带，命名为 Songti SC）
-      \setCJKmainfont[AutoFakeBold=2.0]{Songti SC}
-      \message{^^J WARNING: Preferred CJK fonts not found, falling back to Songti SC.^^J}
-  }
-}
+% 英文衬线：CMU Serif
+\setmainfont[
+  Path = ../../fonts/cmu-serif/ ,
+  Extension = .ttf,
+  UprightFont = cmunrm,
+  BoldFont = cmunbx,
+  ItalicFont = cmunti,
+  BoldItalicFont = cmunbi
+]{CMU Serif}
 
-% 英文（指定为 CMU Serif；无衬线优先 CMU Sans Serif，不在则回退 Helvetica Neue）
-\IfFontExistsTF{CMU Serif}{
-  \setmainfont{CMU Serif}
-  % 无衬线：若存在 CMU Sans Serif 则使用，否则回退到 Helvetica Neue
-  \IfFontExistsTF{CMU Sans Serif}{
-    \setsansfont{CMU Sans Serif}
-  }{
-    \setsansfont{Helvetica Neue}
-    \message{^^J WARNING: CMU Sans Serif not found, using Helvetica Neue as sans-serif.^^J}
-  }
-}{
-  \setmainfont{Times New Roman}
-  \setsansfont{Helvetica Neue}
-  \message{^^J WARNING: CMU Serif not found, falling back to Times New Roman / Helvetica Neue.^^J}
-}
+% 英文无衬线：CMU Sans Serif
+\setsansfont[
+  Path = ../../fonts/cmu-sans-serif/ ,
+  Extension = .ttf,
+  UprightFont = cmunss,
+  BoldFont = cmunsx,
+  ItalicFont = cmunsi,
+  BoldItalicFont = cmunso
+]{CMU Sans Serif}
 
-% --- 设置与自定义 Configuration ---
-
-% 超链接样式 (使用主色调)
+% --- 超链接 ---
 \hypersetup{
   colorlinks=true,
   linkcolor=PrimaryColor,
@@ -70,168 +59,188 @@
   pdfborder={0 0 0},
 }
 
-% 全局设置
+% --- 全局设置 ---
 \pagestyle{empty}
-\setlength{\parindent}{0pt} % 无首行缩进
-\setlength{\parskip}{0.5em} % 段落间距
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.2em, parsep=0pt, topsep=0.3em, leftmargin=1.2em}
 
-% 列表紧凑设置
-\setlist{itemsep=0.3em, parsep=0pt, topsep=0.5em, leftmargin=1.5em}
-
-% --- 标题样式重定义 Section Styling ---
+% --- Section 标题样式 ---
 \titleformat{\section}
   {\normalfont\large\bfseries\color{PrimaryColor}}
   {}
   {0em}
   {#1}
-  [\vspace{0.2ex}\hrule height 0.8pt]
-\titlespacing*{\section}{0pt}{1.8ex}{0.8ex}
+  [\vspace{0.2ex}\hrule height 0.6pt]
+\titlespacing*{\section}{0pt}{0.6ex}{1.0ex}
 
-% --- 自定义命令 Commands ---
-% 工作经历条目
-\newcommand{\experienceEntry}[4]{%
-  \noindent\textbf{#1} @ \textrm{#2} \hfill {\color{DescriptionGray}\small #3}\\
-  \vspace{0.2em}%
-  \begingroup
-  \color{DescriptionGray}#4
-  \endgroup
-  \vspace{0.8em}%
+% --- 自定义命令 Custom Commands ---
+
+% 子标题 (subsection)：深蓝粗体小号；与上下 entry 紧贴
+\newcommand{\subSection}[1]{%
+  \vspace{-0.15em}%
+  \noindent{\color{PrimaryColor}\textbf{\small #1}}\par%
+  \vspace{-0.1em}%
 }
 
-% 中栏“经验”字号（可自定义）
-% 默认与正文一致；如需自定义大小，请在导言区添加：
-% \renewcommand{\ExperienceSize}{\fontsize{11pt}{13pt}\selectfont}
-% 或使用 \large / \small 等字号命令：
-% \renewcommand{\ExperienceSize}{\large}
-\newcommand{\ExperienceSize}{10pt}
-\renewcommand{\ExperienceSize}{\fontsize{10.5pt}{10.5pt}\selectfont}
+% 经历条目：#1=职位@机构, #2=时间(可空), #3=描述(可空)
+% 标题左对齐，时间用 \hfill 右对齐；描述行紧跟标题
+\newcommand{\jobEntry}[3]{%
+  \noindent\textbf{#1}%
+  \notblank{#2}{\hfill{\color{DescriptionGray}\small #2}}{}%
+  \notblank{#3}{\par\vspace{0.05em}\noindent{\color{DescriptionGray}\small\textit{#3}}}{}%
+  \par\vspace{0.45em}%
+}
+
+% 五圆点技能条
+\newcommand{\filledDot}{\textcolor{PrimaryColor}{\small\textbullet}}
+\newcommand{\emptyDot}{\textcolor{DescriptionGray}{\small$\circ$}}
+\newcommand{\skillRow}[2]{%
+  % #1 = 技能名, #2 = 等级 1-5
+  #1 &
+  \ifnum#2>0\filledDot\else\emptyDot\fi\,%
+  \ifnum#2>1\filledDot\else\emptyDot\fi\,%
+  \ifnum#2>2\filledDot\else\emptyDot\fi\,%
+  \ifnum#2>3\filledDot\else\emptyDot\fi\,%
+  \ifnum#2>4\filledDot\else\emptyDot\fi%
+  \\
+}
 
 \begin{document}
 
-% --- 抬头 Header：姓名独占一行 + 下方三栏（基本信息 | 经验 | 照片） ---
-\begin{center}
-  {\fontsize{22pt}{24pt}\selectfont\bfseries\color{PrimaryColor} 王司晨 (Sichen Wang)}
-\end{center}
-\vspace{-0.3em}
-\begin{tabular*}{\textwidth}{@{}p{0.45\textwidth}
-  p{0\textwidth}
-  p{0.20\textwidth}
-  @ {\extracolsep{\fill}} p{0.20\textwidth}@{}}
-  % 左列：基本信息（左对齐）
-  \begin{minipage}[t]{\linewidth}
-    \vspace{0pt}% 对齐三栏顶部
+% =====================================================================
+% Header：照片 tikz overlay 浮于右上角，文字相对整页居中
+% =====================================================================
+% 把文字部分先 sbox，自动测量真实高度
+\sbox{\headerbox}{%
+  \begin{minipage}{\dimexpr\textwidth-1cm\relax}
+    \centering
+    {\fontsize{22pt}{26pt}\selectfont\bfseries\color{PrimaryColor}王司晨 (Sichen Wang)}\\[0.45em]
     {\color{DescriptionGray}
-    \begin{minipage}{0.96\textwidth}
-    \raggedright
-    \begin{tabular}{@{}ll}
-      %\faIcon{map-marker-alt} 深圳 &
-      \faIcon{graduation-cap}\ 电子与计算机工程(ECE) &
-      \faIcon{calendar-alt}\ 本科二年级
-    \end{tabular}\\[0.2em]
-    \begin{tabular}{@{}l}
-      \faIcon{award}\ 专业课均分 96.0，均绩 \textbf{4.00}/4.00，一等奖学金
-    \end{tabular}\\[0.2em]
-    \begin{tabular}{@{}ll}
-       \faIcon{phone} +86 19118814609 & 
-       \faIcon{envelope} \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn}
-    \end{tabular}
-    \end{minipage}}
-  \end{minipage}
-  &
-  % 短竖线列（固定高度）
-  \begin{minipage}[t]{\linewidth}
-    \vspace{0pt}\centering
-    {\color{DescriptionGray}\rule{0.5pt}{2.0cm}}
-  \end{minipage}
-  &
-  % 中列：纵向经验信息
-  \begin{minipage}[t]{\linewidth}
-    \vspace{0pt}% 对齐三栏顶部
-    {\ExperienceSize\color{DescriptionGray}
-    \begin{tabular}{@{}l @ {\hspace{0.4em}·\ } r@{}}
-      \faIcon{trophy}\ 算法竞赛经验 & 8 年 \\
-      \faIcon{microscope}\ 大模型科研经验 & 2 年 \\
-      \faIcon{code}\ C++ 开发经验 & 9 年 \\
-      \faIcon{python}\ Python 开发经验 & 3 年 \\
-    \end{tabular}}
-  \end{minipage}
-  &
-  % 右列：头像
-  \begin{minipage}[t]{\linewidth}
-    \vspace{-5.5em}% 对齐三栏顶部
-    \begin{flushright}
-      \includegraphics[height=3.8cm, keepaspectratio]{photo.JPG}
-    \end{flushright}
-  \end{minipage}
+      \faIcon{graduation-cap}\ 电子与计算机工程·大二 \quad
+      \faIcon{award}\ 一等奖学金 \\[0.3em]
+      \faIcon{phone}\ +86 19118814609 \quad
+      \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \\[0.3em]
+      \faIcon{github}\ \href{https://github.com/sichen-wang}{sichen-wang} \quad
+      \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichen-wang.github.io}{sichen-wang.github.io}}
+  \end{minipage}%
+}
+
+% 占位 rule：向 LaTeX 报告 header 高度，确保后续内容从 (top margin + H) 开始
+\noindent\rule{0pt}{\dimexpr\ht\headerbox+\dp\headerbox\relax}%
+
+% 用 tikz overlay 在精确坐标放置文字和照片，强制底部对齐
+\begin{tikzpicture}[remember picture, overlay]
+  % 文字框：顶部 anchor=north，锁定到 page top - 1.4cm（即 body top），相对页面中心向左偏 0.5cm
+  \node[anchor=north, inner sep=0pt] at
+    ([xshift=-0.5cm, yshift=-1.4cm]current page.north)
+    {\usebox{\headerbox}};
+  % 照片：底部 anchor=south east，锁定到 page top - (1.4cm + H)，即文字底部
+  \node[anchor=south east, inner sep=0pt] at
+    ([xshift=-1.7cm, yshift={\dimexpr -1.4cm-\ht\headerbox-\dp\headerbox\relax}]current page.north east)
+    {\includegraphics[height=\dimexpr\ht\headerbox+\dp\headerbox+0.5cm\relax, keepaspectratio]{photo.JPG}};
+\end{tikzpicture}%
+
+\vspace{-2.4em}
+
+% =====================================================================
+% 双栏正文
+% =====================================================================
+\begin{minipage}[t]{0.30\textwidth}
+
+% --- 方向 ---
+\section{Interests}
+{\color{DescriptionGray}
+算法理论 (Theory of Algorithms)\\[0.2em]
+学习理论 (Learning Theory)\\[0.2em]
+理论计算机 (Theoretical CS)\\[0.2em]
+离散数学 (Discrete Mathematics)\\[0.2em]
+计算数学 (Computational Math.)
+}
+
+% --- 技能 ---
+\vspace*{-0.15em}
+\section{Skills}
+{\color{DescriptionGray}
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+\skillRow{C++}{4}
+\skillRow{Python}{4}
+\skillRow{\LaTeX}{3}
+\skillRow{MATLAB}{2}
+\end{tabular*}}
+
+% --- 语言 ---
+\vspace*{-0.15em}
+\section{Languages}
+{\color{DescriptionGray}
+\begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
+Chinese & Native \\
+English & B2 \\
+Russian & A2 \\
+\end{tabular*}}
+
+% --- 兴趣 ---
+\vspace*{-0.15em}
+\section{Hobbies}
+{\color{DescriptionGray}
+钢琴 / 小提琴\\[0.2em]
+架子鼓 (中国音协 10 级优等)\\[0.2em]
+羽毛球 (校赛八强)\\[0.2em]
+50m 跑 6.4s (校第一)\\[0.2em]
+辩论 (大学校赛亚军及最佳辩手)
+}
+
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.66\textwidth}
+
+% --- 论文 ---
+\section{Publications}
+
+\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}.\ Accepted at ICML 2026.
+
+\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{On Completion Times Under Memoryless Catastrophe}.\ Under review at Stochastic Processes and their Applications.
+
+\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Certified Reduction for Exact Bilinear Reachability}.\ Under review at OOPSLA 2026.
+
+Zhipeng Lu, \textbf{Sichen Wang}$^{*}$.\ \textit{Polynomial Partitioning for Sparse Matrices}.\ Under review at ICPP 2026.\ {\small\color{DescriptionGray}($^{*}$ Co-first authors.)}
+
+{\addfontfeatures{LetterSpace=-2.0}\fontdimen2\font=0.28em
+\emergencystretch=10em\tolerance=9999\looseness=-1
+\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Preconditioned Implicit Midpoint Langevin\nobreak\ Sam\-pling for Non-Smooth Bayesian Imaging}.\ Under review at NeurIPS 2026.\par}
+
+\textbf{Sichen Wang}.\ \textit{The Minimax Rate of Online Isotonic Regression on Product Orders}.\ Under review at NeurIPS 2026.
+
+% --- 获奖 ---
+\section{Awards}
+\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{1.8cm}@{\hspace{0.6em}} r@{}}
+NOI 2022 冬令营 & \textbf{银牌} & \\
+连续 3 年 CSP-S/NOIp & \textbf{一等奖} & \\
+2024 ICPC 亚洲区域赛 (昆明, 沈阳) & \textbf{金牌} & Top 3\% \\
+2024 CCPC 中国大学生程序设计竞赛 & \textbf{金牌} & Top 4\% \\
+2024 ICPC 亚洲总决赛 (EC-Final) & \textbf{rk. 31} & Top 11\% \\
+CCF CSP 计算机软件能力认证 & \textbf{480 分} & Top 0.1\% \\
+\multicolumn{3}{@{}l@{}}{\makebox[\linewidth][l]{AdventureX 2025 黑客松\hfill\textbf{Vibe Coding 赛道冠军 / 中控算法赛道亚军}}} \\
 \end{tabular*}
 
-\vspace{0.3em}
+% --- 经历 ---
+\section{Experience}
 
-% --- 单栏布局开始 ---
+\subSection{Research}
+\jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec. 2024 -- Present}{跟随香港中文大学(深圳)理工学院唐晓莹教授进行大模型基础领域的前沿研究}
+\jobEntry{Research Assistant @ SMBU}{Nov. 2025 -- Present}{与深圳北理莫斯科大学工程系路志鹏老师合作进行计算数学领域的前沿研究}
 
-% 研究兴趣
-\section{研究兴趣 (Research Interests)}
-\vspace{-0.8em}
-\begin{tabular*}{\textwidth}{@{}p{0.40\textwidth} @ {\extracolsep{\fill}} p{0.505\textwidth}@{}}
-  % 左列：传统方向（逐行）
-  \begin{minipage}[t]{\linewidth}
-    \color{DescriptionGray}
-    算法设计 (Algorithm Design)\\
-    理论计算机 (Theoretical Computer Science)\\
-    图论 (Graph Theory)\\
-    组合数学 (Combinatorics)\\
-    博弈论 (Game Theory)
-  \end{minipage}
-  &
-  % 右列：AI 方向（先列两项，再附说明）
-  \begin{minipage}[t]{\linewidth}
-    \color{DescriptionGray}
-    AI 推理 (AI Reasoning)\\
-    机器证明 (Machine Proving)\\% [0.4em]
-    目前跟随香港中文大学(深圳)的唐晓莹教授进行大模型基础领域的前沿研究。
-    
-    正在进行的研究为 LLM Prompt Optimization 相关。
-  \end{minipage}
-\end{tabular*}
-\color{black}
+\subSection{Industry}
+\jobEntry{算法研究员 @ RobustMotion}{May 2025 -- Present}{完成内部技术论文，对一类平面网格图上的数据调度问题提出「转向势能避让」方法.}
 
-% 竞赛获奖（赛事 | 奖项 | Top x%）
-\section{竞赛获奖 (Awards)}
-\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} l r@{}}
-  NOI 2022 冬令营 & \textbf{银牌} & \\
-  连续3年 CSP-S/NOIp & \textbf{一等奖} & \\
-  2024 ICPC 亚洲区域赛 (昆明站) & \textbf{金牌} & Top 3\% \\
-  2024 ICPC 亚洲区域赛 (沈阳站) & \textbf{金牌} & Top 4\% \\
-  2024 CCPC 中国大学生程序设计竞赛 & \textbf{金牌} & Top 4\% \\
-  2024 ICPC 亚洲总决赛 (EC-Final) & \textbf{rk. 31} & Top 11\% \\
-  CCPC 全国邀请赛 (广州) 个人赛 & \textbf{金牌} & Top 2\% \\
-  CCF CSP 计算机软件能力认证 & \textbf{480分} & Top 0.1\% \\
-  AdventureX 2025 Vibe Coding 赛道 & \textbf{冠军} & Top 1 \\
-  AdventureX 2025 中控赛道 & \textbf{亚军} & Top 2 \\
-\end{tabular*}
+\subSection{Competitive Programming}
+\jobEntry{讲师 @ NOI2026 湖南省队集训}{Apr. 2026}{}
+\jobEntry{讲师 @ 学军信友队暑期集训}{Aug. 2026}{}
+\jobEntry{讲师 @ 中国计算机学会 · 信息学夏令营}{Aug. 2023}{}
+\jobEntry{教练 @ 深北莫附中}{Aug. 2023 -- Feb. 2025}{由校长特聘担任信息学竞赛教练}
+\jobEntry{出题人 @ 牛客竞赛}{}{全权负责 6 场参与人数 2000+ 的比赛的出题与讲解}
 
-  （AdvX 参赛项目为「完全由 Multi-Agent 协同调度的自动化智能工厂架构」，全部工作 72 小时内在赛场上完成）
-
-% 工作与实践经历
-\section{工作与实践经历 (Experience)}
-\experienceEntry{算法研究员}{增广智能}{}{%
-独立完成论文「Data Transmission Scheduling on Grid Graph」，提出创新的「转向势能避让方法」，为公司解决了一类复杂的平面网格图上的数据调度问题。}
-
-\experienceEntry{算法竞赛教练}{深北莫附中}{}{%
-被深圳北理莫斯科大学附属中学校长特聘为信息组竞赛教练，承担高水平算法课程的讲授工作。}
-
-\experienceEntry{算法竞赛讲师}{中国计算机学会 (CCF)}{}{%
-在 2023 年大湾区青少年信息学夏令营中，负责讲课和课后答疑，并在结营考试后进行试题讲解与分析。}
-
-\experienceEntry{算法竞赛出题人}{牛客竞赛 (Nowcoder)}{}{%
-六次受邀作为牛客竞赛 (\href{https://ac.nowcoder.com}{ac.nowcoder.com}) 的出题人，承担场均 2000 人比赛的出题和讲题工作。具体包含 CSP--S 模拟赛 1 场，NOIp 模拟赛 1 场，练习赛 2 场，挑战赛 2 场。}
-
-% 其他
-% \section{其他爱好与活动 (Misc.)}
-% \begin{itemize}[itemsep=0.5em, leftmargin=1.2em]
-%   \item 运动: 羽毛球 (校赛八强), 网球, 乒乓球。体测 50 米 6.4 秒 (校第一)。
-%   \item 音乐: 声乐, 架子鼓 (中国音协 10 级优等), 钢琴, 小提琴。
-%   \item 文学: 辩论 (高中校赛冠军; 大学校赛亚军及最佳辩手), 作诗, 写散文。
-% \end{itemize}
+\end{minipage}
 
 \end{document}

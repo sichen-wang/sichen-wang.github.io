@@ -1,8 +1,8 @@
-\documentclass[a4paper, 10.5pt]{ctexart}
+\documentclass[a4paper, 10.5pt]{article}
 
-% !!!重要提示!!! 请使用 XeLaTeX 编译此文件以获得最佳字体和排版效果。
+% IMPORTANT: Compile this file with XeLaTeX for proper font rendering.
 
-% --- 导包 Preamble ---
+% --- Preamble ---
 \usepackage[left=1.4cm, right=1.4cm, top=1.4cm, bottom=1.4cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -17,20 +17,15 @@
 \usepackage{tikz}
 \newsavebox{\headerbox}
 
-% --- 颜色定义 Colors ---
-\definecolor{PrimaryColor}{HTML}{003366} % 深海蓝，专业稳重
-\definecolor{DescriptionGray}{HTML}{444444} % 优化灰度，提高可读性
+% --- Colors ---
+\definecolor{PrimaryColor}{HTML}{003366} % deep navy, professional
+\definecolor{DescriptionGray}{HTML}{444444} % softened gray for readability
 
-% --- 字体设置 Fonts (XeLaTeX) ---
-% 字体源：项目根目录 fonts/（站点统一字体集）。
-% 当前文件位于 static/uploads/，相对路径为 ../../fonts/。
-% 中文：方正新书宋简体
-\setCJKmainfont[
-  Path = ../../fonts/方正新书宋简体/ ,
-  AutoFakeBold = 2.0
-]{方正新书宋简体.ttf}
+% --- Fonts (XeLaTeX) ---
+% Font source: project root fonts/ (site-wide font set).
+% This file lives at static/uploads/; relative path is ../../fonts/.
 
-% 英文衬线：CMU Serif
+% Serif: CMU Serif
 \setmainfont[
   Path = ../../fonts/cmu-serif/ ,
   Extension = .ttf,
@@ -40,7 +35,7 @@
   BoldItalicFont = cmunbi
 ]{CMU Serif}
 
-% 英文无衬线：CMU Sans Serif
+% Sans Serif: CMU Sans Serif
 \setsansfont[
   Path = ../../fonts/cmu-sans-serif/ ,
   Extension = .ttf,
@@ -50,7 +45,7 @@
   BoldItalicFont = cmunso
 ]{CMU Sans Serif}
 
-% --- 超链接 ---
+% --- Hyperlinks ---
 \hypersetup{
   colorlinks=true,
   linkcolor=PrimaryColor,
@@ -59,14 +54,14 @@
   pdfborder={0 0 0},
 }
 
-% --- 全局设置 ---
+% --- Global ---
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.4em}
 \setlength{\emergencystretch}{3em}
 \setlist{itemsep=0.2em, parsep=0pt, topsep=0.3em, leftmargin=1.2em}
 
-% --- Section 标题样式 ---
+% --- Section style ---
 \titleformat{\section}
   {\normalfont\large\bfseries\color{PrimaryColor}}
   {}
@@ -75,17 +70,17 @@
   [\vspace{0.2ex}\hrule height 0.6pt]
 \titlespacing*{\section}{0pt}{0.6ex}{1.0ex}
 
-% --- 自定义命令 Custom Commands ---
+% --- Custom commands ---
 
-% 子标题 (subsection)：深蓝粗体小号；与上下 entry 紧贴
+% Subsection: primary-color bold small; flush with surrounding entries
 \newcommand{\subSection}[1]{%
   \vspace{-0.15em}%
   \noindent{\color{PrimaryColor}\textbf{\small #1}}\par%
   \vspace{-0.1em}%
 }
 
-% 经历条目：#1=职位@机构, #2=时间(可空), #3=描述(可空)
-% 标题左对齐，时间用 \hfill 右对齐；描述行紧跟标题
+% Job entry: #1=Title@Org, #2=Date (optional), #3=Description (optional)
+% Title flush-left, date pushed right via \hfill; description sits below title.
 \newcommand{\jobEntry}[3]{%
   \noindent\textbf{#1}%
   \notblank{#2}{\hfill{\color{DescriptionGray}\small #2}}{}%
@@ -93,11 +88,11 @@
   \par\vspace{0.45em}%
 }
 
-% 五圆点技能条
+% Five-dot skill bar
 \newcommand{\filledDot}{\textcolor{PrimaryColor}{\small\textbullet}}
 \newcommand{\emptyDot}{\textcolor{DescriptionGray}{\small$\circ$}}
 \newcommand{\skillRow}[2]{%
-  % #1 = 技能名, #2 = 等级 1-5
+  % #1 = skill name, #2 = level 1-5
   #1 &
   \ifnum#2>0\filledDot\else\emptyDot\fi\,%
   \ifnum#2>1\filledDot\else\emptyDot\fi\,%
@@ -110,16 +105,16 @@
 \begin{document}
 
 % =====================================================================
-% Header：照片 tikz overlay 浮于右上角，文字相对整页居中
+% Header: photo overlaid in top-right via tikz; text centered on the page.
 % =====================================================================
-% 把文字部分先 sbox，自动测量真实高度
+% Box the text first so its real height can be measured.
 \sbox{\headerbox}{%
   \begin{minipage}{\dimexpr\textwidth-1cm\relax}
     \centering
-    {\fontsize{22pt}{26pt}\selectfont\bfseries\color{PrimaryColor}姓名 (Your Name)}\\[0.45em]
+    {\fontsize{22pt}{26pt}\selectfont\bfseries\color{PrimaryColor}Your Name}\\[0.45em]
     {\color{DescriptionGray}
-      \faIcon{graduation-cap}\ 专业名称·年级 \quad
-      \faIcon{award}\ X等奖学金 \\[0.3em]
+      \faIcon{graduation-cap}\ Your Major · Year \quad
+      \faIcon{award}\ Scholarship Name \\[0.3em]
       \faIcon{phone}\ +86 138XXXXXXXX \quad
       \faIcon{envelope}\ \href{mailto:exp@exp.com}{exp@exp.com} \\[0.3em]
       \faIcon{github}\ \href{https://github.com/yourname}{yourname} \quad
@@ -127,16 +122,16 @@
   \end{minipage}%
 }
 
-% 占位 rule：向 LaTeX 报告 header 高度，确保后续内容从 (top margin + H) 开始
+% Reserve vertical space for the header so subsequent content starts below.
 \noindent\rule{0pt}{\dimexpr\ht\headerbox+\dp\headerbox\relax}%
 
-% 用 tikz overlay 在精确坐标放置文字和照片，强制底部对齐
+% Place text and photo via tikz overlay with bottom-aligned photo.
 \begin{tikzpicture}[remember picture, overlay]
-  % 文字框：顶部 anchor=north，锁定到 page top - 1.4cm（即 body top），相对页面中心向左偏 0.5cm
+  % Text box: anchor=north, locked to page top - 1.4cm (body top), shifted 0.5cm left of center.
   \node[anchor=north, inner sep=0pt] at
     ([xshift=-0.5cm, yshift=-1.4cm]current page.north)
     {\usebox{\headerbox}};
-  % 照片：底部 anchor=south east，锁定到 page top - (1.4cm + H)，即文字底部
+  % Photo: anchor=south east, locked to page top - (1.4cm + H), i.e. the text bottom.
   \node[anchor=south east, inner sep=0pt] at
     ([xshift=-1.7cm, yshift={\dimexpr -1.4cm-\ht\headerbox-\dp\headerbox\relax}]current page.north east)
     {\includegraphics[height=\dimexpr\ht\headerbox+\dp\headerbox+0.5cm\relax, keepaspectratio]{yourphoto.png}};
@@ -145,19 +140,19 @@
 \vspace{-2.4em}
 
 % =====================================================================
-% 双栏正文
+% Two-column body
 % =====================================================================
-\begin{minipage}[t]{0.30\textwidth}
+\begin{minipage}[t]{0.34\textwidth}
 
-% --- 方向 ---
+% --- Interests ---
 \section{Interests}
 {\color{DescriptionGray}
-研究方向一 (Interest One)\\[0.2em]
-研究方向二 (Interest Two)\\[0.2em]
-研究方向三 (Interest Three)
+Interest One\\[0.2em]
+Interest Two\\[0.2em]
+Interest Three
 }
 
-% --- 技能 ---
+% --- Skills ---
 \vspace*{-0.15em}
 \section{Skills}
 {\color{DescriptionGray}
@@ -167,7 +162,7 @@
 \skillRow{\LaTeX}{2}
 \end{tabular*}}
 
-% --- 语言 ---
+% --- Languages ---
 \vspace*{-0.15em}
 \section{Languages}
 {\color{DescriptionGray}
@@ -176,50 +171,51 @@ Chinese & Native \\
 English & B2 \\
 \end{tabular*}}
 
-% --- 兴趣 ---
+% --- Hobbies ---
 \vspace*{-0.15em}
 \section{Hobbies}
 {\color{DescriptionGray}
-爱好一\\[0.2em]
-爱好二 (获得成绩)\\[0.2em]
-爱好三
+Hobby One\\[0.2em]
+Hobby Two (Achievement)\\[0.2em]
+Hobby Three
 }
 
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{0.66\textwidth}
+\begin{minipage}[t]{0.64\textwidth}
 
-% --- 论文 ---
+% --- Publications ---
 \section{Publications}
 
 \textbf{Your Name}, Co Author.\ \textit{Paper Title One}.\ Accepted at VENUE 20XX.
 
 \textbf{Your Name}.\ \textit{Paper Title Two}.\ Submitted to VENUE 20XX.
 
-% 共同一作示例：
+% Co-first-author example:
 % Co Author, \textbf{Your Name}$^{*}$.\ \textit{Paper Title}.\ Submitted to VENUE 20XX.\ {\small\color{DescriptionGray}($^{*}$ Co-first authors.)}
 
-% --- 获奖 ---
+% --- Awards ---
 \section{Awards}
-\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{1.8cm}@{\hspace{0.6em}} r@{}}
-XXXX 年 某竞赛 & \textbf{某奖} & \\
-XXXX 年 某区域赛 (某站) & \textbf{某奖} & Top X\% \\
-% 超长行示例（奖项名过长时占满整行）：
-% \multicolumn{3}{@{}l@{}}{\makebox[\linewidth][l]{XXXX 年 某竞赛\hfill\textbf{某很长的奖项名称}}} \\
-\end{tabular*}
+{\small
+\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{2.2cm}@{\hspace{0.6em}} r@{}}
+Contest Name 20XX & \textbf{Award} & \\
+Regional Contest 20XX (Site) & \textbf{Award} & Top X\% \\
+% Full-width row example (for overly long award names):
+% \multicolumn{3}{@{}l@{}}{\makebox[\linewidth][l]{Contest Name 20XX\hfill\textbf{A Very Long Award Name}}} \\
+\end{tabular*}}
 
-% --- 经历 ---
+% --- Experience ---
 \section{Experience}
 
 \subSection{Research}
-\jobEntry{某某职位 @ 某某机构}{Mon. 20XX -- Present}{完成的工作与承担的职责描述，突出成就与贡献.}
+\jobEntry{Position @ Institution}{Mon.\ 20XX -- Present}{Describe your work and responsibilities, highlighting achievements and contributions.}
 
 \subSection{Industry}
-\jobEntry{某某职位 @ 某某公司}{Mon. 20XX -- Mon. 20XX}{完成的工作与承担的职责描述，突出成就与贡献.}
+\jobEntry{Position @ Company}{Mon.\ 20XX -- Mon.\ 20XX}{Describe your work and responsibilities, highlighting achievements and contributions.}
 
 \subSection{Competitive Programming}
-\jobEntry{某某职位 @ 某某活动}{Mon. 20XX}{}
-\jobEntry{某某职位 @ 某某机构}{}{时间可留空；描述完成的工作与承担的职责.}
+\jobEntry{Position @ Event}{Mon.\ 20XX}{}
+\jobEntry{Position @ Organization}{}{The date field may be left empty; describe your work and responsibilities here.}
 
 \end{minipage}
 

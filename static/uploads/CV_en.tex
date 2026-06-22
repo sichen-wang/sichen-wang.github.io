@@ -139,7 +139,9 @@
 % =====================================================================
 % Two-column body
 % =====================================================================
-\begin{minipage}[t]{0.34\textwidth}
+\begin{minipage}[t]{0.32\textwidth}
+% 左栏偏窄：左对齐 + 禁连字断词，长项按词换行，避免两端对齐拉出大间隙
+\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\relax
 
 % --- Interests ---
 \section{Interests}
@@ -185,22 +187,20 @@ Debate (Intramural 2nd, Best Debater)
 
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{0.64\textwidth}
+\begin{minipage}[t]{0.66\textwidth}
 
 % --- Publications ---
 \section{Publications}
 
 \textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}.\ Accepted at ICML 2026.
 
-\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{On Completion Times Under Memoryless Catastrophe}.\ Submitted to Stochastic Processes and their Applications.
-
-\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Certified Reduction for Exact Bilinear Reachability}.\ Submitted to OOPSLA 2026.
-
-Zhipeng Lu, \textbf{Sichen Wang}$^{*}$.\ \textit{Polynomial Partitioning for Sparse Matrices}.\ Submitted to ICPP 2026.\ {\small\color{DescriptionGray}($^{*}$ Co-first authors.)}
-
 \textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}.\ Submitted to NeurIPS 2026.
 
 \textbf{Sichen Wang}.\ \textit{The Minimax Rate of Online Isotonic Regression on Product Orders}.\ Submitted to NeurIPS 2026.
+
+Qihao Shi, Zeyu Wang, Jingbang Chen, \textbf{Sichen Wang}, Danni Ren, Wujian Yang, Guanlin Chen, Mingli Song, Can Wang.\ \textit{An Efficient Index Framework for Fast Query Processing on Dynamic Uncertain Graphs}.\ Submitted to IEEE Transactions on Knowledge and Data Engineering (TKDE).
+
+Ruida Liu, Wang Xu, Shuoran Cheng, \textbf{Sichen Wang}, Weichao Pan, Han Puyu.\ \textit{DeepOcean-PT: Efficient Pressure-to-Temperature Profile Reconstruction for the Deep Ocean}.\ Submitted to IEEE Journal of Oceanic Engineering (JOE).
 
 % --- Awards ---
 \section{Awards}

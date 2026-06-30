@@ -3,7 +3,7 @@
 % IMPORTANT: Compile this file with XeLaTeX for proper font rendering.
 
 % --- Preamble ---
-\usepackage[left=1.4cm, right=1.4cm, top=1.4cm, bottom=1.4cm]{geometry}
+\usepackage[left=1.0cm, right=1.0cm, top=1.4cm, bottom=1.4cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{fontspec}
@@ -139,7 +139,9 @@
 % =====================================================================
 % Two-column body
 % =====================================================================
-\begin{minipage}[t]{0.32\textwidth}
+\begingroup
+\linespread{1.03}\selectfont
+\begin{minipage}[t]{0.30\textwidth}
 % 左栏偏窄：左对齐 + 禁连字断词，长项按词换行，避免两端对齐拉出大间隙
 \raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\relax
 
@@ -180,17 +182,21 @@ Russian & A2 \\
 {\color{DescriptionGray}
 Piano / Violin\\[0.2em]
 Drums (CMA Gr.\ 10, Distinction)\\[0.2em]
-Badminton (Intramural Quarterfinalist)\\[0.2em]
+Badminton\\[-0.05em]
+(Intramural Quarterfinalist)\\[0.2em]
 50m Sprint 6.4s (Intramural 1st)\\[0.2em]
-Debate (Intramural 2nd, Best Debater)
+Debate\\[-0.05em]
+(Intramural 2nd, Best Debater)
 }
 
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{0.66\textwidth}
+\begin{minipage}[t]{0.68\textwidth}
 
 % --- Publications ---
 \section{Publications}
+\begingroup
+\raggedright
 
 \textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}.\ Accepted at ICML 2026.
 
@@ -202,10 +208,19 @@ Qihao Shi, Zeyu Wang, Jingbang Chen, \textbf{Sichen Wang}, Danni Ren, Wujian Yan
 
 Ruida Liu, Wang Xu, Shuoran Cheng, \textbf{Sichen Wang}, Weichao Pan, Han Puyu.\ \textit{DeepOcean-PT: Efficient Pressure-to-Temperature Profile Reconstruction for the Deep Ocean}.\ Submitted to IEEE Journal of Oceanic Engineering (JOE).
 
+Jingbang Chen, \textbf{Sichen Wang}$^{\dagger}$.\ \textit{The Price of Order in the Logarithmic Method}.\ \mbox{Submitted to SODA 2027.}
+
+\textbf{Sichen Wang}.\ \textit{The Movement Complexity of Sorting}.\ \mbox{Submitted to SODA 2027.}
+
+\textbf{Sichen Wang}.\ \textit{The Complexity of Steering Rotor Walks}.\ \mbox{Submitted to SODA 2027.}
+
+{\small\color{DescriptionGray}$^{\dagger}$ Theoretical computer science conference authors are listed alphabetically.}
+
+\endgroup
+
 % --- Awards ---
 \section{Awards}
-{\small
-\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{2.2cm}@{\hspace{0.6em}} r@{}}
+\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{2.8cm}@{\hspace{0.6em}} r@{}}
 NOI 2022 Winter Camp & \textbf{Silver Medal} & \\
 CSP-S / NOIp (3 consecutive years) & \textbf{First Prize} & \\
 ICPC 2024 Asia Regional (Kunming, Shenyang) & \textbf{Gold Medal} & Top 3\% \\
@@ -213,14 +228,14 @@ CCPC 2024 China Collegiate Programming Contest & \textbf{Gold Medal} & Top 4\% \
 ICPC 2024 Asia East Continent Finals (EC-Final) & \textbf{Rank 31} & Top 11\% \\
 CCF CSP Software Certification & \textbf{480/500 pts} & Top 0.1\% \\
 AdventureX 2025 Hackathon & \textbf{Champion} & \\
-\end{tabular*}}
+\end{tabular*}
 
 % --- Experience ---
 \section{Experience}
 
 \subSection{Research}
-\jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec.\ 2024 -- Present}{Frontier research on the foundations of large language models with Prof.\ Xiaoying Tang, School of Science and Engineering, CUHK-Shenzhen.}
-\jobEntry{Research Assistant @ SMBU}{Nov.\ 2025 -- Present}{Frontier research in computational mathematics with Prof.\ Zhipeng Lu, Faculty of Engineering, SMBU.}
+\jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec.\ 2024 -- Present}{Frontier research on the foundations of large language models with Prof.\ Xiaoying Tang, School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen.}
+\jobEntry{Research Assistant @ SMBU}{Nov.\ 2025 -- Present}{Frontier research in computational mathematics with Prof.\ Zhipeng Lu, Faculty of Engineering, Shenzhen MSU-BIT University.}
 
 \subSection{Industry}
 \jobEntry{Algorithm Researcher @ RobustMotion}{May 2025 -- Present}{Authored an internal technical report; proposed the ``Turning-Potential Avoidance'' method for a class of data scheduling problems on planar grid graphs.}
@@ -233,5 +248,6 @@ AdventureX 2025 Hackathon & \textbf{Champion} & \\
 \jobEntry{Problem Setter @ Nowcoder}{}{Solely responsible for problem setting and editorials of 6 contests, each with 2000+ participants.}
 
 \end{minipage}
+\endgroup
 
 \end{document}

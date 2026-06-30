@@ -3,7 +3,7 @@
 % !!!重要提示!!! 请使用 XeLaTeX 编译此文件以获得最佳字体和排版效果。
 
 % --- 导包 Preamble ---
-\usepackage[left=1.4cm, right=1.4cm, top=1.4cm, bottom=1.4cm]{geometry}
+\usepackage[left=1.0cm, right=1.0cm, top=1.4cm, bottom=1.4cm]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{fontspec}
@@ -147,6 +147,8 @@
 % =====================================================================
 % 双栏正文
 % =====================================================================
+\begingroup
+\linespread{0.99}\selectfont
 \begin{minipage}[t]{0.30\textwidth}
 
 % --- 方向 ---
@@ -193,10 +195,12 @@ Russian & A2 \\
 
 \end{minipage}%
 \hfill
-\begin{minipage}[t]{0.66\textwidth}
+\begin{minipage}[t]{0.68\textwidth}
 
 % --- 论文 ---
 \section{Publications}
+\begingroup
+\raggedright
 
 \textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}.\ Accepted at ICML 2026.
 
@@ -208,14 +212,24 @@ Qihao Shi, Zeyu Wang, Jingbang Chen, \textbf{Sichen Wang}, Danni Ren, Wujian Yan
 
 Ruida Liu, Wang Xu, Shuoran Cheng, \textbf{Sichen Wang}, Weichao Pan, Han Puyu.\ \textit{DeepOcean-PT: Efficient Pressure-to-Temperature Profile Reconstruction for the Deep Ocean}.\ Submitted to IEEE Journal of Oceanic Engineering (JOE).
 
+Jingbang Chen, \textbf{Sichen Wang}$^{\dagger}$.\ \textit{The Price of Order in the Logarithmic Method}.\ \mbox{Submitted to SODA 2027.}
+
+\textbf{Sichen Wang}.\ \textit{The Movement Complexity of Sorting}.\ \mbox{Submitted to SODA 2027.}
+
+\textbf{Sichen Wang}.\ \textit{The Complexity of Steering Rotor Walks}.\ \mbox{Submitted to SODA 2027.}
+
+{\small\color{DescriptionGray}$^{\dagger}$ 理论计算机会议作者按姓名字典序排列。}
+
+\endgroup
+
 % --- 获奖 ---
 \section{Awards}
-\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{1.8cm}@{\hspace{0.6em}} r@{}}
+\begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{1.8cm}@{\hspace{-0.15em}} r@{}}
 NOI 2022 冬令营 & \textbf{银牌} & \\
 连续 3 年 CSP-S/NOIp & \textbf{一等奖} & \\
 2024 ICPC 亚洲区域赛 (昆明, 沈阳) & \textbf{金牌} & Top 3\% \\
 2024 CCPC 中国大学生程序设计竞赛 & \textbf{金牌} & Top 4\% \\
-2024 ICPC 亚洲总决赛 (EC-Final) & \textbf{rk. 31} & Top 11\% \\
+2024 ICPC 亚洲总决赛 (EC-Final) & \textbf{第 31 名} & Top 11\% \\
 CCF CSP 计算机软件能力认证 & \textbf{480 分} & Top 0.1\% \\
 \multicolumn{3}{@{}l@{}}{\makebox[\linewidth][l]{AdventureX 2025 黑客松\hfill\textbf{Vibe Coding 赛道冠军 / 中控算法赛道亚军}}} \\
 \end{tabular*}
@@ -224,19 +238,20 @@ CCF CSP 计算机软件能力认证 & \textbf{480 分} & Top 0.1\% \\
 \section{Experience}
 
 \subSection{Research}
-\jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec. 2024 -- Present}{跟随香港中文大学(深圳)理工学院唐晓莹教授进行大模型基础领域的前沿研究}
-\jobEntry{Research Assistant @ SMBU}{Nov. 2025 -- Present}{与深圳北理莫斯科大学工程系路志鹏老师合作进行计算数学领域的前沿研究}
+\jobEntry{科研助理 @ 香港中文大学（深圳）}{Dec. 2024 -- Present}{跟随香港中文大学（深圳）理工学院唐晓莹教授进行大模型基础领域的前沿研究}
+\jobEntry{科研助理 @ 深圳北理莫斯科大学}{Nov. 2025 -- Present}{与深圳北理莫斯科大学工程系路志鹏老师合作进行计算数学领域的前沿研究}
 
 \subSection{Industry}
-\jobEntry{算法研究员 @ RobustMotion}{May 2025 -- Present}{完成内部技术论文，对一类平面网格图上的数据调度问题提出「转向势能避让」方法.}
+\jobEntry{算法研究员 @ 增广智能}{May 2025 -- Present}{完成内部技术论文，对一类平面网格图上的数据调度问题提出「转向势能避让」方法.}
 
 \subSection{Competitive Programming}
-\jobEntry{讲师 @ NOI2026 湖南省队集训}{Apr. 2026}{}
+\jobEntry{讲师 @ NOI 2026 湖南省队集训}{Apr. 2026}{}
 \jobEntry{讲师 @ 学军信友队暑期集训}{Aug. 2026}{}
 \jobEntry{讲师 @ 中国计算机学会 · 信息学夏令营}{Aug. 2023}{}
 \jobEntry{教练 @ 深北莫附中}{Aug. 2023 -- Feb. 2025}{由校长特聘担任信息学竞赛教练}
 \jobEntry{出题人 @ 牛客竞赛}{}{全权负责 6 场参与人数 2000+ 的比赛的出题与讲解}
 
 \end{minipage}
+\endgroup
 
 \end{document}

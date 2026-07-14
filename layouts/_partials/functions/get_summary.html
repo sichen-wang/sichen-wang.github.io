@@ -1,21 +1,5 @@
 {{/* Safe page summary fallback: Params.summary > Params.description > Params.abstract > plain text from raw content. */}}
-{{ $summary := "" }}
-
-{{ with .Params.summary }}
-  {{ $summary = . }}
-{{ end }}
-
-{{ if not $summary }}
-  {{ with .Params.description }}
-    {{ $summary = . }}
-  {{ end }}
-{{ end }}
-
-{{ if not $summary }}
-  {{ with .Params.abstract }}
-    {{ $summary = . }}
-  {{ end }}
-{{ end }}
+{{ $summary := .Params.summary | default .Params.description | default .Params.abstract | default "" }}
 
 {{ if not $summary }}
   {{ $plain := .RawContent }}

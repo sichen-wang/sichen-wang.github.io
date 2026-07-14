@@ -265,7 +265,7 @@
         {{ if $pub_type_display }}
           <div class="font-bold text-2xl">{{ i18n "publication_type" }}</div>
           <div>
-            {{ if and .Params.publication_types (gt (len .Params.publication_types) 0) }}
+            {{ if .Params.publication_types }}
             <a href="{{ range first 1 (.GetTerms "publication_types") }}{{.RelPermalink}}{{end}}">
             {{ $pub_type_display }}
             </a>

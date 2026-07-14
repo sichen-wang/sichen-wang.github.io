@@ -13,6 +13,8 @@
   {{ $anchor = $item.Params.image.focal_point | default "Center" }}
 {{ end }}
 {{ $fill_image := .config.fill_image | default true }}
+{{ $img_class := printf "w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 %s" (cond $fill_image "object-fill" "object-contain") }}
+{{ $img_style := "position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;" }}
 {{ $showDate := .config.show_date | default true }}
 {{ $showReadTime := .config.show_read_time | default true }}
 {{ $showReadMore := .config.show_read_more | default true }}
@@ -40,12 +42,12 @@
       {{ with $resource }}
         {{ if strings.Contains .MediaType.SubType "svg" }}
           <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="block">
-            <img class="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 {{ if $fill_image }}object-fill{{ else }}object-contain{{ end }}" 
+            <img class="{{ $img_class }}" 
                  src="{{ .RelPermalink }}"
                  loading="lazy" 
                  decoding="async"
                  {{ if eq $index 0 }}fetchpriority="high"{{ end }}
-                 style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+                 style="{{ $img_style }}"
                  alt="{{ $item.Title | plainify }} featured image">
           </a>
         {{ else if ne .MediaType.SubType "gif" }}
@@ -62,7 +64,7 @@
               "formats" (slice "avif" "webp" "jpg")
           ) }}
           <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="block">
-            <img class="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 {{ if $fill_image }}object-fill{{ else }}object-contain{{ end }}" 
+            <img class="{{ $img_class }}" 
                  srcset="{{ $responsive.srcset }}"
                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                  src="{{ $responsive.fallback.RelPermalink }}" 
@@ -71,18 +73,18 @@
                  loading="lazy" 
                  decoding="async"
                  {{ if eq $index 0 }}fetchpriority="high"{{ end }}
-                 style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+                 style="{{ $img_style }}"
                  alt="{{ $item.Title | plainify }} featured image">
           </a>
         {{ else }}
           <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="block">
-            <img class="w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 {{ if $fill_image }}object-fill{{ else }}object-contain{{ end }}"
+            <img class="{{ $img_class }}"
                  src="{{ .RelPermalink }}"
                  width="{{ .Width }}"
                  height="{{ .Height }}"
                  loading="lazy"
                  decoding="async"
-                 style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+                 style="{{ $img_style }}"
                  alt="{{ $item.Title | plainify }} featured image">
           </a>
         {{ end }}
@@ -121,7 +123,7 @@
         {{ end }}
       {{ end }}
 
-      {{ if and $item.Params.tags (gt (len $item.Params.tags) 0) }}
+      {{ if $item.Params.tags }}
       <div class="flex flex-wrap items-center gap-2">
         {{ range first 3 ($item.GetTerms "tags") }}
         <a href="{{ .RelPermalink }}">

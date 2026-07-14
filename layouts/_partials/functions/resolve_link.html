@@ -1,0 +1,16 @@
+{{/* 解析简历类链接：规范化相对 URL 并决定 anchor 的 target。
+     入参：URL 字符串。返回：dict { href, target }。
+     - 相对且非锚点的 URL 走 relLangURL；指向 .pdf 的在新标签打开。
+     - 绝对 http(s) URL 在新标签打开。 */}}
+{{ $href := . }}
+{{ $target := "" }}
+{{ $scheme := (urls.Parse $href).Scheme }}
+{{ if not $scheme }}
+  {{ if not (hasPrefix $href "#") }}
+    {{ $href = $href | relLangURL }}
+  {{ end }}
+  {{ if eq (path.Ext $href) ".pdf" }}{{ $target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
+{{ else if in (slice "http" "https") $scheme }}
+  {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
+{{ end }}
+{{ return (dict "href" $href "target" $target) }}

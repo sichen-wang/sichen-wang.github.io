@@ -1,7 +1,7 @@
 import { mkdirSync, existsSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-const VALID_CATEGORIES = ['CP', 'Research', 'Courses', 'Essays'];
+const VALID_CATEGORIES = ['CP', 'Research', 'Courses', 'Essays', 'Development'];
 const DEFAULT_CATEGORY = 'CP';
 
 function printUsage() {

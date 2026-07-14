@@ -60,6 +60,10 @@
 :root {
   --site-font-text: "SiteText", "SiteTextCJK", serif;
   --site-font-mono: "SiteMono", ui-monospace, monospace;
+  /* 博客列表卡片的固定宽度与卡片间距（改这两个值即可整体调节列数/疏密）。
+     卡片越宽文字越舒展、列数越少；越窄列数越多。 */
+  --blog-card-width: 28rem;
+  --blog-grid-gap: 1.5rem;
 }
 
 html,
@@ -177,9 +181,6 @@ samp {
 }
 
 .page-body .blog-card-summary {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
@@ -187,6 +188,11 @@ samp {
 .page-body .blog-card-summary ul,
 .page-body .blog-card-summary ol {
   margin: 0;
+}
+
+/* 累加的相邻段落之间留一点间距 */
+.page-body .blog-card-summary > * + * {
+  margin-top: 0.5rem;
 }
 
 .page-body .blog-card-summary .katex-display {
@@ -215,29 +221,36 @@ samp {
   flex-direction: column;
 }
 
+/* 博客列表：多列瀑布流（CSS multi-column）。
+   固定列宽 = 卡片宽，按屏宽切 1/2/3 列；容器 max-width 恰好容纳 N 列 + (N-1) 间距，
+   再 margin auto 居中，多余空白落两侧。多列布局天然按列竖向填充，短卡片下方由
+   后续卡片自动补上，不会像网格那样按行对齐而留下行间空隙。
+   （父层已去掉 Tailwind .container 的阶梯宽度，改用连续 max-w，故列宽恒等于卡片宽。） */
 .page-body .blog-section-page .blog-masonry {
-  width: 100%;
+  column-count: 1;
+  column-gap: var(--blog-grid-gap);
+  max-width: var(--blog-card-width);
+  margin-inline: auto;
 }
 
 .page-body .blog-section-page .blog-masonry > [role="article"] {
   width: 100%;
-  max-width: 32rem;
+  break-inside: avoid;
+  margin-bottom: var(--blog-grid-gap);
 }
 
-.page-body .blog-section-page .blog-masonry.blog-masonry-single > [role="article"] {
-  margin-bottom: 0;
-}
-
-@media (min-width: 768px) {
-  .page-body .blog-section-page .blog-masonry:not(.blog-masonry-single) {
-    columns: 3 28rem;
-    column-gap: 2rem;
+/* ≥60rem → 2 列，≥89.5rem → 3 列（断点 = 恰好放下 N 列所需的视口宽） */
+@media (min-width: 60rem) {
+  .page-body .blog-section-page .blog-masonry {
+    column-count: 2;
+    max-width: calc(var(--blog-card-width) * 2 + var(--blog-grid-gap));
   }
+}
 
-  .page-body .blog-section-page .blog-masonry:not(.blog-masonry-single) > [role="article"] {
-    break-inside: avoid;
-    display: inline-block;
-    margin-bottom: 2rem;
+@media (min-width: 89.5rem) {
+  .page-body .blog-section-page .blog-masonry {
+    column-count: 3;
+    max-width: calc(var(--blog-card-width) * 3 + var(--blog-grid-gap) * 2);
   }
 }
 
@@ -283,24 +296,23 @@ samp {
   color: rgb(248 250 252);
 }
 
+/* 奖项：多列瀑布流。卡片按内容自然高度、竖向紧密堆叠，不强制等高、无行间空隙。
+   1 列 → ≥1280px 2 列。 */
 .awards-masonry {
+  column-count: 1;
+  column-gap: 1.5rem;
   width: 100%;
 }
 
 .awards-masonry-item {
   width: 100%;
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
 }
 
 @media (min-width: 1280px) {
   .awards-masonry {
     column-count: 2;
-    column-gap: 1.5rem;
-  }
-
-  .awards-masonry-item {
-    break-inside: avoid;
-    margin-bottom: 1.5rem;
-    display: inline-block;
   }
 }
 

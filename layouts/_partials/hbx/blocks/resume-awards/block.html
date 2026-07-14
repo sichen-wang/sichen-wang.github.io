@@ -93,16 +93,9 @@
     {{ $award_link := "" }}
     {{ $award_target := "" }}
     {{ if $award_url }}
-      {{ $award_link = $award_url }}
-      {{ $scheme := (urls.Parse $award_link).Scheme }}
-      {{ if not $scheme }}
-        {{ if not (hasPrefix $award_link "#") }}
-          {{ $award_link = $award_link | relLangURL }}
-        {{ end }}
-        {{ if eq (path.Ext $award_link) ".pdf" }}{{ $award_target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
-      {{ else if in (slice "http" "https") $scheme }}
-        {{ $award_target = "target=\"_blank\" rel=\"noopener\"" }}
-      {{ end }}
+      {{ $resolved := partial "functions/resolve_link" $award_url }}
+      {{ $award_link = $resolved.href }}
+      {{ $award_target = $resolved.target }}
     {{ end }}
     {{ if $award_link }}<a href="{{ $award_link | safeURL }}" {{ $award_target | safeHTMLAttr }}>{{ end }}
       <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
@@ -145,17 +138,9 @@
 
     {{ $certificate_url := index $award "certificate_url" }}
     {{ if $certificate_url }}
-    {{ $certificate_link := $certificate_url }}
-    {{ $certificate_target := "" }}
-    {{ $certificate_scheme := (urls.Parse $certificate_link).Scheme }}
-    {{ if not $certificate_scheme }}
-      {{ if not (hasPrefix $certificate_link "#") }}
-        {{ $certificate_link = $certificate_link | relLangURL }}
-      {{ end }}
-      {{ if eq (path.Ext $certificate_link) ".pdf" }}{{ $certificate_target = "target=\"_blank\" rel=\"noopener\"" }}{{ end }}
-    {{ else if in (slice "http" "https") $certificate_scheme }}
-      {{ $certificate_target = "target=\"_blank\" rel=\"noopener\"" }}
-    {{ end }}
+    {{ $resolved := partial "functions/resolve_link" $certificate_url }}
+    {{ $certificate_link := $resolved.href }}
+    {{ $certificate_target := $resolved.target }}
     <a href="{{ $certificate_link | safeURL }}" {{ $certificate_target | safeHTMLAttr }} class="inline-flex items-center text-primary-600 dark:text-primary-300 hover:underline">
       {{ i18n "see_certificate" | default "See certificate" }}
       <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">

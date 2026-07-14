@@ -13,7 +13,7 @@
 {{ $all_blog_pages := where site.RegularPages "Type" "blog" }}
 {{ $pages := where $all_blog_pages "Params.categories" "intersect" (slice $current) }}
 {{ $pages = $pages.ByDate.Reverse }}
-{{ $grid_len := cond (eq (len $pages) 1) 2 (len $pages) }}
+{{ $grid_len := len $pages }}
 {{ $tabs := slice }}
 {{ range $tab_candidates }}
   {{ $count := len (where $all_blog_pages "Params.categories" "intersect" (slice .key)) }}

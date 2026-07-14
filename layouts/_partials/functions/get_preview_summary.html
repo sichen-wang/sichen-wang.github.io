@@ -1,43 +1,56 @@
-{{/* Preview summary for cards: prefer explicit card_summary, else standard summary fields, else content before <!--more-->, else first meaningful paragraph. */}}
+{{/* 卡片预览摘要：
+     1) 优先显式标识 card_summary/summary/description/abstract；
+     2) 否则从正文提取——跳过标题/分隔线/图片/公式块/表格/短代码/裸 HTML，
+        按“整段”累加，直到再加一段就会超出长度预算为止（尽量多放几段、但不超预算）；
+     3) 正文没有可用段落时，回退为全文纯文本截断，确保预览非空。
+     注意：中文需按“字符”而非“字节”计长，故用 strings.RuneCount。 */}}
 {{ $summary := .Params.card_summary | default .Params.summary | default .Params.description | default .Params.abstract | default "" }}
 
 {{ if not $summary }}
+  {{ $budget := 140 }}
   {{ $raw := .RawContent }}
-  {{ $raw = replaceRE "(?s)```.*?```" " " $raw }}
+  {{/* 统一换行：源文件为 CRLF 时，按 "\n\n" 分段会失效，先归一化 */}}
+  {{ $raw = replaceRE `\r\n?` "\n" $raw }}
+  {{/* 去掉代码块 */}}
+  {{ $raw = replaceRE "(?s)```.*?```" "\n\n" $raw }}
+  {{/* 有 <!--more--> 摘要分隔符则只取其前 */}}
   {{ if strings.Contains $raw "<!--more-->" }}
-    {{ $parts := split $raw "<!--more-->" }}
-    {{ $before := strings.TrimSpace (index $parts 0) }}
-    {{ if $before }}
-      {{ $summary = $before }}
-    {{ else if gt (len $parts) 1 }}
-      {{ $raw = index $parts 1 }}
+    {{ $before := strings.TrimSpace (index (split $raw "<!--more-->") 0) }}
+    {{ if $before }}{{ $raw = $before }}{{ end }}
+  {{ end }}
+
+  {{ range (split $raw "\n\n") }}
+    {{ $block := strings.TrimSpace . }}
+    {{ $skip := or (not $block)
+        (hasPrefix $block "#")
+        (hasPrefix $block "---")
+        (hasPrefix $block "![")
+        (hasPrefix $block "\\[")
+        (hasPrefix $block "$$")
+        (hasPrefix $block "|")
+        (hasPrefix $block "{{")
+        (hasPrefix $block "<") }}
+    {{ if not $skip }}
+      {{ if not $summary }}
+        {{ $summary = $block }}
+      {{ else if le (add (strings.RuneCount $summary) (strings.RuneCount $block)) $budget }}
+        {{ $summary = printf "%s\n\n%s" $summary $block }}
+      {{ end }}
     {{ end }}
   {{ end }}
 
-  {{ if and (not $summary) $raw }}
-    {{ $minLen := 200 }}
-    {{ $maxLen := 500 }}
-    {{ $truncLen := 300 }}
-    {{ $blocks := split $raw "\n\n" }}
-    {{ range $blocks }}
-      {{ $block := strings.TrimSpace . }}
-      {{ if and $block (not (hasPrefix $block "#")) (not (hasPrefix $block "---")) (not (hasPrefix $block "![")) }}
-        {{ if not $summary }}
-          {{ $summary = $block }}
-        {{ else if lt (len $summary) $minLen }}
-          {{ $candidate := printf "%s\n\n%s" $summary $block }}
-          {{ if le (len $candidate) $maxLen }}
-            {{ $summary = $candidate }}
-          {{ end }}
-        {{ end }}
-      {{ end }}
-    {{ end }}
-    {{ if and $summary (gt (len $summary) $maxLen) }}
-      {{ $summary = printf "%s..." (substr $summary 0 $truncLen) }}
-    {{ end }}
+  {{/* 兜底：整篇没有可用段落（如全是公式/图片）时，取全文纯文本 */}}
+  {{ if not $summary }}
+    {{ $plain := plainify (replaceRE `(?m)^#+\s*` "" $raw) }}
+    {{ $plain = strings.TrimSpace (replaceRE `\s+` " " $plain) }}
+    {{ if $plain }}{{ $summary = $plain }}{{ end }}
+  {{ end }}
+
+  {{/* 单段本身过长时截断 */}}
+  {{ if gt (strings.RuneCount $summary) (add $budget 80) }}
+    {{ $summary = printf "%s…" (substr $summary 0 $budget) }}
   {{ end }}
 {{ end }}
 
-{{ $summary = replaceRE `(?m)^---+$` `` $summary }}
 {{ $summary = strings.TrimSpace $summary }}
 {{ return $summary }}

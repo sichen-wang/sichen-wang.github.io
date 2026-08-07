@@ -314,7 +314,9 @@
               {{ $target = "target=\"_blank\" rel=\"noopener\"" }}
             {{ end }}
             <a href="{{ $linkUrl | safeURL }}" {{ $target | safeHTMLAttr }} 
-               aria-label="{{ $iconName }}"
+               {{/* 优先用 label 作无障碍名；缺省才回落到图标名 ——
+                    否则屏幕阅读器会念出 "academicons/google-scholar" 这种路径 */}}
+               aria-label="{{ $linkLabel | default $iconName }}"
                {{ if $linkLabel }} title="{{ $linkLabel }}"{{ end }}
                class="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 
                       shadow-md hover:shadow-xl hover:scale-110 hover:-translate-y-1 
@@ -396,17 +398,28 @@
           {{ end }}
         {{ end }}
 
-        {{/* Education Section */}}
+        {{/* 教育背景原本渲染在这里（中间栏），用的是三列网格 + 大卡片。首页只有
+             一条学历，那个样式会在正文下面留一张孤零零的宽卡片，而右侧栏又空着。
+             已挪到第三列并改成窄栏排版，见下方。 */}}
+      </div>
+
+      {{/* 第三列：学历 + 兴趣。兴趣原本挤在正文列末尾，右侧留下大片空白，访客
+           还得往下滚才能看到；学历原本在中间栏，渲染成三列网格大卡片。两者都搬到
+           这一列并改成窄栏排版。
+           顺序是学历在上：这样整列从上到下是「学历 → 研究方向 → 乐器」，语域单向
+           收窄，最后落在最人性的一条。反过来则是「研究方向 → 乐器 → 学历」，正式
+           和轻松会来回跳一次。 */}}
+      <div>
         {{ $education_raw := $profile.education }}
         {{ $education := slice }}
         {{ if reflect.IsSlice $education_raw }}
           {{ $education = $education_raw }}
         {{ end }}
         {{ if gt (len $education) 0 }}
-        <div class="mb-16">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">
-              {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="flex-shrink-0 w-9 h-9 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">
+              {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-5 h-5 text-primary-600 dark:text-primary-400'") }}
             </div>
             {{ $education_heading := i18n "education" }}
             {{ $education_heading_raw := index $headings "education" }}
@@ -416,66 +429,56 @@
                 {{ $education_heading = $education_heading_raw }}
               {{ end }}
             {{ end }}
-            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $education_heading | markdownify }}</h3>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white tracking-tight">{{ $education_heading | markdownify }}</h3>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {{ range $education }}
-            {{ if reflect.IsMap . }}
+
+          {{ range $education }}
+          {{ if reflect.IsMap . }}
             {{ $degree := "" }}
             {{ $degreeRaw := index . "degree" | default (index . "area") }}
-            {{ if ne $degreeRaw nil }}{{ $degree = printf "%v" $degreeRaw }}{{ end }}
-            {{ $year := "" }}
-            {{ with index . "year" }}{{ $year = printf "%v" . }}{{ end }}
-            {{ $start := "" }}
-            {{ with index . "start" }}{{ $start = printf "%v" . }}{{ end }}
-            {{ $end := "" }}
-            {{ with index . "end" }}{{ $end = printf "%v" . }}{{ end }}
+            {{ if ne $degreeRaw nil }}{{ $degree = strings.TrimSpace (printf "%v" $degreeRaw) }}{{ end }}
             {{ $institution := "" }}
-            {{ with index . "institution" }}{{ $institution = printf "%v" . }}{{ end }}
-            {{ $icon := "" }}
-            {{ $iconRaw := index . "icon" }}
-            {{ if eq (printf "%T" $iconRaw) "string" }}
-              {{ $icon = $iconRaw }}
-            {{ end }}
-            <div class="group h-full flex flex-col bg-gradient-to-br from-white/90 to-primary-50/30 dark:from-gray-800/90 dark:to-primary-900/20 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-transparent hover:border-primary-200 dark:hover:border-primary-800 backdrop-blur-md">
-              <div class="flex gap-4">
-                <div class="flex-shrink-0 w-12 h-12 bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 rounded-full flex items-center justify-center shadow-md">
-                  {{ if $icon }}
-                    {{ partial "functions/get_icon" (dict "name" $icon "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
-                  {{ else }}
-                    {{ partial "functions/get_icon" (dict "name" "academic-cap" "attributes" "class='w-6 h-6 text-primary-600 dark:text-primary-400'") }}
-                  {{ end }}
-                </div>
-                <div class="flex-1 flex-grow">
-                  {{ if $degree }}
-                  <p class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                    {{ $degree }}
-                  </p>
-                  {{ end }}
-                  {{ if $year }}
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">{{ $year }}</p>
-                  {{ else if $start }}
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                      {{ $start }}
-                      {{ if $end }}<br>{{ $end }}{{ end }}
-                    </p>
-                  {{ end }}
-                  {{ if $institution }}
-                    <p class="text-gray-700 dark:text-gray-300 text-base">{{ $institution }}</p>
-                  {{ end }}
-                </div>
-              </div>
+            {{ with index . "institution" }}{{ $institution = strings.TrimSpace (printf "%v" .) }}{{ end }}
+            {{ $year := "" }}
+            {{ with index . "year" }}{{ $year = strings.TrimSpace (printf "%v" .) }}{{ end }}
+            {{ $honors := slice }}
+            {{ $honors_raw := index . "honors" }}
+            {{ if reflect.IsSlice $honors_raw }}{{ $honors = $honors_raw }}{{ end }}
+
+            {{/* 字号跟随全站层级，不因为栏窄就压小：正下方 Interests 的标签是
+                 14px，若这里用 12px，信息密度更高的块反而比标签云还小。窄栏里
+                 折行是正常的，不是要避免的事。 */}}
+            <div class="home-education mb-6 last:mb-0">
+              {{ with $degree }}
+                <p class="text-base font-semibold leading-snug text-gray-900 dark:text-white">{{ . }}</p>
+              {{ end }}
+              {{ with $institution }}
+                <p class="mt-1 text-base leading-snug text-gray-700 dark:text-gray-300">{{ . }}</p>
+              {{ end }}
+              {{ with $year }}
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ . }}</p>
+              {{ end }}
+
+              {{ if gt (len $honors) 0 }}
+              <ul class="mt-3 space-y-2">
+                {{ range $honors }}
+                {{ $honor := strings.TrimSpace (printf "%v" .) }}
+                {{ if $honor }}
+                <li class="flex gap-2 text-sm leading-snug text-gray-600 dark:text-gray-400">
+                  {{/* 圆点用独立元素而非 list-style，否则换行后第二行会缩到点下面 */}}
+                  <span class="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary-400 dark:bg-primary-500"></span>
+                  <span>{{ $honor | markdownify }}</span>
+                </li>
+                {{ end }}
+                {{ end }}
+              </ul>
+              {{ end }}
             </div>
-            {{ end }}
-            {{ end }}
-          </div>
+          {{ end }}
+          {{ end }}
         </div>
         {{ end }}
-      </div>
 
-      {{/* 第三列：兴趣。原本挤在正文列末尾，右侧留下大片空白，
-           访客还得往下滚才能看到。移出来单独成列填满右侧。 */}}
-      <div>
         {{/* Interests Section */}}
         {{ $interests_raw := $profile.interests }}
         {{ $interests := slice }}
@@ -485,7 +488,7 @@
           {{ $interests = slice $interests_raw }}
         {{ end }}
         {{ if gt (len $interests) 0 }}
-        <div>
+        <div class="mt-10">
           <div class="flex items-center gap-3 mb-5">
             <div class="flex-shrink-0 w-9 h-9 bg-primary-100 dark:bg-primary-900/50 rounded-full flex items-center justify-center">
               {{ partial "functions/get_icon" (dict "name" "sparkles" "attributes" "class='w-5 h-5 text-primary-600 dark:text-primary-400'") }}
@@ -503,7 +506,7 @@
           <div class="home-interests flex flex-wrap gap-2 items-start">
             {{ range $i, $e := $interests }}
             {{ $interest := strings.TrimSpace (printf "%v" $e) }}
-            {{/* 前三项是研究方向，之后换行，让短的乐器名并作一行 */}}
+            {{/* 前三项是研究方向，之后强制换行，让短的乐器名并作一行 */}}
             {{ if eq $i 3 }}<div class="basis-full w-full h-0"></div>{{ end }}
             {{ if $interest }}
             <span class="inline-block bg-primary-50 dark:bg-gray-800 text-primary-800 dark:text-primary-200 text-sm font-medium px-3 py-1.5 rounded-full border border-primary-200/50 dark:border-primary-800/50
@@ -517,6 +520,7 @@
           </div>
         </div>
         {{ end }}
+
       </div>
     </div>
   </div>

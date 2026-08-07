@@ -163,9 +163,9 @@ hugoblox:
     # Table of contents
     toc:
       enable: true
-    # Reading time estimates
+    # 阅读时间：已全站关闭（按字数/200 估算，对技术文章没有参考价值）
     reading_time:
-      enable: true
+      enable: false
     # Academic citations
     citations:
       style: apa # apa | mla | chicago | ieee

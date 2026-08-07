@@ -755,8 +755,12 @@ samp {
 
 /* 首屏三列：左栏按姓名所需宽度定死，中间栏吃掉剩余空间，兴趣栏留出足以放下
    最长研究方向标签的宽度。用 12 等分栅格做不到这个分配 —— 左栏占 4 格会多出
-   一截空隙，占 3 格姓名又要折行，右栏则被挤到只剩 2 格而不得不缩字号。 */
-@media (min-width: 768px) {
+   一截空隙，占 3 格姓名又要折行，右栏则被挤到只剩 2 格而不得不缩字号。
+
+   断点不能用 Tailwind 的 md(768px)：左右两栏是定宽，加起来已经 656px，
+   768px 下中间栏只剩 17px，正文会被压成每行一个字符（实测高 3252px）。
+   1120px 才够中间栏留出 416px。低于此宽度退回单栏堆叠。 */
+@media (min-width: 1120px) {
   .home-hero-grid {
     grid-template-columns: minmax(0, 26rem) minmax(0, 1fr) minmax(0, 15rem);
   }
@@ -768,4 +772,13 @@ samp {
   display: block;
   height: 0;
   scroll-margin-top: 5rem;
+}
+
+/* 卡片标题字号：24px 时论文标题需要 774px 而卡片内容区仅 728px，会折成两行；
+   22px 正好单行。写在这里而不是用 Tailwind 任意值 class，是因为后者要等
+   hugo_stats.json 更新后才会被编译出来，改完当次构建往往不生效。
+   博客卡片标题在上面另有规则（多一个 class，特异性更高），不受影响。 */
+.page-body h3[id^="card-title-"] {
+  font-size: 1.375rem;
+  line-height: 1.3;
 }

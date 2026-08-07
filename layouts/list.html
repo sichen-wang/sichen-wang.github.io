@@ -1,0 +1,56 @@
+{{ define "main" }}
+
+{{/* 标题与正文的容器宽度与下方卡片一致（52rem）。主题原本是 max-w-prose(约 520px)，
+     比卡片窄一大截，像「Noisy Optimization」这样的标签名在 text-6xl 下会被挤到折行。
+     hide_title：页面已由导航栏标明身份时（如 Publications），可省掉这个大标题。 */}}
+{{ if or (not .Params.hide_title) .Content }}
+<div class="max-w-[52rem] mx-auto flex justify-center px-8 xl:px-5">
+  <article class="prose prose-slate lg:prose-xl dark:prose-invert max-w-none w-full">
+    {{ if not .Params.hide_title }}<h1 class="lg:text-6xl">{{ .Title }}</h1>{{ end }}
+    {{ .Content }}
+  </article>
+</div>
+{{ end }}
+
+{{ $view := .Params.view | default "card" }}
+{{ $block := . }}
+
+{{ $paginator := .Paginate .Pages.ByDate.Reverse }}
+{{ $config := dict 
+  "columns" (.Params.columns | default 2) 
+  "len" (len $paginator.Pages) 
+  "fill_image" (.Params.fill_image | default true)
+  "show_date" (.Params.show_date | default true)
+  "show_read_time" (.Params.show_read_time | default true)
+  "show_read_more" (.Params.show_read_more | default true)
+}}
+{{/* show_image 只在页面显式设置时才传：无条件传的话，标签页(term)这类没有
+     front matter 的页面会带着 true 进来，覆盖掉 card.html 里「publications
+     类型默认不带图」的判断，poster 又会冒出来。 */}}
+{{ if isset .Params "show_image" }}
+  {{ $config = merge $config (dict "show_image" .Params.show_image) }}
+{{ end }}
+
+{{/* Check if any pages have author_notes to enable Alpine.js */}}
+{{ range .Pages }}
+  {{ if isset .Params "author_notes" }}
+    {{ $.Store.Set "has_alpine" true }}
+    {{ break }}
+  {{ end }}
+{{ end }}
+
+<div class="flex flex-col items-center">
+
+  {{ partial "functions/render_view" (dict "fragment" "start" "page" $block "item" . "view" $view "config" $config) }}
+
+  {{ range $index, $item := $paginator.Pages }}
+  {{ partial "functions/render_view" (dict "page" . "item" . "view" $view "index" $index "config" $config) }}
+  {{end}}
+
+  {{ partial "functions/render_view" (dict "fragment" "end" "page" $block "item" . "view" $view) }}
+
+  {{ partial "components/paginator" . }}
+
+</div>
+
+{{ end }}

@@ -18,7 +18,9 @@ sections:
       text: ''
       # 不再放 Download CV 大按钮：头像下方的 CV 图标已指向同一份英文 CV
       headings:
-        about: ''
+        # 主题的默认值是 "Professional Summary"（i18n 里没有 about_me 键，走的兜底），
+        # 那是简历/LinkedIn 的语域，学术主页不该用
+        about: 'Biography'
         education: ''
         interests: ''
     design:

@@ -26,10 +26,31 @@ links:
   - icon: at-symbol
     url: "mailto:scwang.cs@gmail.com"
     label: E-mail Me
+  - icon: academicons/google-scholar
+    url: "https://scholar.google.com/citations?user=NE0cZgEAAAAJ"
+    label: Google Scholar
+  - icon: academicons/orcid
+    # 公开档案地址；orcid.org/my-orcid?orcid=... 是登录后的管理页，访客打不开
+    url: "https://orcid.org/0009-0008-3734-4006"
+    label: ORCID
   - icon: brands/github
     url: "https://github.com/sichen-wang"
+    label: GitHub
   - icon: academicons/cv
     url: "/uploads/CV_en.pdf"
+    label: CV (English)
+
+education:
+  # 荣誉名称与 CV 保持一致：都已去掉「Top 5%」「1 of 12 recipients」这类
+  # 分母描述——排名本身不构成信息，只会让条目在窄栏里折行
+  - degree: B.Eng. in Electronic and Computer Engineering
+    institution: Shenzhen MSU-BIT University
+    year: "2024 – 2028"
+    # 与 static/uploads/CV_en.tex 的 University Honors 逐字一致
+    honors:
+      - First-Class Scholarship
+      - Outstanding Student
+      - Excellence in Sci-Tech Innovation
 
 interests:
   - Theoretical Computer Science

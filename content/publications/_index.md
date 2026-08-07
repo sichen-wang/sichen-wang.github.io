@@ -1,11 +1,15 @@
 ---
 title: Publications
+# 导航栏已标明当前在 Publications，页面顶部不再重复一个大标题
+hide_title: true
 cms_exclude: true
 
 # View：卡片视图（带配图），单栏显示
 view: article-grid
 columns: 1
-# 图完整显示而非裁切填充（论文示意图不能被裁掉）
+# 列表页不放 poster：卡片宽度下 poster 缩放比仅 0.24，正文约 8px 不可读，
+# 只是装饰却把标题挤出首屏；poster 仍可从详情页的 POSTER 按钮打开
+show_image: false
 fill_image: false
 show_read_time: false
 show_read_more: false

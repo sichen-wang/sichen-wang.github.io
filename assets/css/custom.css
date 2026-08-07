@@ -409,3 +409,363 @@ samp {
   color: rgb(75 85 99);
   font-size: 0.95rem;
 }
+
+/* ==========================================================================
+   论文全文（LaTeXML 转换的 HTML，见 scripts/paper-html/）
+   目标：沿用站点自身的字体与配色，而不是 LaTeXML 自带的那套样式。
+   容器 class 由 layouts/single.html 在 publications 类型下添加。
+   ========================================================================== */
+
+/* 版心与字号：Tailwind prose 默认把正文锁在 ~520px 且不居中，论文会整片挤在左侧；
+   lg:prose-xl 的 20px 对论文正文也偏大。版心宽度交给 layouts/single.html 里收窄后的
+   <main>（max-w-4xl）统一控制，标题 / 元信息 / 正文 / 页脚因此共用同一条左右边界。 */
+.page-body .paper-body {
+  font-size: 1rem;
+  line-height: 1.72;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* 页脚与"最后更新"：prose 会把它们压到 ~520px 并居中，与左对齐的正文错开、
+   长文本还会溢出。比照 .blog-page-footer 的做法拉回与正文同宽。 */
+/* 页脚（标签 / 作者卡片 / 最后更新）：左对齐跟随正文栏，不居中也不铺满。
+   铺满整幅正文宽时，作者简介那段会拉得过长不好读，"Last updated on ..."
+   也会顶到版心外面；这里比照 blog 收到与正文相近的阅读宽度。 */
+.page-body .paper-page-footer,
+.page-body .paper-page-footer .max-w-prose {
+  max-width: 46rem;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 0.98rem;
+}
+
+/* 标题：prose 在大屏下的标题尺寸对论文过大，收敛到接近正文的层级感 */
+.page-body .paper-body h2 {
+  font-size: 1.5rem;
+  margin-top: 2em;
+  margin-bottom: 0.7em;
+}
+.page-body .paper-body h3 {
+  font-size: 1.2rem;
+  margin-top: 1.6em;
+  margin-bottom: 0.55em;
+}
+.page-body .paper-body h4,
+.page-body .paper-body h5,
+.page-body .paper-body h6 {
+  font-size: 1.02rem;
+  margin-top: 1.3em;
+  margin-bottom: 0.45em;
+}
+
+/* 段落：LaTeXML 用 ltx_para 包 ltx_p，prose 的默认段距会叠加，这里统一收敛 */
+.paper-body .ltx_para {
+  margin: 0 0 1.1em;
+}
+.paper-body .ltx_p {
+  margin: 0 0 0.85em;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* 章节标题：LaTeXML 自带编号 span，保留但弱化 */
+.paper-body .ltx_title_section,
+.paper-body .ltx_title_subsection,
+.paper-body .ltx_title_subsubsection {
+  scroll-margin-top: 5rem; /* 目录锚点跳转时不被吸顶导航遮住 */
+}
+.paper-body .ltx_tag_section,
+.paper-body .ltx_tag_subsection,
+.paper-body .ltx_tag_subsubsection {
+  opacity: 0.55;
+  margin-right: 0.35em;
+  font-weight: 500;
+}
+
+/* 列表：LaTeXML 把项目符号放在 <span class="ltx_tag_item"> 里，紧跟其后的却是块级的
+   <div class="ltx_para">，块级元素另起一行，圆点就和正文被拆成两行。改用 flex 让
+   两者同行，并把标记列固定宽度以对齐多行文本。 */
+.paper-body .ltx_itemize,
+.paper-body .ltx_enumerate,
+.paper-body .ltx_description {
+  list-style: none;
+  padding-left: 0.4em;
+  margin: 1em 0;
+}
+.paper-body .ltx_item {
+  display: flex;
+  gap: 0.55em;
+  margin: 0.4em 0;
+  list-style: none;
+}
+.paper-body .ltx_item > .ltx_tag_item {
+  flex: 0 0 auto;
+  min-width: 1.1em;
+  opacity: 0.75;
+}
+.paper-body .ltx_item > .ltx_para {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-bottom: 0;
+}
+.paper-body .ltx_item > .ltx_para > .ltx_p:last-child {
+  margin-bottom: 0;
+}
+
+/* 行间公式：LaTeXML 用 table 排版以便右侧放编号 */
+.paper-body .ltx_equation,
+.paper-body .ltx_equationgroup {
+  width: 100%;
+  margin: 1.2em 0;
+  border: 0;
+  table-layout: auto;
+}
+
+/* 居中：LaTeXML 靠左右两个空单元格把公式挤到中间，但它们没有宽度就不会生效。
+   给两侧各分配 50%，公式才真正居中（编号列另有固定宽度，不受影响）。 */
+.paper-body .ltx_eqn_center_padleft,
+.paper-body .ltx_eqn_center_padright {
+  width: 50%;
+  padding: 0;
+}
+/* align 组：由 postprocess.py 整组还原成 aligned 环境后输出为下面的结构，
+   公式居中、编号靠右（编号不进 LaTeX，因为 KaTeX 的 aligned 内不支持 \tag）。 */
+.paper-body .paper-eqgroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin: 1.2em 0;
+}
+.paper-body .paper-eqgroup-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.paper-body .paper-eqgroup-body .katex-display {
+  margin: 0;
+}
+.paper-body .paper-eqgroup-no {
+  flex: 0 0 auto;
+  text-align: right;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.9;
+}
+.paper-body .ltx_equation td,
+.paper-body .ltx_equationgroup td {
+  border: 0;
+  padding: 0.15em 0;
+  background: none;
+}
+.paper-body .ltx_eqn_eqno {
+  width: 3.5em;
+  text-align: right;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+/* 长公式在窄屏下允许横向滚动，避免撑破版心 */
+/* 公式单元格本身不要滚动条：LaTeXML 用表格排版公式，左右两个空单元格
+   （padleft/padright）负责居中。若给每个单元格开 overflow-x:auto，短公式也会
+   长出滚动条；而空单元格一旦分到宽度，中间的公式格就被挤窄，KaTeX 只好折行 ——
+   表现为"不长的公式换很多行还带滚动条"。这里把空格子归零、单元格不滚动，
+   溢出交给 .katex-display 处理。 */
+.paper-body .ltx_eqn_cell {
+  overflow: visible;
+}
+.paper-body .ltx_eqn_center_padleft,
+.paper-body .ltx_eqn_center_padright {
+  width: 0;
+  padding: 0;
+}
+/* 公式居中，且只有真正超宽时才横向滚动 */
+.paper-body .ltx_eqn_cell .katex-display {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* 留出滚动条空间，免得裁掉上下标 */
+  padding-block: 0.15em;
+}
+.paper-body .ltx_align_center {
+  text-align: center;
+}
+
+/* 定理 / 引理 / 命题 / 假设 */
+.paper-body .ltx_theorem {
+  margin: 1.4em 0;
+  padding: 0.9em 1.1em;
+  border-left: 3px solid rgb(148 163 184 / 0.6);
+  border-radius: 0.25rem;
+  background: rgb(148 163 184 / 0.07);
+}
+.paper-body .ltx_theorem .ltx_title_theorem {
+  margin: 0 0 0.4em;
+  font-size: 1em;
+  font-weight: 700;
+}
+.paper-body .ltx_theorem .ltx_para:last-child,
+.paper-body .ltx_theorem .ltx_p:last-child {
+  margin-bottom: 0;
+}
+.dark .paper-body .ltx_theorem {
+  background: rgb(148 163 184 / 0.1);
+  border-left-color: rgb(148 163 184 / 0.5);
+}
+
+/* 证明：不加底色，用左边细线区分，末尾保留 LaTeXML 的方块符号 */
+.paper-body .ltx_proof {
+  margin: 1.2em 0;
+  padding-left: 1.1em;
+  border-left: 2px dotted rgb(148 163 184 / 0.5);
+}
+.paper-body .ltx_proof .ltx_title_proof {
+  font-style: italic;
+  font-weight: 600;
+  margin: 0 0 0.35em;
+  font-size: 1em;
+}
+
+/* 图 */
+.paper-body .ltx_figure {
+  margin: 1.8em 0;
+  text-align: center;
+}
+/* 图片宽度统一：原始 PDF 插图的固有尺寸相差一倍以上（论文里靠 \includegraphics
+   的 width= 缩放，转出来就没了），若按固有尺寸显示会一张大一张小。这里统一按版心
+   宽度渲染，配合 convert.py 输出的等宽图源，视觉上就齐了。 */
+/* 插图尺寸：宽度由 postprocess.py 按论文里 \includegraphics 的 width= 折算成
+   百分比写进内联 style（跨栏大图 100%，单栏小图 55%），还原原有的主次层次。
+   百分比要相对一个固定的图框来算，所以宽度上限放在 figure 上而不是 img 上，
+   否则 img 自身的 max-width 会把比例关系压平。 */
+.paper-body .ltx_figure {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+.paper-body .ltx_figure img,
+.paper-body .ltx_table img {
+  display: block;
+  margin: 0 auto;
+  width: 100%; /* 默认值；有内联 style 时以内联为准 */
+  height: auto;
+  max-width: 100%;
+  max-height: 30rem;
+}
+/* 论文插图是白底矢量图，暗色模式下直接贴在深色背景上会是刺眼的白块，
+   给它一层"纸面"并留出内边距 */
+.dark .paper-body .ltx_figure img,
+.dark .paper-body .ltx_table img,
+.dark .featured-image[src$=".svg"] {
+  background: #fff;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+}
+
+.paper-body .ltx_caption {
+  display: block;
+  margin-top: 0.7em;
+  font-size: 0.875em;
+  line-height: 1.5;
+  text-align: left;
+  opacity: 0.85;
+}
+.paper-body .ltx_tag_figure,
+.paper-body .ltx_tag_table {
+  font-weight: 700;
+}
+
+/* 表：论文表格常常比版心宽，装进可横向滚动的容器 */
+.paper-body .ltx_table {
+  margin: 1.8em 0;
+  overflow-x: auto;
+}
+.paper-body .ltx_tabular {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  font-variant-numeric: tabular-nums;
+}
+.paper-body .ltx_tabular td,
+.paper-body .ltx_tabular th {
+  padding: 0.35em 0.7em;
+  border: 0;
+}
+/* booktabs 的三线表：LaTeXML 用 border 类表达 */
+.paper-body .ltx_border_t { border-top: 1px solid currentColor; }
+.paper-body .ltx_border_b { border-bottom: 1px solid currentColor; }
+.paper-body .ltx_border_tt { border-top: 2px solid currentColor; }
+.paper-body .ltx_border_bb { border-bottom: 2px solid currentColor; }
+
+/* 交叉引用与文献引用 */
+.paper-body .ltx_ref {
+  text-decoration: none;
+  border-bottom: 1px solid rgb(148 163 184 / 0.5);
+}
+.paper-body .ltx_ref:hover {
+  border-bottom-color: currentColor;
+}
+.paper-body .ltx_cite .ltx_ref {
+  border-bottom: none;
+}
+
+/* 参考文献 */
+.paper-body .ltx_bibliography {
+  margin-top: 2em;
+}
+.paper-body .ltx_biblist {
+  list-style: none;
+  padding-left: 0;
+  font-size: 0.9em;
+}
+.paper-body .ltx_bibitem {
+  margin: 0 0 0.6em;
+  padding-left: 2.5em;
+  text-indent: -2.5em;
+  line-height: 1.5;
+}
+.paper-body .ltx_bibitem .ltx_bibtag {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+/* 图未成功转换时的可见提示，避免静默丢图 */
+.paper-body .paper-figure-missing {
+  display: inline-block;
+  padding: 0.4em 0.8em;
+  border: 1px dashed rgb(239 68 68 / 0.6);
+  border-radius: 0.25rem;
+  color: rgb(239 68 68);
+  font-size: 0.85em;
+}
+
+/* 脚注 */
+.paper-body .ltx_note_content {
+  font-size: 0.85em;
+  opacity: 0.85;
+}
+
+/* 首屏：主题给每个 .hbb-section 加了 6rem 上下内边距（front matter 的
+   design.spacing 管不到它，是 CSS 类里写死的）。首页这个区块自己已经占满
+   一屏高并垂直居中，再加 96px 会把内容整体推低、首屏还多出一段无谓滚动。
+   只针对该区块归零，其他 landing 区块的间距不受影响。 */
+.hbb-section.blox-resume-biography-3 {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* 首屏三列：左栏按姓名所需宽度定死，中间栏吃掉剩余空间，兴趣栏留出足以放下
+   最长研究方向标签的宽度。用 12 等分栅格做不到这个分配 —— 左栏占 4 格会多出
+   一截空隙，占 3 格姓名又要折行，右栏则被挤到只剩 2 格而不得不缩字号。 */
+@media (min-width: 768px) {
+  .home-hero-grid {
+    grid-template-columns: minmax(0, 26rem) minmax(0, 1fr) minmax(0, 15rem);
+  }
+}
+
+/* 公式组的交叉引用锚点：零尺寸占位，只为让「见式 (27)」能跳到该公式，
+   跳转后留出吸顶导航的高度 */
+.paper-body .paper-eq-anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: 5rem;
+}

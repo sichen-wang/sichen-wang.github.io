@@ -16,8 +16,11 @@
     "@type" "ImageObject"
     "url" .Permalink
   -}}
-  {{- with .Width }}{{ $image_obj = merge $image_obj (dict "width" .) }}{{ end -}}
-  {{- with .Height }}{{ $image_obj = merge $image_obj (dict "height" .) }}{{ end -}}
+  {{/* .Width/.Height 仅对位图可用；SVG 调用会直接让构建失败 */}}
+  {{- if ne .MediaType.SubType "svg" -}}
+    {{- with .Width }}{{ $image_obj = merge $image_obj (dict "width" .) }}{{ end -}}
+    {{- with .Height }}{{ $image_obj = merge $image_obj (dict "height" .) }}{{ end -}}
+  {{- end -}}
 {{- end -}}
 
 {{- $webpage := dict

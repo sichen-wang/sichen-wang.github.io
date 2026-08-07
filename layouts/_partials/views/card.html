@@ -22,6 +22,15 @@
 {{ $index := .index }}
 {{ $isEvent := eq $item.Type "events" }}
 {{ $isBlog := eq $item.Type "blog" }}
+{{ $isPublication := eq $item.Type "publications" }}
+{{/* 论文封面（poster / 论文插图）必须按原始比例完整呈现：
+     不锁死 16:9、不裁切、不缩到 800x450。
+     注意上面的 $fill_image 取不到 false —— `false | default true` 在 Hugo 里返回 true，
+     所以这里不依赖该参数，直接对 publications 强制走完整显示。 */}}
+{{ if $isPublication }}
+  {{ $img_class = "w-full h-auto transition-transform duration-500 ease-out group-hover:scale-105" }}
+  {{ $img_style = "color: transparent;" }}
+{{ end }}
 {{ $event_dates := "" }}
 {{ if $isEvent }}
 {{ $event_dates = partial "functions/get_event_dates" $item }}
@@ -30,7 +39,7 @@
 <div class="group bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-2xl ring-1 ring-zinc-900/5 dark:ring-white/10 shadow-lg overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-primary-500/50" role="article" aria-labelledby="card-title-{{ $item.File.UniqueID }}">
     {{ if not $isBlog }}
     <!-- Image Section -->
-    <div class="relative overflow-hidden aspect-[16/9] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900">
+    <div class="relative overflow-hidden {{ if not $isPublication }}aspect-[16/9]{{ end }} bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900">
       {{ with $item.Params.content_meta }}
         {{ if .trending }}
           <div class="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/55 backdrop-blur-sm text-white shadow-sm">
@@ -42,38 +51,45 @@
       {{ with $resource }}
         {{ if strings.Contains .MediaType.SubType "svg" }}
           <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="block">
-            <img class="{{ $img_class }}" 
+            {{/* 首图必须 eager：自适应高度下未加载的图高度为 0，
+                 浏览器会判定其不可见而永不触发 lazy 加载（死锁）。 */}}
+            <img class="{{ $img_class }}"
                  src="{{ .RelPermalink }}"
-                 loading="lazy" 
+                 loading="{{ if eq $index 0 }}eager{{ else }}lazy{{ end }}"
                  decoding="async"
                  {{ if eq $index 0 }}fetchpriority="high"{{ end }}
-                 style="{{ $img_style }}"
+                 style="{{ $img_style | safeCSS }}"
                  alt="{{ $item.Title | plainify }} featured image">
           </a>
         {{ else if ne .MediaType.SubType "gif" }}
           {{ $original_image := "" }}
-          {{ if $fill_image }}
+          {{ $resp_sizes := slice 400 600 800 }}
+          {{ if $isPublication }}
+            {{/* 论文封面：完整装入大边界并保留高分辨率，不裁切、不压到 800x450 */}}
+            {{ $original_image = .Fit "2000x2000" }}
+            {{ $resp_sizes = slice 600 900 1200 1600 }}
+          {{ else if $fill_image }}
             {{ $original_image = .Fill (printf "800x450 %s" $anchor) }}
           {{ else }}
             {{ $original_image = .Fit (printf "800x450 %s" $anchor) }}
           {{ end }}
-          {{ $responsive := partial "functions/process_responsive_image.html" (dict 
-              "image" $original_image 
+          {{ $responsive := partial "functions/process_responsive_image.html" (dict
+              "image" $original_image
               "mode" "responsive"
-              "sizes" (slice 400 600 800)
+              "sizes" $resp_sizes
               "formats" (slice "avif" "webp" "jpg")
           ) }}
           <a href="{{ $link }}" {{ $target | safeHTMLAttr }} class="block">
             <img class="{{ $img_class }}" 
                  srcset="{{ $responsive.srcset }}"
-                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                 sizes="{{ if $isPublication }}(max-width: 768px) 100vw, 1100px{{ else }}(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw{{ end }}"
                  src="{{ $responsive.fallback.RelPermalink }}" 
                  width="{{ $original_image.Width }}" 
                  height="{{ $original_image.Height }}"
                  loading="lazy" 
                  decoding="async"
                  {{ if eq $index 0 }}fetchpriority="high"{{ end }}
-                 style="{{ $img_style }}"
+                 style="{{ $img_style | safeCSS }}"
                  alt="{{ $item.Title | plainify }} featured image">
           </a>
         {{ else }}
@@ -84,7 +100,7 @@
                  height="{{ .Height }}"
                  loading="lazy"
                  decoding="async"
-                 style="{{ $img_style }}"
+                 style="{{ $img_style | safeCSS }}"
                  alt="{{ $item.Title | plainify }} featured image">
           </a>
         {{ end }}
@@ -187,7 +203,16 @@
                 </div>
               {{ end }}
             </div>
-            <span class="truncate max-w-[9rem] text-sm">{{ $profile.title }}</span>
+            {{/* 列出全部作者，而不是只显示第一位（论文通常是多作者）。
+                 注意传原始字符串：get_author_profile 内部会 urlize 去 data/authors
+                 里查找，同时保留原文作为显示名；先 urlize 会让未登记的作者
+                 显示成 slug（如 "zhipeng-lu"）。 */}}
+            <span class="truncate max-w-[20rem] text-sm">
+              {{- range $i, $a := $item.Params.authors -}}
+                {{- if $i }}, {{ end -}}
+                {{- (partial "functions/get_author_profile" $a).title -}}
+              {{- end -}}
+            </span>
           </div>
           <span class="opacity-40">•</span>
           {{ end }}

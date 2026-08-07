@@ -6,8 +6,9 @@ date: 2022-10-24
 type: landing
 
 design:
-  # Default section spacing
-  spacing: '6rem'
+  # 区块间距设为 0：本页只有一个区块，它已经自己占满一屏高并垂直居中，
+  # 再加 6rem 的上下间距会把内容整体推低、并让首屏多出无谓的滚动
+  spacing: '0'
 
 sections:
   - block: resume-biography-3
@@ -15,10 +16,7 @@ sections:
       # Choose a user profile to display (a folder name within `content/authors/`)
       username: home
       text: ''
-      # Show a call-to-action button under your biography? (optional)
-      button:
-        text: Download CV
-        url: uploads/CV_en.pdf
+      # 不再放 Download CV 大按钮：头像下方的 CV 图标已指向同一份英文 CV
       headings:
         about: ''
         education: ''

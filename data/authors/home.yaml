@@ -1,5 +1,5 @@
 schema: hugoblox/author/v1
-slug: me
+slug: home
 is_owner: true
 name:
   display: Sichen Wang
@@ -17,26 +17,24 @@ bio: |
   Now I am a Research Assistant at The Chinese University of Hong Kong, Shenzhen. My research interests lie at the intersection of Computer Science and Computational Mathematics, with a focus on Programming, Theoretical Computer Science, and Machine Learning Theory. I am dedicated to solving complex computational problems and exploring the mathematical foundations of learning algorithms.
 
 affiliations:
-  - name: |
-      Shenzhen MSU-BIT University, Faculty of Engineering
+  - name: "Shenzhen MSU-BIT University,<br>Faculty of Engineering"
     url: "https://smbu.edu.cn/"
-  - name: |
-      The Chinese University of Hong Kong, Shenzhen, School of Science and Engineering
+  - name: "The Chinese University of Hong Kong, Shenzhen,<br>School of Science and Engineering<br>& School of Data Science"
     url: "https://cuhk.edu.cn/"
 
 links:
   - icon: at-symbol
-    url: "mailto:wsc@smbu.edu.cn"
+    url: "mailto:scwang.cs@gmail.com"
     label: E-mail Me
   - icon: brands/github
     url: "https://github.com/sichen-wang"
   - icon: academicons/cv
-    url: "/uploads/CV.pdf"
+    url: "/uploads/CV_en.pdf"
 
 interests:
-  - Algorithm Design
   - Theoretical Computer Science
-  - Machine Learning
+  - Algorithm Design and Analysis
+  - Statistical Learning Theory
   - Piano
   - Violin
   - Drum Kit

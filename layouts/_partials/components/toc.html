@@ -18,6 +18,25 @@
       {{- $headings = $headings | append (dict "level" $level "id" $id "title" $title) -}}
     {{- end -}}
   {{- end -}}
+
+  {{/* 论文正文由 LaTeXML 转换而来，标题是 HTML 而非 Markdown，上面的正则取不到。
+       这里直接读取标题自带的 id（由 scripts/paper-html/postprocess.py 写入），
+       而不是用 anchorize 重新推导 —— 两套规则不一致会让锚点失效。 */}}
+  {{- if not $headings -}}
+    {{- $html_matches := findRESubmatch `(?s)<h([2-4])[^>]*\bid="([^"]+)"[^>]*>(.*?)</h[2-4]>` $raw -}}
+    {{- range $html_matches -}}
+      {{- $level := int (index . 1) -}}
+      {{- $id := index . 2 -}}
+      {{- $title := index . 3 -}}
+      {{/* 保留 LaTeXML 的章节编号（"1 "、"3.1 "、附录的 "A "），长文里便于定位；
+           只去掉标签本身 */}}
+      {{- $title = replaceRE `<[^>]+>` "" $title -}}
+      {{- $title = replaceRE `\s+` " " $title | strings.TrimSpace | htmlUnescape -}}
+      {{- if and $id $title -}}
+        {{- $headings = $headings | append (dict "level" $level "id" $id "title" $title) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 {{- $has_toc := gt (len $headings) 0 -}}
 

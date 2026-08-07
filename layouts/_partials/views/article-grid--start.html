@@ -7,7 +7,15 @@
 <div class="w-full px-5 mx-auto py-5 lg:py-8 max-w-[96rem]">
   <div class="blog-masonry">
 {{ else }}
+{{/* 容器宽度：单栏时放宽以容纳大图（论文列表）；否则沿用原逻辑
+     —— 单卡片收窄到 500px 避免在宽栅格里被拉伸 */}}
+{{ $container := "max-w-screen-lg" }}
+{{ if eq $columns 1 }}
+  {{ $container = "max-w-[52rem]" }}
+{{ else if eq $len 1 }}
+  {{ $container = "max-w-[500px] justify-center" }}
+{{ end }}
 {{/* NOTE: dynamic `md:grid-cols-{{$columns}}` class requires Tailwind exception */}}
-<div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 {{ if eq $len 1 }}max-w-[500px] justify-center{{else}}max-w-screen-lg {{end}}">
+<div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 {{ $container }}">
   <div class="grid gap-10 md:grid-cols-{{$columns}} lg:gap-10">
 {{ end }}

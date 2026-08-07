@@ -33,7 +33,12 @@ cascade:
 
 build:
   writeStats: true
-enableGitInfo: false
+# 页面底部的 "Last updated" 取真实修改时间，而不是 front matter 里的 date
+# （论文页的 date 是 poster 当天，用于顶部与列表卡片显示，不代表最后修改时间）。
+# 优先级：git 提交时间 → front matter 的 lastmod → 文件修改时间 → date
+enableGitInfo: true
+frontmatter:
+  lastmod: [':git', 'lastmod', ':fileModTime', 'date']
 summaryLength: 30
 pagination:
   pagerSize: 10

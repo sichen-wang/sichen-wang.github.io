@@ -1,4 +1,4 @@
-\documentclass[a4paper, 10pt]{ctexart}
+\documentclass[a4paper, 10.5pt]{ctexart}
 
 % !!!重要提示!!! 请使用 XeLaTeX 编译此文件以获得最佳字体和排版效果。
 
@@ -62,7 +62,7 @@
 % --- 全局设置 ---
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.3em}
+\setlength{\parskip}{0.4em}
 \setlength{\emergencystretch}{3em}
 \setlist{itemsep=0.2em, parsep=0pt, topsep=0.3em, leftmargin=1.2em}
 
@@ -73,7 +73,7 @@
   {0em}
   {#1}
   [\vspace{0.2ex}\hrule height 0.6pt]
-\titlespacing*{\section}{0pt}{0.6ex}{1.0ex}
+\titlespacing*{\section}{0pt}{1.8ex}{1.0ex}
 
 % --- 自定义命令 Custom Commands ---
 
@@ -90,7 +90,7 @@
   \noindent\textbf{#1}%
   \notblank{#2}{\hfill{\color{DescriptionGray}\small #2}}{}%
   \notblank{#3}{\par\vspace{0.05em}\noindent{\color{DescriptionGray}\small\textit{#3}}}{}%
-  \par\vspace{0.28em}%
+  \par\vspace{0.45em}%
 }
 
 % 五圆点技能条
@@ -118,11 +118,8 @@
     \centering
     {\fontsize{22pt}{26pt}\selectfont\bfseries\color{PrimaryColor}王司晨 (Sichen Wang)}\\[0.45em]
     {\color{DescriptionGray}
-      \faIcon{graduation-cap}\ 电子与计算机工程·大二 \quad
-      \faIcon{award}\ 一等奖学金 \\[0.3em]
+      \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \quad
       \faIcon{phone}\ +86 19118814609 \quad
-      \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \\[0.3em]
-      \faIcon{github}\ \href{https://github.com/sichen-wang}{sichen-wang} \quad
       \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichen-wang.github.io}{sichen-wang.github.io}}
   \end{minipage}%
 }
@@ -139,30 +136,48 @@
   % 照片：底部 anchor=south east，锁定到 page top - (1.4cm + H)，即文字底部
   \node[anchor=south east, inner sep=0pt] at
     ([xshift=-1.7cm, yshift={\dimexpr -1.4cm-\ht\headerbox-\dp\headerbox\relax}]current page.north east)
-    {\includegraphics[height=\dimexpr\ht\headerbox+\dp\headerbox+0.5cm\relax, keepaspectratio]{photo.JPG}};
+    {\includegraphics[height=2.5cm, keepaspectratio]{photo.JPG}};
 \end{tikzpicture}%
 
-\vspace{-3.2em}
+\vspace{-2.4em}
 
 % =====================================================================
 % 双栏正文
 % =====================================================================
 \begingroup
-\linespread{0.99}\selectfont
+\linespread{1.0}\selectfont
 \begin{minipage}[t]{0.30\textwidth}
+% 左栏偏窄：左对齐 + 禁连字断词，避免两端对齐在窄栏里拉出大间隙
+\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\relax
+
+% --- 教育 ---
+\section{Education}
+{\color{DescriptionGray}
+\textbf{深圳北理莫斯科大学}\\[0.2em]
+\begin{tabular*}{\linewidth}{@{}>{\raggedright\arraybackslash}b{0.66\linewidth}@{\extracolsep{\fill}}r@{}}
+电子与计算机工程 学士 & 2024--2028\hspace*{0.5em}
+\end{tabular*}
+}
+
+\vspace*{0.5em}
+\subSection{校级荣誉}
+{\color{DescriptionGray}
+一等奖学金\\[0.2em]
+优秀学生\\[0.2em]
+科技创新优秀奖
+}
 
 % --- 方向 ---
+\vspace*{0.3em}
 \section{Interests}
 {\color{DescriptionGray}
-算法理论 (Theory of Algorithms)\\[0.2em]
-学习理论 (Learning Theory)\\[0.2em]
-理论计算机 (Theoretical CS)\\[0.2em]
-离散数学 (Discrete Mathematics)\\[0.2em]
-计算数学 (Computational Math.)
+理论计算机科学\\[0.2em]
+算法设计与分析\\[0.2em]
+统计学习理论
 }
 
 % --- 技能 ---
-\vspace*{-0.15em}
+\vspace*{0.3em}
 \section{Skills}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -173,7 +188,7 @@
 \end{tabular*}}
 
 % --- 语言 ---
-\vspace*{-0.15em}
+\vspace*{0.3em}
 \section{Languages}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -183,14 +198,10 @@ Russian & A2 \\
 \end{tabular*}}
 
 % --- 兴趣 ---
-\vspace*{-0.15em}
+\vspace*{0.3em}
 \section{Hobbies}
 {\color{DescriptionGray}
-钢琴 / 小提琴\\[0.2em]
-架子鼓 (中国音协 10 级优等)\\[0.2em]
-羽毛球 (校赛八强)\\[0.2em]
-50m 跑 6.4s (校第一)\\[0.2em]
-辩论 (大学校赛亚军及最佳辩手)
+钢琴、小提琴、架子鼓（中国音协 10 级优等）、羽毛球（校赛八强）、辩论（校赛亚军及最佳辩手）
 }
 
 \end{minipage}%
@@ -203,26 +214,6 @@ Russian & A2 \\
 \raggedright
 
 \textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}.\ Accepted at ICML 2026.
-
-\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}.\ Submitted to NeurIPS 2026.
-
-\textbf{Sichen Wang}.\ \textit{The Minimax Rate of Online Isotonic Regression on Product Orders}.\ Submitted to NeurIPS 2026.
-
-Qihao Shi, Zeyu Wang, Jingbang Chen, \textbf{Sichen Wang}, Danni Ren, Wujian Yang, Guanlin Chen, Mingli Song, Can Wang.\ \textit{An Efficient Index Framework for Fast Query Processing on Dynamic Uncertain Graphs}.\ Submitted to IEEE Transactions on Knowledge and Data Engineering (TKDE).
-
-Ruida Liu, Wang Xu, Shuoran Cheng, \textbf{Sichen Wang}, Weichao Pan, Han Puyu.\ \textit{DeepOcean-PT: Efficient Pressure-to-Temperature Profile Reconstruction for the Deep Ocean}.\ Submitted to IEEE Journal of Oceanic Engineering (JOE).
-
-\textbf{Sichen Wang}, Zhipeng Lu, Jingbang Chen.\ \textit{The Price of Order in the Logarithmic Method}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}, Jingbang Chen.\ \textit{A Complexity Dichotomy for Minimum-Cost Two-Neighbor Bootstrap Percolation}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}.\ \textit{Min-Plus Compression for All Best Swap Edges}.\ Submitted to SODA~2027.
-
-\textbf{Sichen Wang}.\ \textit{The Movement Complexity of Sorting}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}.\ \textit{The Complexity of Steering Rotor Walks}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Internal Observability and Certified Reduction of Polynomial Loops over Finite Fields}.\ \mbox{Submitted to POPL 2027.}
 
 \endgroup
 
@@ -244,13 +235,14 @@ CCF CSP 计算机软件能力认证 & \textbf{480 分} & Top 0.1\% \\
 \subSection{Research}
 \jobEntry{科研助理 @ 香港中文大学（深圳）}{Dec. 2024 -- Present}{跟随香港中文大学（深圳）理工学院唐晓莹教授进行大模型基础领域的前沿研究}
 \jobEntry{科研助理 @ 深圳北理莫斯科大学}{Nov. 2025 -- Present}{与深圳北理莫斯科大学工程系路志鹏老师合作进行计算数学领域的前沿研究}
+\jobEntry{科研助理 @ 香港中文大学（深圳）}{Nov. 2025 -- Present}{与香港中文大学（深圳）陈靖邦教授合作进行算法分析、数据结构、图论与图挖掘方向的前沿研究}
 
 \subSection{Industry}
-\jobEntry{算法研究员 @ 增广智能}{May 2025 -- Present}{完成内部技术论文，对一类平面网格图上的数据调度问题提出「转向势能避让」方法.}
+\jobEntry{算法研究员 @ 增广智能}{May 2025 -- May 2026}{完成内部技术论文，对一类平面网格图上的数据调度问题提出「转向势能避让」方法.}
 
 \subSection{Competitive Programming}
 \jobEntry{讲师 @ NOI 2026 湖南省队集训}{Apr. 2026}{}
-\jobEntry{讲师 @ 学军信友队暑期集训}{Aug. 2026}{}
+\jobEntry{讲师 @ 学军信友队暑期集训}{Jul. -- Aug. 2026}{}
 \jobEntry{讲师 @ 中国计算机学会 · 信息学夏令营}{Aug. 2023}{}
 \jobEntry{教练 @ 深北莫附中}{Aug. 2023 -- Feb. 2025}{由校长特聘担任信息学竞赛教练}
 \jobEntry{出题人 @ 牛客竞赛}{}{全权负责 6 场参与人数 2000+ 的比赛的出题与讲解}

@@ -68,7 +68,7 @@
   {0em}
   {#1}
   [\vspace{0.2ex}\hrule height 0.6pt]
-\titlespacing*{\section}{0pt}{0.6ex}{1.0ex}
+\titlespacing*{\section}{0pt}{1.8ex}{1.0ex}
 
 % --- Custom commands ---
 
@@ -112,11 +112,8 @@
     \centering
     {\fontsize{22pt}{26pt}\selectfont\bfseries\color{PrimaryColor}Sichen Wang}\\[0.45em]
     {\color{DescriptionGray}
-      \faIcon{graduation-cap}\ ECE · Sophomore \quad
-      \faIcon{award}\ First-Class Scholarship \\[0.3em]
+      \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \quad
       \faIcon{phone}\ +86 19118814609 \quad
-      \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \\[0.3em]
-      \faIcon{github}\ \href{https://github.com/sichen-wang}{sichen-wang} \quad
       \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichen-wang.github.io}{sichen-wang.github.io}}
   \end{minipage}%
 }
@@ -131,7 +128,7 @@
     {\usebox{\headerbox}};
   \node[anchor=south east, inner sep=0pt] at
     ([xshift=-1.7cm, yshift={\dimexpr -1.4cm-\ht\headerbox-\dp\headerbox\relax}]current page.north east)
-    {\includegraphics[height=\dimexpr\ht\headerbox+\dp\headerbox+0.5cm\relax, keepaspectratio]{photo.JPG}};
+    {\includegraphics[height=2.5cm, keepaspectratio]{photo.JPG}};
 \end{tikzpicture}%
 
 \vspace{-2.4em}
@@ -145,18 +142,35 @@
 % 左栏偏窄：左对齐 + 禁连字断词，长项按词换行，避免两端对齐拉出大间隙
 \raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\relax
 
+% --- Education ---
+\section{Education}
+{\color{DescriptionGray}
+\textbf{Shenzhen MSU-BIT University}\\[0.2em]
+% 前一行占满整个左栏宽度，只有末行给年份让位；用 tabular 固定列宽的话
+% 每一行都会被压窄，学位名会被挤成三行
+B.Eng. in Electronic and Computer\\
+\makebox[\dimexpr\linewidth-0.5em\relax][l]{Engineering\hfill 2024 -- 2028}
+}
+
+\vspace*{0.5em}
+\subSection{University Honors}
+{\color{DescriptionGray}
+First-Class Scholarship\\[0.2em]
+Outstanding Student\\[0.2em]
+Excellence in Sci-Tech Innovation
+}
+
 % --- Interests ---
+\vspace*{0.3em}
 \section{Interests}
 {\color{DescriptionGray}
-Theory of Algorithms\\[0.2em]
-Learning Theory\\[0.2em]
-Theoretical CS\\[0.2em]
-Discrete Mathematics\\[0.2em]
-Computational Mathematics
+Theoretical Computer Science\\[0.2em]
+Algorithm Design and Analysis\\[0.2em]
+Statistical Learning Theory
 }
 
 % --- Skills ---
-\vspace*{-0.15em}
+\vspace*{0.3em}
 \section{Skills}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -167,7 +181,7 @@ Computational Mathematics
 \end{tabular*}}
 
 % --- Languages ---
-\vspace*{-0.15em}
+\vspace*{0.3em}
 \section{Languages}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -177,16 +191,10 @@ Russian & A2 \\
 \end{tabular*}}
 
 % --- Hobbies ---
-\vspace*{-0.15em}
+\vspace*{0.3em}
 \section{Hobbies}
 {\color{DescriptionGray}
-Piano / Violin\\[0.2em]
-Drums (CMA Gr.\ 10, Distinction)\\[0.2em]
-Badminton\\[-0.05em]
-(Intramural Quarterfinalist)\\[0.2em]
-50m Sprint 6.4s (Intramural 1st)\\[0.2em]
-Debate\\[-0.05em]
-(Intramural 2nd, Best Debater)
+Piano, Violin, Drums (CMA Grade 10, Distinction), Badminton (Intramural Quarterfinalist), Debate (Intramural 2nd \& Best Debater)
 }
 
 \end{minipage}%
@@ -199,26 +207,6 @@ Debate\\[-0.05em]
 \raggedright
 
 \textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}.\ Accepted at ICML 2026.
-
-\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}.\ Submitted to NeurIPS 2026.
-
-\textbf{Sichen Wang}.\ \textit{The Minimax Rate of Online Isotonic Regression on Product Orders}.\ Submitted to NeurIPS 2026.
-
-Qihao Shi, Zeyu Wang, Jingbang Chen, \textbf{Sichen Wang}, Danni Ren, Wujian Yang, Guanlin Chen, Mingli Song, Can Wang.\ \textit{An Efficient Index Framework for Fast Query Processing on Dynamic Uncertain Graphs}.\ Submitted to IEEE Transactions on Knowledge and Data Engineering (TKDE).
-
-Ruida Liu, Wang Xu, Shuoran Cheng, \textbf{Sichen Wang}, Weichao Pan, Han Puyu.\ \textit{DeepOcean-PT: Efficient Pressure-to-Temperature Profile Reconstruction for the Deep Ocean}.\ Submitted to IEEE Journal of Oceanic Engineering (JOE).
-
-\textbf{Sichen Wang}, Zhipeng Lu, Jingbang Chen.\ \textit{The Price of Order in the Logarithmic Method}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}, Jingbang Chen.\ \textit{A Complexity Dichotomy for Minimum-Cost Two-Neighbor Bootstrap Percolation}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}.\ \textit{Min-Plus Compression for All Best Swap Edges}.\ Submitted to SODA~2027.
-
-\textbf{Sichen Wang}.\ \textit{The Movement Complexity of Sorting}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}.\ \textit{The Complexity of Steering Rotor Walks}.\ \mbox{Submitted to SODA 2027.}
-
-\textbf{Sichen Wang}, Zhipeng Lu.\ \textit{Internal Observability and Certified Reduction of Polynomial Loops over Finite Fields}.\ \mbox{Submitted to POPL 2027.}
 
 \endgroup
 
@@ -240,13 +228,14 @@ AdventureX 2025 Hackathon & \textbf{Champion} & \\
 \subSection{Research}
 \jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec.\ 2024 -- Present}{Frontier research on the foundations of large language models with Prof.\ Xiaoying Tang, School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen.}
 \jobEntry{Research Assistant @ SMBU}{Nov.\ 2025 -- Present}{Frontier research in computational mathematics with Prof.\ Zhipeng Lu, Faculty of Engineering, Shenzhen MSU-BIT University.}
+\jobEntry{Research Assistant @ CUHK-Shenzhen}{Nov.\ 2025 -- Present}{Frontier research on algorithm analysis, data structures, graph theory and graph mining with Prof.\ Jingbang Chen, The Chinese University of Hong Kong, Shenzhen.}
 
 \subSection{Industry}
-\jobEntry{Algorithm Researcher @ RobustMotion}{May 2025 -- Present}{Authored an internal technical report; proposed the ``Turning-Potential Avoidance'' method for a class of data scheduling problems on planar grid graphs.}
+\jobEntry{Algorithm Researcher @ RobustMotion}{May 2025 -- May 2026}{Authored an internal technical report; proposed the ``Turning-Potential Avoidance'' method for a class of data scheduling problems on planar grid graphs.}
 
 \subSection{Competitive Programming}
 \jobEntry{Lecturer @ NOI 2026 Hunan Provincial Team Training}{Apr.\ 2026}{}
-\jobEntry{Lecturer @ Xuejun Xinyou Team Summer Camp}{Aug.\ 2026}{}
+\jobEntry{Lecturer @ Xuejun Xinyou Team Summer Camp}{Jul.\ -- Aug.\ 2026}{}
 \jobEntry{Lecturer @ CCF Informatics Summer Camp}{Aug.\ 2023}{}
 \jobEntry{Coach @ SMBU Experimental High School}{Aug.\ 2023 -- Feb.\ 2025}{Specially appointed by the principal as the informatics olympiad coach.}
 \jobEntry{Problem Setter @ Nowcoder}{}{Solely responsible for problem setting and editorials of 6 contests, each with 2000+ participants.}

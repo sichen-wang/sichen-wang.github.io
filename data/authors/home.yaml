@@ -12,9 +12,7 @@ postnominals:
 
 role: Researcher in Computer Science
 bio: |
-  I am Sichen Wang, an undergraduate student in Electronic and Computer Engineering at Shenzhen MSU-BIT University. With over 8 years of experience in competitive programming, I have achieved significant recognition in high-level algorithmic contests, including Gold Medals in the ICPC Asia Regional Contests and the China Collegiate Programming Contest.
-
-  Now I am a Research Assistant at The Chinese University of Hong Kong, Shenzhen. My research interests lie at the intersection of Computer Science and Computational Mathematics, with a focus on Programming, Theoretical Computer Science, and Machine Learning Theory. I am dedicated to solving complex computational problems and exploring the mathematical foundations of learning algorithms.
+  I am Sichen Wang, an undergraduate in Electronic and Computer Engineering at Shenzhen MSU-BIT University, currently a Research Assistant at The Chinese University of Hong Kong, Shenzhen. My research interests are Theoretical Computer Science, Algorithm Design and Analysis, and Statistical Learning Theory. My work spans quite a few areas, but the core question I care about has always been the same: how the complexity of a problem should be characterized, and what quantity ultimately determines it. I like to solve a problem completely: prove a lower bound, add the matching upper bound, and ideally an algorithm that attains it, closing the loop. Starting in seventh grade, I spent eight years in competitive programming and won gold medals at the ICPC Asia Regional Contests. I then turned to research, and my first paper, on noisy evolution strategies, appeared at ICML 2026. These days I am looking for remote or summer research opportunities in the United States, as well as PhD openings. Outside research, I play piano, violin, and drums, and enjoy badminton. Feel free to email me, whether to talk research or set up a game.
 
 affiliations:
   - name: "Shenzhen MSU-BIT University,<br>Faculty of Engineering"
@@ -59,6 +57,7 @@ interests:
   - Piano
   - Violin
   - Drum Kit
+  - Badminton
 
 skills:
   - name: Technical Skills

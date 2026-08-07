@@ -11,10 +11,8 @@ name:
 postnominals:
 
 role: Researcher in Computer Science
-bio: |
-  I am Sichen Wang, an undergraduate student in Electronic and Computer Engineering at Shenzhen MSU-BIT University. With over 8 years of experience in competitive programming, I have achieved significant recognition in high-level algorithmic contests, including Gold Medals in the ICPC Asia Regional Contests and the China Collegiate Programming Contest.
-
-  Now I am a Research Assistant at The Chinese University of Hong Kong, Shenzhen. My research interests lie at the intersection of Computer Science and Computational Mathematics, with a focus on Programming, Theoretical Computer Science, and Machine Learning Theory. I am dedicated to solving complex computational problems and exploring the mathematical foundations of learning algorithms.
+# bio 字段已删：旧文案（"8 年竞赛"开头）与首页新 bio 冲突，且 Background 页
+# 的四个 resume-* 区块都不渲染 bio。首页文案的唯一来源是 home.yaml。
 
 affiliations:
   - name: |
@@ -47,59 +45,91 @@ education:
     institution: Shenzhen MSU-BIT University
     start: 2024-09-01
     end: 2028-06-30
+    # 荣誉措辞与 CV_en.tex 的 University Honors 逐字一致（分母类描述已按用户要求去掉）
     summary: |
-      - First-Class Scholarship (Top 5% academically)
-      - Outstanding Student Award (1 of 12 recipients)
-      - Excellence in Sci-Tech Innovation Award (1 of 4 recipients)
+      - First-Class Scholarship
+      - Outstanding Student
+      - Excellence in Sci-Tech Innovation
 
 
+# 条目、日期与措辞和 static/uploads/CV_en.tex 的 Experience 段保持同步；
+# 顺序也照抄 CV（Research → Industry → Competitive Programming），
+# resume-experience 区块按文件顺序渲染、不排序。
+# 单月活动的写法：start 留空、end 写月份字符串——模板对解析失败的 end 会原样
+# 输出，这样只显示一个月份，而不是 "August 2023 – August 2023"。
 experience:
   - role: Research Assistant
     org: The Chinese University of Hong Kong, Shenzhen
     start: 2024-12-03
     summary: |-
-      Conducting research on the foundations of large language models under the supervision of Prof. Xiaoying Tang, currently focusing on LLM prompt optimization.
+      Frontier research on the foundations of large language models with Prof. Xiaoying Tang, School of Science and Engineering.
     tags:
       - LLMs
       - Prompt Optimization
       - AI Reasoning
+  - role: Research Assistant
+    org: Shenzhen MSU-BIT University
+    start: 2025-11-01
+    summary: |-
+      Frontier research in computational mathematics with Prof. Zhipeng Lu, Faculty of Engineering.
+    tags:
+      - Computational Mathematics
+  - role: Research Assistant
+    org: The Chinese University of Hong Kong, Shenzhen
+    start: 2025-11-01
+    summary: |-
+      Frontier research on algorithm analysis, data structures, graph theory and graph mining with Prof. Jingbang Chen.
+    tags:
+      - Algorithms
+      - Data Structures
+      - Graph Theory
   - role: Algorithm Researcher
     org: RobustMotion
     start: 2025-05-27
+    end: 2026-05-31
     summary: |-
-      Independently completed the paper *Data Transmission Scheduling on Grid Graph* and proposed a turn-potential avoidance method to address a complex data scheduling problem on planar grid graphs.
+      Authored an internal technical report; proposed the "Turning-Potential Avoidance" method for a class of data scheduling problems on planar grid graphs.
     tags:
       - Algorithms
       - Graph Theory
       - Scheduling
-  - role: Competitive Programming Coach
-    org: Shenzhen No.33 Senior High School
-    start: 2023-08-12
-    end: 2025-02-15
-    summary: |-
-      Invited to serve as a coach for the informatics competition team, responsible for teaching advanced algorithm courses to high-level students.
+  - role: Lecturer
+    org: NOI 2026 Hunan Provincial Team Training
+    end: "April 2026"
     tags:
       - Teaching
       - Competitive Programming
-      - Algorithms
-  - role: Competitive Programming Lecturer
-    org: China Computer Federation (CCF)
-    start: 2023-08-06
-    end: 2023-08-12
+  - role: Lecturer
+    org: Xuejun Xinyou Team Summer Camp
+    start: 2026-07-01
+    end: 2026-08-31
+    tags:
+      - Teaching
+      - Competitive Programming
+  - role: Lecturer
+    org: CCF Informatics Summer Camp
+    end: "August 2023"
     summary: |-
       Delivered lectures, held after-class Q&A sessions, and provided post-exam solution analysis in the 2023 Greater Bay Area Youth Informatics Summer Camp.
     tags:
       - Teaching
       - CCF
-      - Informatics
+  - role: Coach
+    org: SMBU Experimental High School
+    start: 2023-08-12
+    end: 2025-02-15
+    summary: |-
+      Specially appointed by the principal as the informatics olympiad coach, teaching advanced algorithm courses to high-level students.
+    tags:
+      - Teaching
+      - Competitive Programming
   - role: Problem Setter
     org: Nowcoder
     summary: |-
-      Invited six times to design problems and deliver editorials for contests on ac.nowcoder.com, with around 2,000 participants per contest on average. These included one CSP-S mock contest, one NOIp mock contest, two practice contests, and two challenge contests.
+      Solely responsible for problem setting and editorials of 6 contests on ac.nowcoder.com, each with 2,000+ participants. These included one CSP-S mock contest, one NOIp mock contest, two practice contests, and two challenge contests.
     tags:
       - Problem Setting
       - Contest Design
-      - Nowcoder
 
 skills:
   - name: Technical Skills
@@ -112,8 +142,6 @@ skills:
     items:
       - label: LaTeX
         level: 3
-      - label: MATLAB
-        level: 2
 
 languages:
   - name: Chinese

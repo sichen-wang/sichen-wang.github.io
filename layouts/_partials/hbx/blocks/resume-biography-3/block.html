@@ -88,7 +88,9 @@
     <div class="home-hero-grid grid grid-cols-1 gap-6 md:gap-6 items-start">
       
       {{/* Left Column: Flexible span */}}
-      <div class="md:-mt-8 flex flex-col items-center text-center space-y-5 md:space-y-6">
+      {{/* 这里曾有 md:-mt-8 往上提 32px——那是中间栏还只有两段短 bio 时调的；
+           bio 加长后左栏顶着上沿反而重心偏高，撤掉负边距即是下移 */}}
+      <div class="flex flex-col items-center text-center space-y-5 md:space-y-6">
         
         {{/* Banner Image */}}
         {{ $img := "" }}

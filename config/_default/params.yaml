@@ -21,7 +21,7 @@ hugoblox:
     # Short tagline displayed on your site
     tagline: ""
     # Site meta description for search engines and social sharing
-    description: "Personal academic website of Sichen Wang (王司晨) — theoretical computer science, algorithm design, and machine learning theory."
+    description: "Personal academic website of Sichen Wang (王司晨) — theoretical computer science, algorithm design and analysis, and statistical learning theory."
     # Social accounts (used for meta tags like Twitter Cards)
     social:
       twitter: "" # Twitter/X handle for Twitter Cards (without @)

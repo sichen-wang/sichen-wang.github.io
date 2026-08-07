@@ -33,9 +33,9 @@ categories:
 
 现在我们来探寻 \(b\) 进制数在模 \(n\) 意义下可以使用哪种同余化简方式(或不满足三类中任意一种).
 
-1. 若存在 \(k\) 满足 \(b^{k} \equiv 0 \pmod n\), 那么 \(\overline{a_{ta}_{t - 1}\cdots a_{k + 1}00 \cdots 0} \equiv 0 \pmod n\), 则 \(\overline{a_{ta}_{t - 1}\cdots a_{2a}_{1}} \equiv \overline{a_{ka}_{k - 1}\cdots a_{2a}_{1}} \pmod n\), 可以使用第一类化简方式.
-2. 若存在 \(k\) 满足 \(b^{k} \equiv 1 \pmod n\), 那么 \(\overline{a_{ta}_{t - 1}\cdots a_{k + 1}00 \cdots 0} \equiv \overline{a_{ta}_{t - 1}\cdots a_{k + 1}} \pmod n\), 则 \(\overline{a_{ta}_{t - 1}\cdots a_{2a}_{1}} \equiv \overline{a_{ka}_{k - 1}\cdots a_{1}} + \overline{a_{2k}a_{2k - 1}\cdots a_{k + 1}} + \cdots \pmod n\), 可以使用第二类化简方式.
-3. 若存在 \(k\) 满足 \(b^{k} \equiv -1 \pmod n\), 那么 \(\overline{a_{pk}a_{pk - 1}\cdots a_{(p - 1)k + 1} 00\cdots 0} \equiv (-1)^{p}\overline{a_{pk}a_{pk - 1}\cdots a_{(p - 1)k + 1}}\), 则 \(\overline{a_{ta}_{t - 1}\cdots a_{2a}_{1}} \equiv \overline{a_{ka}_{k - 1}\cdots a_{1}} - \overline{a_{2k}a_{2k - 1}\cdots a_{k + 1}} + \cdots \pmod n\), 可以使用第三类化简方式.
+1. 若存在 \(k\) 满足 \(b^{k} \equiv 0 \pmod n\), 那么 \(\overline{a_{t}a_{t - 1}\cdots a_{k + 1}00 \cdots 0} \equiv 0 \pmod n\), 则 \(\overline{a_{t}a_{t - 1}\cdots a_{2}a_{1}} \equiv \overline{a_{k}a_{k - 1}\cdots a_{2}a_{1}} \pmod n\), 可以使用第一类化简方式.
+2. 若存在 \(k\) 满足 \(b^{k} \equiv 1 \pmod n\), 那么 \(\overline{a_{t}a_{t - 1}\cdots a_{k + 1}00 \cdots 0} \equiv \overline{a_{t}a_{t - 1}\cdots a_{k + 1}} \pmod n\), 则 \(\overline{a_{t}a_{t - 1}\cdots a_{2}a_{1}} \equiv \overline{a_{k}a_{k - 1}\cdots a_{1}} + \overline{a_{2k}a_{2k - 1}\cdots a_{k + 1}} + \cdots \pmod n\), 可以使用第二类化简方式.
+3. 若存在 \(k\) 满足 \(b^{k} \equiv -1 \pmod n\), 那么 \(\overline{a_{pk}a_{pk - 1}\cdots a_{(p - 1)k + 1} 00\cdots 0} \equiv (-1)^{p}\overline{a_{pk}a_{pk - 1}\cdots a_{(p - 1)k + 1}}\), 则 \(\overline{a_{t}a_{t - 1}\cdots a_{2}a_{1}} \equiv \overline{a_{k}a_{k - 1}\cdots a_{1}} - \overline{a_{2k}a_{2k - 1}\cdots a_{k + 1}} + \cdots \pmod n\), 可以使用第三类化简方式.
 
 于是想找到 \(b\) 进制数在模 \(n\) 意义下的化简方式, 只需要找到最小的 \(k\) 满足 \(b^{k} \equiv 0\ \textrm{or}\ 1\ \textrm{or}- 1\) 即对应第 \(1/2/3\) 类化简方式. 若直到 \(k\) 等于 \(b\) 的幂在模 \(n\) 意义下的循环节长度仍未找到满足条件的 \(k\), 则 \(b\) 进制数在模 \(n\) 意义下不能使用这 \(3\) 种方式化简.
 

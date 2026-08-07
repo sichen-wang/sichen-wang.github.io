@@ -214,7 +214,7 @@ dp_{l,r}=\min\limits_{i\leqslant k\lt j}\{dp_{i,k}+dp_{k+1,j}+w_{i,j}\}
 m\sum_{i=1}^m(d_i-ave)^2=m\sum_{i=1}^md_i^2-\left(\sum_{i=1}^md_i\right)^2
 \]
 
-容易观察到此题本质上是在求 \(\left(\sum_{i=1}^{md}_{i}\right)^{2}_{\min}\)，于是设 \(f_{i,j}\) 表示当前已经考虑到第 \(i\) 段，当前已经分成了 \(j\) 段的最小 \(\sum_{p=1}^{jd}_{p}.\) 枚举转移点，容易得到转移方程 ：
+容易观察到此题本质上是在求 \(\left(\sum_{i=1}^{m}d_{i}\right)^{2}_{\min}\)，于是设 \(f_{i,j}\) 表示当前已经考虑到第 \(i\) 段，当前已经分成了 \(j\) 段的最小 \(\sum_{p=1}^{j}d_{p}.\) 枚举转移点，容易得到转移方程 ：
 
 \[
 f_{i,j}=\min\limits_{k\lt i}\{f_{k,j-1}+(s_i-s_k)^2\}

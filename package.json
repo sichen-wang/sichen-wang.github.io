@@ -10,7 +10,8 @@
     "dev:search": "hugo --minify && npm run pagefind && hugo server --disableFastRender",
     "new:blog": "node scripts/new-blog-post.mjs",
     "build": "hugo --minify && npm run pagefind",
-    "pagefind": "pagefind --site public"
+    "pagefind": "pagefind --site public",
+    "check:math": "node scripts/check-math.js"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",

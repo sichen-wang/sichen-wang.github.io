@@ -1,0 +1,30 @@
+{{/* 覆盖主题同名模板，只加了 name / description / publisher 三个字段。
+
+     原版只有 url 和 potentialAction。Google 判定搜索结果里显示的站点名时最优先读
+     WebSite 结构化数据的 name，读不到就自己猜 —— 实测猜成了
+     "GitHub Pages documentation"。og:site_name 虽然是对的，但优先级低于结构化数据。
+
+     publisher 用 @id 指向 hooks/head-end/person-jsonld.html 输出的 Person 实体，
+     让「网站」和「人」在图谱里连起来，而不是两个孤立节点。 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": {{ printf "%s#website" site.BaseURL }},
+  "name": {{ site.Params.hugoblox.identity.name | default site.Title }},
+  {{- with site.Params.hugoblox.identity.description }}
+  "description": {{ . }},
+  {{- end }}
+  {{- if eq (site.Params.hugoblox.identity.type | default "person") "person" }}
+  "publisher": { "@id": {{ printf "%s#person" site.BaseURL }} },
+  {{- end }}
+  {{- if site.Params.hugoblox.search.enable }}
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {{ printf "%s?q={search_term_string}" site.BaseURL }},
+    "query-input": "required name=search_term_string"
+  },
+  {{end -}}
+  "url": {{site.BaseURL}}
+}
+</script>

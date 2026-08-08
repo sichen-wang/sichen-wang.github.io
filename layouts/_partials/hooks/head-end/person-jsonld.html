@@ -94,6 +94,8 @@
       {{ $person = merge $person (dict "sameAs" $sameAs) }}
     {{ end }}
 
+    {{/* 站点名（WebSite.name）不在这里补 —— 那样会出现两个 WebSite 实体。
+         已改为直接覆盖主题的 layouts/_partials/jsonld/website.html。 */}}
     <script type="application/ld+json">{{ $person | jsonify (dict "indent" "") | safeJS }}</script>
   {{ end }}
 {{ end }}

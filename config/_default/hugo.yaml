@@ -47,8 +47,18 @@ enableRobotsTXT: true
 footnotereturnlinkcontents: <sup>^</sup>
 ignoreFiles: [".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 disableAliases: false
+# llms.txt：给 AI 抓取器的站点索引（llmstxt.org 约定）。用输出格式生成而不是
+# 在 static/ 放死文件，这样新增博文/论文后内容自动跟随，不会写完就过期。
+# params.yaml 里的 hugoblox.seo.ai 段在本主题版本没有对应模板，是空转的。
+outputFormats:
+  llms:
+    mediaType: text/plain
+    baseName: llms
+    isPlainText: true
+    notAlternative: true
+
 outputs:
-  home: [HTML, RSS, headers, redirects, backlinks]
+  home: [HTML, RSS, headers, redirects, backlinks, llms]
   section: [HTML, RSS]
 imaging:
   resampleFilter: lanczos

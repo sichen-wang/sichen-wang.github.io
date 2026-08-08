@@ -1,0 +1,99 @@
+{{/* Person 结构化数据（仅首页）。
+
+     主题在 identity.type: person 时只输出 WebSite + SearchAction —— 见
+     jsonld/main.html：Person 那条分支根本不存在，`{{ if ne $site_type "Person" }}`
+     只在“非个人站”时补 business.html。对学术主页来说缺的恰恰是最关键的一块。
+
+     sameAs 的作用是把 Google Scholar、ORCID、GitHub 声明为同一实体，这是搜索引擎
+     与 AI 建立人物认知、以及 Google Knowledge Graph 的标准输入。缺了它，各平台上
+     的账号在机器眼里就是彼此无关的几个页面。
+
+     数据源是 home.yaml（首页展示的那份 author profile），改那个文件这里自动跟随。 */}}
+
+{{ if .IsHome }}
+  {{ $profile := partial "functions/get_author_profile" "home" }}
+  {{ if $profile.has_data }}
+
+    {{/* sameAs：只收外部个人主页类链接。邮箱不是 URL，CV 是文档不是身份页，都排除 */}}
+    {{ $sameAs := slice }}
+    {{ range $profile.links }}
+      {{ if reflect.IsMap . }}
+        {{ $u := "" }}
+        {{ with index . "url" }}{{ $u = strings.TrimSpace (printf "%v" .) }}{{ end }}
+        {{ $icon := "" }}
+        {{ with index . "icon" }}{{ $icon = printf "%v" . }}{{ end }}
+        {{ if and (hasPrefix $u "http") (ne $icon "academicons/cv") }}
+          {{ $sameAs = $sameAs | append $u }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{/* 邮箱：从 mailto: 链接里取 */}}
+    {{ $email := "" }}
+    {{ range $profile.links }}
+      {{ if reflect.IsMap . }}
+        {{ $u := "" }}
+        {{ with index . "url" }}{{ $u = strings.TrimSpace (printf "%v" .) }}{{ end }}
+        {{ if hasPrefix $u "mailto:" }}{{ $email = strings.TrimPrefix "mailto:" $u }}{{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{/* 所属机构。home.yaml 的机构名里有 <br> 是为了首页排版换行，
+         结构化数据里要还原成一行纯文本 */}}
+    {{ $affiliations := slice }}
+    {{ range $profile.affiliations }}
+      {{ if reflect.IsMap . }}
+        {{ $n := "" }}
+        {{ with index . "name" }}{{ $n = printf "%v" . }}{{ end }}
+        {{ $n = replaceRE "<br\\s*/?>" " " $n | plainify | strings.TrimSpace }}
+        {{ $org := dict "@type" "Organization" "name" $n }}
+        {{ with index . "url" }}
+          {{ $org = merge $org (dict "url" (printf "%v" .)) }}
+        {{ end }}
+        {{ if $n }}{{ $affiliations = $affiliations | append $org }}{{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{/* knowsAbout：研究方向。home.yaml 的 interests 前三项是研究方向，
+         其余是乐器与运动 —— 后者不该作为“专业领域”喂给搜索引擎 */}}
+    {{ $knowsAbout := slice }}
+    {{ range $i, $e := $profile.interests }}
+      {{ if lt $i 3 }}{{ $knowsAbout = $knowsAbout | append (strings.TrimSpace (printf "%v" $e)) }}{{ end }}
+    {{ end }}
+
+    {{ $person := dict
+      "@context" "https://schema.org"
+      "@type" "Person"
+      "@id" (printf "%s#person" site.BaseURL)
+      "url" site.BaseURL
+      "name" $profile.title
+    }}
+
+    {{ with $profile.name_alternate }}
+      {{ $person = merge $person (dict "alternateName" (printf "%v" .)) }}
+    {{ end }}
+    {{ with $profile.role }}
+      {{ $person = merge $person (dict "jobTitle" (printf "%v" .)) }}
+    {{ end }}
+    {{ with $profile.bio }}
+      {{ $person = merge $person (dict "description" (printf "%v" . | plainify | strings.TrimSpace)) }}
+    {{ end }}
+    {{ with $profile.avatar }}
+      {{ $person = merge $person (dict "image" .Permalink) }}
+    {{ end }}
+    {{ with $email }}
+      {{ $person = merge $person (dict "email" .) }}
+    {{ end }}
+    {{ if gt (len $affiliations) 0 }}
+      {{ $person = merge $person (dict "affiliation" $affiliations) }}
+    {{ end }}
+    {{ if gt (len $knowsAbout) 0 }}
+      {{ $person = merge $person (dict "knowsAbout" $knowsAbout) }}
+    {{ end }}
+    {{ if gt (len $sameAs) 0 }}
+      {{ $person = merge $person (dict "sameAs" $sameAs) }}
+    {{ end }}
+
+    <script type="application/ld+json">{{ $person | jsonify (dict "indent" "") | safeJS }}</script>
+  {{ end }}
+{{ end }}

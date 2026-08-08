@@ -11,8 +11,10 @@ name:
 postnominals:
 
 role: Researcher in Computer Science
-# bio 字段已删：旧文案（"8 年竞赛"开头）与首页新 bio 冲突，且 Background 页
-# 的四个 resume-* 区块都不渲染 bio。首页文案的唯一来源是 home.yaml。
+# 与 home.yaml 的 bio 逐字一致。这段渲染在文章/论文页脚的作者卡片里
+# （layouts/_partials/page_author_card.html）；改文案时两个文件一起改。
+bio: |
+  I am Sichen Wang, an undergraduate in Electronic and Computer Engineering at Shenzhen MSU-BIT University, currently a Research Assistant at The Chinese University of Hong Kong, Shenzhen. My research interests are Theoretical Computer Science, Algorithm Design and Analysis, and Statistical Learning Theory. My work spans quite a few areas, but the core question I care about has always been the same: how the complexity of a problem should be characterized, and what quantity ultimately determines it. I like to solve a problem completely: prove a lower bound, add the matching upper bound, and ideally an algorithm that attains it, closing the loop. Starting in seventh grade, I spent eight years in competitive programming and won gold medals at the ICPC Asia Regional Contests. I then turned to research, and my first paper, on noisy evolution strategies, appeared at ICML 2026. These days I am looking for remote or summer research opportunities in the United States, as well as PhD openings. Outside research, I play piano, violin, and drums, and enjoy badminton. Feel free to email me, whether to talk research or set up a game.
 
 affiliations:
   - name: |
@@ -22,14 +24,24 @@ affiliations:
       The Chinese University of Hong Kong, Shenzhen, School of Science and Engineering
     url: "https://cuhk.edu.cn/"
 
+# 与 home.yaml 的 links 保持一致：这五个图标同时出现在首页和文章页脚的作者卡片，
+# 两处不同会让访客以为是两个人。CV 指英文版（站点通篇英文）。
 links:
   - icon: at-symbol
-    url: "mailto:wsc@smbu.edu.cn"
+    url: "mailto:scwang.cs@gmail.com"
     label: E-mail Me
+  - icon: academicons/google-scholar
+    url: "https://scholar.google.com/citations?user=NE0cZgEAAAAJ"
+    label: Google Scholar
+  - icon: academicons/orcid
+    url: "https://orcid.org/0009-0008-3734-4006"
+    label: ORCID
   - icon: brands/github
     url: "https://github.com/sichen-wang"
+    label: GitHub
   - icon: academicons/cv
-    url: "/uploads/CV.pdf"
+    url: "/uploads/CV_en.pdf"
+    label: CV (English)
 
 interests:
   - Theoretical Computer Science

@@ -23,6 +23,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -86,8 +87,36 @@ def main() -> int:
     img_dir = work / "figures-svg"
     img_dir.mkdir(exist_ok=True)
 
+    # LaTeXML 没有 aliascnt 的绑定。用了它的稿件里，\newtheorem{lemma}[lemma]{Lemma}
+    # 的计数器指向一个未定义的别名，结果引理/命题/推论全部渲染成没有编号的
+    # 「Lemma」「Proposition」，正文里的 \cref 交叉引用随之失效（定理本身不受影响，
+    # 因为它用的是自己的计数器）。这里把 aliascnt 的写法改写成等价的共享计数器
+    # 语法再交给 LaTeXML —— \newtheorem{X}[Y]{Label} 本来就是「与 Y 共用计数器」。
+    # 改写发生在工作目录的副本上，论文源目录不受影响。
+    src_for_latexml = src
+    tex_text = tex.read_text(encoding="utf-8")
+    if "\\newaliascnt" in tex_text:
+        alias = dict(
+            re.findall(r"\\newaliascnt\{(\w+)\}\{(\w+)\}", tex_text)
+        )  # 别名 -> 真实计数器
+        patched = tex_text
+        for name, target in alias.items():
+            patched = patched.replace(
+                rf"\newtheorem{{{name}}}[{name}]{{", rf"\newtheorem{{{name}}}[{target}]{{"
+            )
+        patched = re.sub(r"\\newaliascnt\{\w+\}\{\w+\}\s*", "", patched)
+        patched = re.sub(r"\\aliascntresetthe\{\w+\}\s*", "", patched)
+        patched = re.sub(r"\\usepackage\{aliascnt\}\s*", "", patched)
+
+        src_for_latexml = work / "src"
+        if src_for_latexml.exists():
+            shutil.rmtree(src_for_latexml)
+        shutil.copytree(src, src_for_latexml)
+        (src_for_latexml / tex.name).write_text(patched, encoding="utf-8")
+        print(f"      已改写 aliascnt（{', '.join(alias)} → 共用 {set(alias.values())} 计数器）")
+
     print("[1/5] latexml：解析 LaTeX")
-    run([latexml, f"--dest={xml}", tex.name], cwd=src)
+    run([latexml, f"--dest={xml}", tex.name], cwd=src_for_latexml)
 
     print("[2/5] latexmlpost：生成 HTML（数学保留 LaTeX 源）")
     run(

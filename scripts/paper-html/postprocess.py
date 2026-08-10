@@ -200,6 +200,10 @@ def clean_tex(tex: str) -> str:
     tex = re.sub(r"\s*\n\s*", " ", tex)
     tex = tex.replace("~{}", " ")
     tex = RE_BIG_DELIM.sub(r"\1\2", tex)
+    # amsthm 的证毕符号。写在行末的 `\qed` 会被 LaTeXML 一并收进公式源码，
+    # 而 KaTeX 没有这个宏，整条公式会渲染成红色报错。它是排版记号不是数学，
+    # 直接丢掉（章节末尾的 ∎ 由 LaTeXML 另行输出，不受影响）。
+    tex = re.sub(r"\\qed(?![a-zA-Z])\s*", "", tex)
     return tex.strip()
 
 
@@ -461,10 +465,30 @@ def check_balanced(fragment: str) -> list[str]:
 def extract_body(html: str, include_appendix: bool) -> str:
     body = extract_page_content(html)
 
+    # 用配对计数删整块，不能用 `.*?</div>`：非贪婪会停在**第一个**闭合标签，
+    # 遇到内部有嵌套的块（摘要里带 itemize、作者块用 tabular 排版）就会在中途
+    # 截断——开标签被吃掉、内层的 </div></ul></li> 留在原地，产物随即失衡。
     for cls in DROP_CLASSES:
-        body = re.sub(
-            rf'<(div|h1)[^>]*class="[^"]*{cls}[^"]*"[^>]*>.*?</\1>', "", body, flags=re.S
+        for tag in ("div", "h1"):
+            pattern = re.compile(rf'<{tag}[^>]*class="[^"]*{cls}[^"]*"[^>]*>')
+            body = replace_blocks(body, pattern, tag, lambda block, m: "")
+
+    # 标题块的脚注（\thanks、\footnotetext[1]{Corresponding author.} 之类）。
+    # LaTeXML 把它们搬到文档开头一个独立的 <p> 里，而作者块已被上面的 DROP_CLASSES
+    # 删掉 —— 两者不在同一个容器，于是正文顶部会孤零零留下一行
+    # 「1footnotetext: Corresponding author.」，指向一个页面上根本不存在的作者列表。
+    # 只清理第一个 <section> 之前的范围：正文里的脚注是内容，必须留着。
+    first_section = body.find("<section")
+    if first_section > 0:
+        head, rest = body[:first_section], body[first_section:]
+        head = replace_blocks(
+            head,
+            re.compile(r'<span[^>]*class="[^"]*ltx_role_footnotetext[^"]*"[^>]*>'),
+            "span",
+            lambda block, m: "",
         )
+        head = re.sub(r"<p>\s*</p>", "", head)
+        body = head + rest
 
     # LaTeXML 的页脚（生成时间等）
     body = re.sub(r'<footer[^>]*class="ltx_page_footer".*?</footer>', "", body, flags=re.S)

@@ -257,9 +257,14 @@
              再标一行 "Conference paper" 属冗余。publication_types 仍保留在 front
              matter 里，用于 taxonomy 与结构化数据。 */}}
 
+        {{/* 摘要走 markdownify，可能含列表（原文用 itemize 列举各查询族的界）。
+             这个 grid 容器没有 prose，而 Tailwind 的 Preflight 会把 ul 的
+             list-style 重置为 none —— 列表会渲染成没有圆点的三行散句。
+             加 prose 恢复列表样式；max-w-none 是因为外层已经定了版心宽度，
+             prose 自带的 65ch 会把摘要挤窄，和上方 Publication 一行对不齐。 */}}
         {{ if .Params.abstract }}
           <div class="font-bold text-2xl">{{ i18n "abstract" }}</div>
-          <div>{{ .Params.abstract | markdownify }}</div>
+          <div class="prose dark:prose-invert max-w-none">{{ .Params.abstract | markdownify }}</div>
         {{ end }}
 
         {{ if eq .Type "events" }}

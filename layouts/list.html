@@ -15,7 +15,26 @@
 {{ $view := .Params.view | default "card" }}
 {{ $block := . }}
 
-{{ $paginator := .Paginate .Pages.ByDate.Reverse }}
+{{/* 排序：默认按日期倒序；publications 例外 —— 已过同行评审的排在预印本之前，
+     组内再按日期倒序。理由是这一列表的读者最先要判断的是每篇的学术状态，
+     而预印本往往比已录用的论文更新，纯按日期会把在审稿件顶到最上面。
+     分组依据是 publication_types：paper-conference / article-journal 等属于
+     已发表，manuscript（预印本）不在其列。 */}}
+{{ $sorted := .Pages.ByDate.Reverse }}
+{{ if eq .Type "publications" }}
+  {{ $reviewed := slice }}
+  {{ $other := slice }}
+  {{ range $sorted }}
+    {{ $types := .Params.publication_types | default (slice) }}
+    {{ if in $types "manuscript" }}
+      {{ $other = $other | append . }}
+    {{ else }}
+      {{ $reviewed = $reviewed | append . }}
+    {{ end }}
+  {{ end }}
+  {{ $sorted = $reviewed | append $other }}
+{{ end }}
+{{ $paginator := .Paginate $sorted }}
 {{ $config := dict 
   "columns" (.Params.columns | default 2) 
   "len" (len $paginator.Pages) 

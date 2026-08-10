@@ -138,10 +138,13 @@ jobs:
         PF_URL="https://github.com/pagefind/pagefind/releases/download/${PF_VERSION}/${PF_TARBALL}"
 
         echo "下载 ${PF_TARBALL}"
-        curl -sSL --retry 3 --retry-delay 5 -o /tmp/pagefind.tar.gz "$PF_URL"
+        # --fail 不能省：没有它时 404 会被当成正常响应，把错误页面存成 tar 包，
+        # 直到后面 tar 解包才报错，错误信息会指向完全无关的地方
+        curl -sSL --fail --retry 3 --retry-delay 5 -o /tmp/pagefind.tar.gz "$PF_URL"
 
-        # 校验：npm 的平台包里带着官方 sha256，用它核对下载内容
-        SHA_FILE="node_modules/@pagefind/linux-x64/${PF_TARBALL}.sha256"
+        # 校验：npm 的平台包里带着官方 sha256，用它核对下载内容。
+        # 注意在 bin/ 子目录下，不在包根目录。
+        SHA_FILE="node_modules/@pagefind/linux-x64/bin/${PF_TARBALL}.sha256"
         if [ -f "$SHA_FILE" ]; then
           EXPECT=$(cut -d' ' -f1 < "$SHA_FILE")
           ACTUAL=$(sha256sum /tmp/pagefind.tar.gz | cut -d' ' -f1)
@@ -159,15 +162,21 @@ jobs:
         /tmp/pagefind_extended --version
         /tmp/pagefind_extended --site public
 
-        # 验收信号：中文页面必须拿到真正的分词器，wasm 不能是 null
+        # 验收：zh 索引必须存在且覆盖全部博文。
+        # 注意**不能**检查 wasm 字段 —— 运行时源码是
+        #   let lang_wasm = index.wasm ? index.wasm : "unknown"
+        # 即 null 只是「无专用词干器，回落通用 wasm」。英文标 en-us 是因为有
+        # 词干器（strategies→strategy），中文没有词干化概念，extended 版建出的
+        # zh 索引 wasm 照样是 null。上一次构建就是被这个错误断言拦死的。
+        # 「确实在用 extended」由上面的显式下载 + sha256 校验保证，无需运行时再证。
         python3 - <<'PY'
         import json, sys
         d = json.load(open("public/pagefind/pagefind-entry.json"))
         langs = d.get("languages", {})
         print("索引语言:", {k: {"wasm": v.get("wasm"), "pages": v.get("page_count")} for k, v in langs.items()})
-        zh = langs.get("zh")
-        if zh and zh.get("wasm") is None:
-            print("::error::中文索引的 wasm 为 null —— 用的不是 extended 版，中文搜索会全部失效")
+        zh = langs.get("zh", {})
+        if zh.get("page_count", 0) < 50:
+            print(f"::error::zh 索引缺失或页面过少（{zh.get('page_count', 0)}，博客有 70+ 篇）——语言标注可能没生效")
             sys.exit(1)
         PY
 

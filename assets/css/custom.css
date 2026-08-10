@@ -190,6 +190,24 @@ samp {
   margin: 0;
 }
 
+/* 恢复列表标记：Tailwind 的 Preflight 把 ul/ol 的 list-style 清成 none、
+   padding 归零，卡片摘要不在 prose 容器里，没人给它加回来 —— 论文摘要里
+   用 itemize 列举的几条界会渲染成没有圆点、也不缩进的散句。
+   详情页的摘要另有 prose 兜底（见 layouts/single.html）。 */
+.page-body .blog-card-summary ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.page-body .blog-card-summary ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+
+.page-body .blog-card-summary li + li {
+  margin-top: 0.25rem;
+}
+
 /* 累加的相邻段落之间留一点间距 */
 .page-body .blog-card-summary > * + * {
   margin-top: 0.5rem;

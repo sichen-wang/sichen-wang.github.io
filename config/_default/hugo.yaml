@@ -37,8 +37,15 @@ build:
 # （论文页的 date 是 poster 当天，用于顶部与列表卡片显示，不代表最后修改时间）。
 # 优先级：git 提交时间 → front matter 的 lastmod → 文件修改时间 → date
 enableGitInfo: true
+# 回落链里**不能有** :fileModTime。CI 里 Hugo 对大部分文件取不到 git 信息
+# （fetch-depth: 0 已设，原因未查明），一旦回落到文件修改时间，那就是 CI 检出
+# 文件的时刻 —— 结果是每次重新构建都把上百个页面的「Last updated」刷成当天，
+# 实测一篇 3 月的博文线上显示成 8 月 10 日。
+# 落到 date（文章自己的日期）虽然不反映后续修改，但至少不会撒谎，也不会每次
+# 构建都变。这同时让 sitemap 的 lastmod 恢复可用（scripts/indexnow.py 依赖它
+# 判断哪些页面真的改过）。
 frontmatter:
-  lastmod: [':git', 'lastmod', ':fileModTime', 'date']
+  lastmod: [':git', 'lastmod', 'date']
 summaryLength: 30
 pagination:
   pagerSize: 10

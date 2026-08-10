@@ -81,3 +81,25 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+
+  # 部署完成后通知 IndexNow（Bing / Yandex / Seznam 等采纳该协议）。
+  # 逻辑在 scripts/indexnow.py 里，含为何只提交近期变更、以及 Google 为何
+  # 无法自动化的说明。密钥文件 static/<key>.txt 按协议公开，不是机密。
+  indexnow:
+    needs: [config, deploy]
+    if: needs.config.outputs.deploy-host == 'github-pages'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: scripts/indexnow.py
+        sparse-checkout-cone-mode: false
+
+    - name: Notify IndexNow of recently changed URLs
+      run: |
+        # 等 Pages 边缘节点生效，否则抓到的还是上一版 sitemap
+        sleep 45
+        python3 scripts/indexnow.py \
+          --host sichen-wang.github.io \
+          --key f8a5e0fb67dbd6db01887a1d610da508

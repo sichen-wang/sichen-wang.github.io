@@ -160,7 +160,12 @@ jobs:
         tar -xzf /tmp/pagefind.tar.gz -C /tmp
         chmod +x /tmp/pagefind_extended
         /tmp/pagefind_extended --version
-        /tmp/pagefind_extended --site public
+        # --force-language zh：全站单索引。分语言 + mergeIndex 实测有本质缺陷 ——
+        # Pagefind 合并副索引时 load_wasm:false，查询词永远由主语言 wasm 处理，
+        # 从英文页搜中文必然 0 命中（反向则丢词干还原）。统一进 zh 索引后，
+        # jieba 正确切中文（实测「贪心」6 命中），英文单词照样成 token 可原词
+        # 匹配；唯一代价是英文失去词干还原（strategies 搜不到 strategy）。
+        /tmp/pagefind_extended --site public --force-language zh
 
         # 验收：zh 索引必须存在且覆盖全部博文。
         # 注意**不能**检查 wasm 字段 —— 运行时源码是

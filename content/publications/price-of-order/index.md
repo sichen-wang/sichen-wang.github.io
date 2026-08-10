@@ -10,12 +10,15 @@ authors:
 date: 2026-08-09
 
 # 预印本用 manuscript：它是 Hugo Blox 里表示「未经同行评审的稿件」的类型，
-# 与 ICML 那篇的 paper-conference 区分开。列表页的 venue 徽章取
-# publication_short，这里写 arXiv 编号而不是投稿目标会议 —— 稿件在审，
-# 写会议名会读成已录用。
+# 与 ICML 那篇的 paper-conference 区分开。
+#
+# publication_short 是列表页徽章的取值。这里写 Preprint 而不是 arXiv 编号或
+# 投稿目标会议：编号在一瞥之下不可读、也没人靠 ID 认论文；写目标会议会被读成
+# 已录用。Preprint 直接回答读者唯一在意的问题——过没过同行评审。
+# 论文录用后把这里改成会议名（如 SODA 2027），徽章自动跟着变。
 publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2608.06388"
-publication_short: "arXiv 2608.06388"
+publication_short: "Preprint"
 
 abstract: >-
   The logarithmic method is a classical static-to-dynamic transformation: it

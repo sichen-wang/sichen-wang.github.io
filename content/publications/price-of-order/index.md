@@ -53,7 +53,13 @@ tags:
 # 现在两篇都标或都不标都没有意义。
 featured: false
 
+# 按书写顺序显示。PDF 命名为 paper.pdf 而非与目录同名，否则主题会自动追加一个
+# PDF 按钮（且总排在最后），与这里的显式声明重复。
+# 这篇没有 code / poster / slides / event，暂缺；日后有了按同样格式补。
 links:
+  - type: pdf
+    url: paper.pdf
+    label: Paper
   - type: preprint
     provider: arxiv
     id: 2608.06388

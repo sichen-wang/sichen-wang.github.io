@@ -209,7 +209,10 @@
               {{- end -}}
             </span>
           </div>
-          <span class="opacity-40">•</span>
+          {{/* 分隔符跟随日期一起显隐：日期带 hidden sm:inline，小屏会消失，
+               若分隔符留着就会剩一个孤立的圆点贴在下一行的 venue 前面。
+               同理没有日期可显示时也不该出现分隔符。 */}}
+          {{ if $showDate }}<span class="opacity-40 hidden sm:inline">•</span>{{ end }}
           {{ end }}
           {{ if $showDate }}
             {{ if $isEvent }}
@@ -219,6 +222,21 @@
               {{ $item.Date | time.Format (site.Params.hugoblox.locale.date_format | default "Jan 2, 2006") }}
             </time>
             {{ end }}
+          {{ end }}
+
+          {{/* 发表信息推到本行右端。原本卡片完全不显示 venue —— front matter 里的
+               publication 字段只在详情页用到，列表页看不出这篇发在哪、是否过了评审，
+               而这恰恰是学术读者第一眼要找的信息。
+               放这里而不是卡片角上：左边是「谁、何时」，右边是「发在哪」，共用同一
+               条基线和分隔线，不新增视觉层；任何长度的 venue 都能容纳。
+               取值优先 publication_short（如 "ICML 2026"），它就是为列表场景准备的。 */}}
+          {{ $venue := "" }}
+          {{ with $item.Params.publication_short }}{{ $venue = printf "%v" . }}{{ end }}
+          {{ if not $venue }}{{ with $item.Params.publication }}{{ $venue = printf "%v" . }}{{ end }}{{ end }}
+          {{ with $venue }}
+            <span class="ml-auto whitespace-nowrap font-semibold text-slate-700 dark:text-slate-200">
+              {{ . | markdownify }}
+            </span>
           {{ end }}
         </div>
         

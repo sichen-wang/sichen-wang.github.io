@@ -122,10 +122,54 @@ jobs:
 
     - name: Generate Pagefind search index (if applicable)
       run: |
-        # Check if site uses Pagefind search
-        if [ -f "package.json" ] && grep -q "pagefind" package.json; then
-          pnpm run pagefind || npx pagefind --site "public"
+        set -euo pipefail
+        if [ ! -f "package.json" ] || ! grep -q "pagefind" package.json; then
+          echo "站点未使用 Pagefind，跳过。"
+          exit 0
         fi
+
+        # 必须用 extended 版：中文分词器只在它里面。标准版建出来的中文索引
+        # entry 里 "wasm" 为 null，等于空壳 —— 实测搜任何中文词都是 0 命中。
+        # npm 的 pagefind 包只放 .sha256，二进制靠 postinstall 下载，装到哪个
+        # 版本不确定；这里直接取官方 release 的 extended 二进制，消除不确定性。
+        # 体积 54 MB vs 标准版 9 MB，差的就是各语言的分词 WASM。
+        PF_VERSION="v1.4.0"
+        PF_TARBALL="pagefind_extended-${PF_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+        PF_URL="https://github.com/pagefind/pagefind/releases/download/${PF_VERSION}/${PF_TARBALL}"
+
+        echo "下载 ${PF_TARBALL}"
+        curl -sSL --retry 3 --retry-delay 5 -o /tmp/pagefind.tar.gz "$PF_URL"
+
+        # 校验：npm 的平台包里带着官方 sha256，用它核对下载内容
+        SHA_FILE="node_modules/@pagefind/linux-x64/${PF_TARBALL}.sha256"
+        if [ -f "$SHA_FILE" ]; then
+          EXPECT=$(cut -d' ' -f1 < "$SHA_FILE")
+          ACTUAL=$(sha256sum /tmp/pagefind.tar.gz | cut -d' ' -f1)
+          if [ "$EXPECT" != "$ACTUAL" ]; then
+            echo "::error::pagefind_extended 校验和不符（期望 $EXPECT，实际 $ACTUAL）"
+            exit 1
+          fi
+          echo "校验和通过"
+        else
+          echo "::warning::未找到官方 sha256（$SHA_FILE），跳过校验"
+        fi
+
+        tar -xzf /tmp/pagefind.tar.gz -C /tmp
+        chmod +x /tmp/pagefind_extended
+        /tmp/pagefind_extended --version
+        /tmp/pagefind_extended --site public
+
+        # 验收信号：中文页面必须拿到真正的分词器，wasm 不能是 null
+        python3 - <<'PY'
+        import json, sys
+        d = json.load(open("public/pagefind/pagefind-entry.json"))
+        langs = d.get("languages", {})
+        print("索引语言:", {k: {"wasm": v.get("wasm"), "pages": v.get("page_count")} for k, v in langs.items()})
+        zh = langs.get("zh")
+        if zh and zh.get("wasm") is None:
+            print("::error::中文索引的 wasm 为 null —— 用的不是 extended 版，中文搜索会全部失效")
+            sys.exit(1)
+        PY
 
     - name: Upload artifact
       id: upload

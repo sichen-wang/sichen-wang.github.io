@@ -51,13 +51,12 @@ education:
       - Excellence in Sci-Tech Innovation
 
 interests:
-  - Theoretical Computer Science
-  - Algorithm Design and Analysis
-  - Statistical Learning Theory
+  - Algorithms & Complexity
+  - Learning Theory & Statistics
+  - Extremal Combinatorics
   - Piano
   - Violin
   - Drum Kit
-  - Badminton
 
 skills:
   - name: Technical Skills

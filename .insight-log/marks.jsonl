@@ -1,0 +1,2 @@
+{"ts": "2026-06-30", "quote": "请不要将 SODA 插入 ICML 后，而是逐一放在最后，我是按时间顺序排的", "task": "Updating publication list ordering on CV", "state": "Model had inserted a new SODA entry after the ICML entry rather than at the chronological end", "source": "retro-mined", "origin": "codex-win"}
+{"ts": "2026-06-30", "quote": "不是，中文版之前就是好的，一页，并且栏宽合适，SODA 的后两个一行。你怎么又把栏宽变窄了？", "task": "Adjusting CV layout (column width) across a revision cycle", "state": "Model had changed the column width again after a version that was already correct", "source": "retro-mined", "origin": "codex-win"}

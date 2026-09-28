@@ -74,59 +74,24 @@ RE_EQGROUP_OPEN = re.compile(r'<table[^>]*class="[^"]*ltx_equationgroup[^"]*"[^>
 RE_TR = re.compile(r"<tr\b[^>]*>(.*?)</tr>", re.S)
 RE_TD = re.compile(r"<td\b([^>]*)>(.*?)</td>", re.S)
 
-# LaTeXML 给每个片段都加了 \displaystyle 之类的样式前缀，判别续行前要先剥掉
-RE_STYLE_PREFIX = re.compile(
-    r"^(?:\s*\\(?:displaystyle|textstyle|scriptstyle|scriptscriptstyle)\b)+\s*"
-)
-
-# 以关系符/运算符开头 ⇒ 这一行没有自己的左侧表达式，是上一行的延续
-RE_CONTINUATION = re.compile(
-    r"^\s*(?:=|\\le(?:q)?\b|\\ge(?:q)?\b|\\l(?:eqslant)?\b|\\g(?:eqslant)?\b"
-    r"|\\approx\b|\\equiv\b|\\sim\b|\\simeq\b|\\cong\b|\\propto\b"
-    r"|\\subseteq\b|\\supseteq\b|\\subset\b|\\supset\b|\\in\b"
-    r"|\\to\b|\\rightarrow\b|\\Rightarrow\b|\\implies\b|\\mapsto\b"
-    r"|\\pm\b|\\times\b|\\cdot\b|<|>|\+|-)"
-)
-
-
-def merge_continuation_rows(rows: list[str]) -> list[str]:
-    """把为适配双栏而断开的续行接回上一行。
-
-    论文原本是 ICML 双栏，栏宽只有 ~234pt，长公式不得不用 `\\\\` 断行；转成单栏
-    网页后版心宽裕，这些断行反而显得莫名其妙。
-
-    判别依据：整行去掉对齐符 `&` 后若以关系符开头（`\\le ...`、`= ...`），说明它
-    没有独立的左侧表达式，只是上一行的延续，应当合并；而 `\\delta_\\mu &= ...`、
-    `\\kappa_t &:= ...` 这类每行自带左侧的，是语义上并列的多个式子，必须保留分行。
-    """
-    out: list[str] = []
-    for row in rows:
-        bare = row.replace("&", " ").strip()
-        # LaTeXML 会在每个片段前插 \displaystyle，挡住后面的关系符，判别前先剥掉
-        probe = RE_STYLE_PREFIX.sub("", bare)
-        if out and RE_CONTINUATION.match(probe):
-            # 合并后对齐符失去意义，一并去掉
-            out[-1] = f"{out[-1].replace('&', ' ').strip()} {bare}"
-        else:
-            out.append(row)
-    return out
-
 
 def convert_equation_groups(html: str) -> str:
-    """align 组必须整组交给 KaTeX 的 aligned 环境，不能逐片段渲染。
+    """整组还原 align/gather 的行列结构，不能逐片段渲染或合并续行。
 
     LaTeXML 把 align 拆成表格：每个 `&` 片段是一个 <td> 里独立的
     <span class="ltx_Math">。若逐个替换成 $...$，每个片段会被 KaTeX 当成一条
     独立公式来排版 —— 跨行对齐关系丢失，片段之间还会各自断行，表现为
     "= m_t +" 单独占一行、下一行才是 "m_{t+1} ..." 这种错位。
 
-    这里把整组还原成 `\\begin{aligned} ... \\\\ ... \\end{aligned}`：
-    同一行的各片段用 `&` 连接，行间用 `\\\\`。公式编号不塞进 LaTeX
+    多列还原成 aligned，单列还原成 gathered，保留原稿的居中方式。
+    同一行的各片段（含空左侧单元格）用 `&` 连接，行间用 `\\\\`。
+    以关系符开头的续行也是原稿的显式换行，不能擅自拼回上一行。
+    公式编号不塞进 LaTeX
     （KaTeX 的 aligned 内不支持 \\tag），改由右侧的 HTML 单元格承载。
     """
 
     def handle(block: str, _m: re.Match) -> str:
-        rows: list[str] = []
+        rows: list[list[str]] = []
         nums: list[str] = []
         # 正文里的「见式 (27)」指向的是每一行公式自带的 id。整组替换成
         # paper-eqgroup 时若不把这些 id 带过来，那些交叉引用就会指向不存在的
@@ -146,27 +111,33 @@ def convert_equation_groups(html: str) -> str:
             parts: list[str] = []
             for td in RE_TD.finditer(tr.group(1)):
                 attrs, inner = td.group(1), td.group(2)
-                if "ltx_eqn_eqno" in attrs:
+                cm = re.search(r'\bclass="([^"]*)"', attrs)
+                classes = cm.group(1).split() if cm else []
+                if "ltx_eqn_eqno" in classes:
                     num = strip_tags(inner)
                     if num:
                         nums.append(num)
                     continue
+                # 居中填充和编号不是 TeX 的对齐列。真正的空公式单元格则
+                # 必须保留，否则 `&= ...` 会变成下一行的左侧表达式。
+                if any("padleft" in c or "padright" in c for c in classes):
+                    continue
                 texs = [clean_tex(mm.group(3)) for mm in RE_MATH.finditer(inner)]
                 seg = " ".join(t for t in texs if t)
-                if seg:
+                if seg or "ltx_eqn_cell" in classes:
                     parts.append(seg)
-            if parts:
-                rows.append(" & ".join(parts))
+            if any(parts):
+                rows.append(parts)
         if not rows:
             return ""
-        rows = merge_continuation_rows(rows)
-        if len(rows) == 1:
-            # 合并后只剩一行，就不必再套 aligned（否则残留的 & 会把左侧留空）
-            tex = rows[0].replace("&", " ").strip()
-        else:
-            body = " \\\\\n".join(rows)
-            tex = f"\\begin{{aligned}}\n{body}\n\\end{{aligned}}"
-        nums_html = "<br>".join(html_mod.escape(n) for n in nums)
+        environment = "gathered" if all(len(row) == 1 for row in rows) else "aligned"
+        body = " \\\\\n".join(" & ".join(row) for row in rows)
+        tex = f"\\begin{{{environment}}}\n{body}\n\\end{{{environment}}}"
+        nums_html = "".join(
+            f'<span class="paper-eqgroup-number">{html_mod.escape(n)}</span>'
+            for n in nums
+        )
+        nums_class = "paper-eqgroup-no paper-eqgroup-no-rows" if nums else "paper-eqgroup-no"
         anchors = "".join(
             f'<span class="paper-eq-anchor" id="{html_mod.escape(i, quote=True)}"></span>'
             for i in dict.fromkeys(anchor_ids)
@@ -175,7 +146,7 @@ def convert_equation_groups(html: str) -> str:
             '\n<div class="paper-eqgroup">'
             f"{anchors}"
             f'<div class="paper-eqgroup-body">$${tex_to_html(tex)}$$</div>'
-            f'<div class="paper-eqgroup-no">{nums_html}</div>'
+            f'<div class="{nums_class}">{nums_html}</div>'
             "</div>\n"
         )
 
@@ -204,6 +175,8 @@ def clean_tex(tex: str) -> str:
     # 而 KaTeX 没有这个宏，整条公式会渲染成红色报错。它是排版记号不是数学，
     # 直接丢掉（章节末尾的 ∎ 由 LaTeXML 另行输出，不受影响）。
     tex = re.sub(r"\\qed(?![a-zA-Z])\s*", "", tex)
+    # 末尾的 TeX 控制空格不能被 strip 截成孤立反斜杠。
+    tex = re.sub(r"(?<!\\)((?:\\\\)*)\\[ \t]+$", r"\1\\space{}", tex)
     return tex.strip()
 
 
@@ -216,6 +189,23 @@ def tex_to_html(tex: str) -> str:
     这里重新转义 & < >，浏览器解析后 KaTeX 拿到的仍是原始字符。
     """
     return html_mod.escape(tex, quote=False)
+
+
+def attach_inline_punctuation(body: str) -> str:
+    """让紧随行内公式的标点留在最后一个数学片段上，避免孤立到下一行。
+
+    只移动紧邻单美元分隔符的标点；正文文字、展示公式和数学内容不变。
+    使用 text 保留正文标点的字形，不把冒号解释为数学关系符。
+    """
+    pattern = re.compile(r"(?<!\\)(\$\$|\$)(.*?)(?<!\\)\1([,.;:]*)", re.S)
+
+    def repl(m: re.Match) -> str:
+        delimiter, tex, punctuation = m.groups()
+        if delimiter == "$" and punctuation:
+            return f"${tex}\\text{{{punctuation}}}$"
+        return m.group(0)
+
+    return pattern.sub(repl, body)
 
 
 def convert_math(html: str, display_ids: set[str]) -> str:
@@ -578,6 +568,7 @@ def main() -> int:
     # align 组要先整组合并，否则下一步会把各片段拆成独立公式
     body = convert_equation_groups(body)
     body = convert_math(body, display_ids)
+    body = attach_inline_punctuation(body)
     body, missing = fix_images(body, id_to_file, image_files, width_ratio)
     body = add_heading_ids(body)
 

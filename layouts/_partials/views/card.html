@@ -15,10 +15,12 @@
 {{ $fill_image := .config.fill_image | default true }}
 {{ $img_class := printf "w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 %s" (cond $fill_image "object-fill" "object-contain") }}
 {{ $img_style := "position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;" }}
-{{ $showDate := .config.show_date | default true }}
+{{/* 与详情页一致：未知发表日期的条目可用 hide_date 隐藏内部排序日期。 */}}
+{{ $showDate := and (.config.show_date | default true) (not $item.Params.hide_date) }}
 {{ $showReadTime := .config.show_read_time | default true }}
 {{ $showReadMore := .config.show_read_more | default true }}
-{{ $hasMeta := or $showDate $showReadTime $showReadMore }}
+{{/* 隐藏日期不应连带隐藏作者与发表状态。 */}}
+{{ $hasMeta := or $showDate $showReadTime $showReadMore $item.Params.authors $item.Params.publication_short $item.Params.publication }}
 {{ $index := .index }}
 {{ $isEvent := eq $item.Type "events" }}
 {{ $isBlog := eq $item.Type "blog" }}

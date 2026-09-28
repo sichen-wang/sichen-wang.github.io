@@ -56,6 +56,22 @@ python3 scripts/paper-html/convert.py --src ~/Desktop/ICML/paper --slug depth-ov
 脚本**只替换 `index.md` 的正文，front matter 原样保留**，所以标题、作者、日期、
 按钮链接这些不会被覆盖。
 
+新增 publications 要与现有论文详情保持一致时，需要加入可读的 HTML 正文，
+不能只添加摘要与 PDF。完整论文使用 `--appendix`，并核对参考文献与补充材料。
+
+转换成功不代表内容已完全保真。验收时还需对照源稿检查：
+
+- `thm-restate` 的星号重述可能被 LaTeXML 简化为 `See N`，需恢复完整定理，
+  给副本使用不同的 ID，并保留原落点与交叉引用。
+- `algorithmic` 的 `\Statex` 输入/初始化说明应不带行号；PDF 的固定栏宽需
+  改为网页自适应布局。正文以 HTML 直接渲染，避免算法缩进被当成 Markdown 代码。
+- 数学中的 `\eqref` 需按原稿 `.aux` 的实际编号展开；不支持的字体命令也需
+  等价处理。TikZ 可从原稿编译为 SVG，核对文字、箭头和图注。
+- 公式编号需逐项对照原 PDF；例如带 `\qedhere` 的公式可能被 LaTeXML 额外编号，
+  进而使后续编号和引用整体偏移。不能仅检查引用目标是否存在。
+- 检查各章节、定理/证明、公式编号、表格、算法行号和参考文献是否完整，
+  所有内部锚点、图片是否有效，再运行公式检查、构建与浏览器验收。
+
 ## 实现要点
 
 - **不转 Markdown。** 本站数学是客户端 KaTeX（`assets/js/katex-config.js` 调
@@ -71,11 +87,15 @@ python3 scripts/paper-html/convert.py --src ~/Desktop/ICML/paper --slug depth-ov
 - **KaTeX 兼容**：LaTeXML 会把 `\bigl(` 写成 `\bigl{(}`，LaTeX 容忍，KaTeX 报
   `Invalid delimiter type 'ordgroup'`；`postprocess.py` 会把这类花括号去掉。
   行尾续行注释 `%\n` 同理需要清除。
+  紧随行内公式的标点会并入末尾的 `\text{...}`，防止逗号或句点独占下一行。
 - **align 组必须整组渲染**：LaTeXML 把 `align` 拆成表格，每个 `&` 片段是独立的
   `<span class="ltx_Math">`。若逐个替换成 `$...$`，每段会被 KaTeX 当成独立公式，
   跨行对齐丢失、片段各自断行（表现为 `= m_t +` 单独一行）。`convert_equation_groups`
-  会把整组还原成 `\begin{aligned}...\end{aligned}`；编号不进 LaTeX（KaTeX 的
-  aligned 内不支持 `\tag`），改由右侧 HTML 单元格承载。
+  会保留原稿的每一行和空对齐单元格，多列还原成 `aligned`，单列还原成居中的
+  `gathered`。以关系符开头的续行也保留换行，不因网页版心较宽而自动合并；
+  表格的居中填充单元格不作为公式列。编号不进 LaTeX（KaTeX 的 aligned 内不支持
+  `\tag`），改由右侧独立 HTML 编号按组高排列，原公式锚点继续保留。
+  原稿的 `\\[4pt]` 等额外行距可能已被上游 HTML 丢弃，需对照 TeX 恢复。
 - **标签平衡自检**：提取正文若用贪婪的 `(.*)</div>`，会把 `ltx_page_content` 自己的
   闭合标签也吞进来，多出的 `</div>` 会提前关闭页面模板的 `<article>`，把页脚挤到
   外层容器（表现为页脚溢出版心）。现在改用配对计数提取，并在转换结束时检查各类

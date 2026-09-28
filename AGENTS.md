@@ -1,0 +1,1 @@
+- Insight logging is enabled here. Follow the insight-log skill: capture human insights as they occur, consolidate at milestones.

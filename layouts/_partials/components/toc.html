@@ -55,13 +55,13 @@
         {{- range $headings -}}
           {{- $link_class := "inline-block w-full break-words" -}}
           {{- if eq .level 2 -}}
-            {{- $link_class = printf "%s ml-3" $link_class -}}
+            {{- $link_class = printf "%s pl-3" $link_class -}}
           {{- else if eq .level 3 -}}
-            {{- $link_class = printf "%s ml-6" $link_class -}}
+            {{- $link_class = printf "%s pl-6" $link_class -}}
           {{- else if eq .level 4 -}}
-            {{- $link_class = printf "%s ml-9" $link_class -}}
+            {{- $link_class = printf "%s pl-9" $link_class -}}
           {{- else if ge .level 5 -}}
-            {{- $link_class = printf "%s ml-12" $link_class -}}
+            {{- $link_class = printf "%s pl-12" $link_class -}}
           {{- end -}}
         <li>
           <a class="{{ $link_class }}" href="#{{ .id }}">

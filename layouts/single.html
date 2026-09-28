@@ -303,7 +303,13 @@
         {{ with .Params.categories }}
           <span data-pagefind-filter="category" style="display:none;">{{ index . 0 }}</span>
         {{ end }}
-        {{ .Content }}
+        {{/* LaTeXML 正文已经是完整 HTML；再次经过 Markdown 会把算法中缩进的
+             span 解析成代码块，并使其中的数学失去渲染。普通 Markdown 正文照旧。 */}}
+        {{ if and $is_publication (hasPrefix (strings.TrimSpace .RawContent) "<article") }}
+          {{ .RawContent | safeHTML }}
+        {{ else }}
+          {{ .Content }}
+        {{ end }}
         {{ partial "components/blog_pdf_embeds.html" . }}
       </div>
 

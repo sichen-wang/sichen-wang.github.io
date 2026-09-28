@@ -537,7 +537,8 @@ samp {
   width: 100%;
   margin: 1.2em 0;
   border: 0;
-  table-layout: auto;
+  /* 固定表格版心后，超长公式在自身容器内滚动，不再以最小内容宽度撑开手机页面。 */
+  table-layout: fixed;
 }
 
 /* 居中：LaTeXML 靠左右两个空单元格把公式挤到中间，但它们没有宽度就不会生效。
@@ -570,6 +571,17 @@ samp {
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
   line-height: 1.9;
+}
+/* 独立编号随公式组高度分布，适应分式和显式行间距；旧的 br 编号布局不变。 */
+.paper-body .paper-eqgroup-no-rows {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  line-height: 1;
+}
+.paper-body .paper-eqgroup-no-rows > .paper-eqgroup-number {
+  display: block;
 }
 .paper-body .ltx_equation td,
 .paper-body .ltx_equationgroup td {
@@ -668,6 +680,7 @@ samp {
   height: auto;
   max-width: 100%;
   max-height: 30rem;
+  object-fit: contain;
 }
 /* 论文插图是白底矢量图，暗色模式下直接贴在深色背景上会是刺眼的白块，
    给它一层"纸面"并留出内边距 */
@@ -695,7 +708,31 @@ samp {
 /* 表：论文表格常常比版心宽，装进可横向滚动的容器 */
 .paper-body .ltx_table {
   margin: 1.8em 0;
+}
+
+/* arXiv 的脚注原带悬浮层和重复编号；站内将注释就近完整展开。 */
+.paper-body .ltx_note_outer {
+  display: block;
+  margin: 0.65em 0;
+  padding: 0.6em 0.8em;
+  border-left: 2px solid rgb(148 163 184 / 0.5);
+  font-size: 0.875em;
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.paper-body .ltx_note_content > .ltx_note_mark {
+  display: none;
+}
+.paper-body .ltx_tag_note {
+  margin-right: 0.4em;
+}
+/* 未编号的 tabular 会直接放在段落内，也需要局部滚动。 */
+.paper-body .ltx_table,
+.paper-body .ltx_para:has(> .ltx_tabular) {
   overflow-x: auto;
+  /* 将 KaTeX 的绝对定位辅助节点也限制在表格滚动区域内。 */
+  position: relative;
 }
 .paper-body .ltx_tabular {
   margin: 0 auto;
@@ -713,6 +750,52 @@ samp {
 .paper-body .ltx_border_b { border-bottom: 1px solid currentColor; }
 .paper-body .ltx_border_tt { border-top: 2px solid currentColor; }
 .paper-body .ltx_border_bb { border-bottom: 2px solid currentColor; }
+
+/* 算法保留原稿行号和缩进；在宽屏并排、窄屏上下排，避免沿用 PDF 的固定栏宽。 */
+.paper-body .paper-algorithms {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: none;
+  text-align: left;
+}
+.paper-body .paper-algorithms > figcaption {
+  grid-column: 1 / -1;
+}
+.paper-body .ltx_float:has(.ltx_listing) {
+  min-width: 0;
+  margin: 1.2em 0;
+  padding: 0.65em 0;
+  border-block: 1px solid rgb(148 163 184 / 0.6);
+  text-align: left;
+}
+.paper-body .paper-algorithms > .ltx_float {
+  margin: 0;
+}
+.paper-body .ltx_float > .ltx_caption {
+  margin: 0 0 0.7em;
+}
+.paper-body .ltx_listing {
+  overflow-x: auto;
+  font-size: 0.9em;
+  line-height: 1.7;
+}
+.paper-body .ltx_listingline {
+  padding-left: 2em;
+  text-indent: -2em;
+}
+.paper-body .ltx_tag_listingline {
+  display: inline-block;
+  width: 2em;
+  text-align: right;
+  padding-right: 0.5em;
+  text-indent: 0;
+}
+@media (min-width: 1024px) {
+  .paper-body .paper-algorithms {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 /* 交叉引用与文献引用 */
 .paper-body .ltx_ref {

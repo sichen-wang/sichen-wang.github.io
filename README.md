@@ -65,7 +65,9 @@ assets/js/hb-citation.js
 
 ## 简历
 
-`static/uploads/CV_zh.tex`（中文）/ `CV_en.tex`（英文），XeLaTeX。
+`static/uploads/CV_zh.tex`（中文，A4）/ `CV_en.tex`（英文，US Letter，供美国申请），XeLaTeX。
+论文条目的顺序与网站 Publications 页一致；已录用的只写会议名（黑色加粗，链接到会议的论文页），
+预印本写 arXiv 号（链接到 arXiv）。
 **必须在 `static/uploads/` 目录下编译**（字体与图片走相对路径）：
 
 ```bash

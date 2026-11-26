@@ -66,8 +66,11 @@ assets/js/hb-citation.js
 ## 简历
 
 `static/uploads/CV_zh.tex`（中文，A4）/ `CV_en.tex`（英文，US Letter，供美国申请），XeLaTeX。
-论文条目的顺序与网站 Publications 页一致；已录用的只写会议名（黑色加粗，链接到会议的论文页），
-预印本写 arXiv 号（链接到 arXiv）。
+论文条目的顺序与网站 Publications 页一致；已录用的只写会议名（深红色 `VenueColor`、不加粗，
+链接到会议的论文页），预印本写 arXiv 号（链接到 arXiv）。顶栏第一行是个人网站 · github.com/sichen-wang ·
+ORCID 编号，第二行是两个邮箱（都显示可读文字，印出来也看得见；行宽不能长到被右侧照片挡住）。
+ORCID 图标用 academicons；图标命令要加花括号，否则其后的空格会落进图标字体。
+Interests 一节上面是三个加粗的方向关键词，下面接一段研究简介（书面、约 50 词）。
 **必须在 `static/uploads/` 目录下编译**（字体与图片走相对路径）：
 
 ```bash

@@ -11,15 +11,20 @@
 \usepackage[explicit]{titlesec}
 \usepackage{microtype}
 \usepackage{fontawesome5}
+\usepackage{academicons}
 \usepackage{hyperref}
 \usepackage{etoolbox}
 \usepackage{array}
 \usepackage{tikz}
 \newsavebox{\headerbox}
+% 左栏的整段文字（Interests 简介、Hobbies）：两端对齐并允许连字符断词，
+% 免得窄栏里右边缘参差不齐；列表式的短行仍沿用左栏的左对齐、不断词。
+\newcommand{\leftpara}[1]{{\rightskip=0pt\relax\parfillskip=0pt plus 1fil\relax\hyphenpenalty=1500\relax\exhyphenpenalty=1500\relax\tolerance=4000\relax\emergencystretch=2em\relax #1\par}}
 
 % --- 颜色定义 Colors ---
 \definecolor{PrimaryColor}{HTML}{003366}
 \definecolor{DescriptionGray}{HTML}{444444}
+\definecolor{VenueColor}{HTML}{B31B1B}
 
 % --- 字体设置 Fonts (XeLaTeX) ---
 % 字体源：项目根目录 fonts/（站点统一字体集）。
@@ -118,9 +123,11 @@
     \centering
     {\fontsize{22pt}{26pt}\selectfont\bfseries\color{PrimaryColor}王司晨 (Sichen Wang)}\\[0.45em]
     {\color{DescriptionGray}
+      \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichenwang.com}{sichenwang.com} \quad
+      \faIcon{github}\ \href{https://github.com/sichen-wang}{github.com/sichen-wang} \quad
+      {\aiOrcid}\ \href{https://orcid.org/0009-0008-3734-4006}{0009-0008-3734-4006}\\[0.3em]
       \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \quad
-      \faIcon{envelope}\ \href{mailto:me@sichenwang.com}{me@sichenwang.com} \quad
-      \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichenwang.com}{sichenwang.com}}
+      \faIcon{envelope}\ \href{mailto:me@sichenwang.com}{me@sichenwang.com}}
   \end{minipage}%
 }
 
@@ -171,9 +178,10 @@
 \vspace*{0.3em}
 \section{Interests}
 {\color{DescriptionGray}
-算法与复杂性\\[0.2em]
-学习理论与统计学\\[0.2em]
-极值组合学
+\textbf{算法与复杂性}\\[0.2em]
+\textbf{学习理论与统计学}\\[0.2em]
+\textbf{极值组合学}\par\vspace{0.35em}
+\leftpara{我的工作横跨多个方向，始终关心的是一个问题的复杂度应当如何刻画，以及它最终由什么量决定。我享受把一个问题彻底闭环的过程，从证明下界、给出与之匹配的上界，到设计出达到这一界的算法。}
 }
 
 % --- 技能 ---
@@ -201,7 +209,7 @@ Russian & A2 \\
 \vspace*{0.3em}
 \section{Hobbies}
 {\color{DescriptionGray}
-钢琴、小提琴、架子鼓（中国音协 10 级优等）、羽毛球（校赛八强）、辩论（校赛亚军及最佳辩手）
+\leftpara{钢琴、小提琴、架子鼓（中国音协 \mbox{10 级}优等）、羽毛球（校赛八强）、辩论（校赛亚军及最佳辩手）}
 }
 
 \end{minipage}%
@@ -211,20 +219,20 @@ Russian & A2 \\
 % --- 论文 ---
 \section{Publications}
 \begingroup
-\raggedright
+\hyphenpenalty=200\relax\exhyphenpenalty=200\relax\tolerance=1000\relax\emergencystretch=1em\relax\spaceskip=0.3333em plus 0.1667em minus 0.15em\relax
 
-\textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/online-isotonic-regression/}{\textit{The Minimax Rate of Online Isotonic Regression on Product Orders}}.\ \href{https://openreview.net/forum?id=OZYmFCFi3w}{\textcolor{black}{\textbf{NeurIPS 2026}}}.
+\textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/online-isotonic-regression/}{\textit{The Minimax Rate of Online Isotonic Regression on Product Orders}}.\ \href{https://openreview.net/forum?id=OZYmFCFi3w}{\textcolor{VenueColor}{NeurIPS 2026}}.
 
-\textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/implicit-midpoint-langevin/}{\textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}}.\ \href{https://openreview.net/forum?id=6vWdtoSoVB}{\textcolor{black}{\textbf{NeurIPS 2026}}}.
+\textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/implicit-midpoint-langevin/}{\textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}}.\ \href{https://openreview.net/forum?id=6vWdtoSoVB}{\textcolor{VenueColor}{NeurIPS 2026}}.
 
-\textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/depth-over-fidelity/}{\textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}}.\ \href{https://proceedings.mlr.press/v306/wang26ff.html}{\textcolor{black}{\textbf{ICML 2026}}}.
+\textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/depth-over-fidelity/}{\textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}}.\ \href{https://proceedings.mlr.press/v306/wang26ff.html}{\textcolor{VenueColor}{ICML 2026}}.
 
 \endgroup
 
 % --- Selected Preprints ---
 \section{Selected Preprints}
 \begingroup
-\raggedright
+\hyphenpenalty=200\relax\exhyphenpenalty=200\relax\tolerance=1000\relax\emergencystretch=1em\relax\spaceskip=0.3333em plus 0.1667em minus 0.15em\relax
 
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/denoising-flows-on-trees/}{\textit{The Minimax Rate of Denoising Flows on Trees}}.\ \href{https://arxiv.org/abs/2609.14091}{\textcolor{black}{arXiv:2609.14091}}.
 

@@ -28,7 +28,7 @@ affiliations:
 # 两处不同会让访客以为是两个人。CV 指英文版（站点通篇英文）。
 links:
   - icon: at-symbol
-    url: "mailto:scwang.cs@gmail.com"
+    url: "mailto:me@sichenwang.com"
     label: E-mail Me
   - icon: academicons/google-scholar
     url: "https://scholar.google.com/citations?user=NE0cZgEAAAAJ"

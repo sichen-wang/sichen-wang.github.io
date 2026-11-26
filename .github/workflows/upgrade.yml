@@ -11,9 +11,10 @@ on:
         options:
         - Stable
         - Beta (Preview)
-  schedule:
-    # Run at 05:00 on Monday
-    - cron: '0 5 * * 1'
+  # 已停用每周定时运行（原为 cron '0 5 * * 1'）：仓库没有允许 Actions 创建 PR，
+  # 每次都在 "Create Pull Request" 失败，只留下一个 chore/upgrade-hugoblox-* 分支。
+  # 升级还可能打乱 README 列出的本地覆盖模板，所以改为需要时在 Actions 页手动触发，
+  # 升级后逐个检查这些覆盖文件。
 
 permissions:
   contents: write

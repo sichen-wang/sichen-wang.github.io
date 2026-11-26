@@ -18,6 +18,10 @@
 \usepackage{array}
 \usepackage{tikz}
 \newsavebox{\headerbox}
+% 论文条目之间的间距（模板里 \parskip 在两栏中不起作用，改用显式 \vspace）
+\newlength{\pubgap}\setlength{\pubgap}{0.3em}
+% 节标题前的间距（titlesec 的节前距在两栏里不起作用，改用显式 \vspace*）
+\newlength{\secgap}\setlength{\secgap}{0.5em}
 % 左栏的整段文字（Interests 简介、Hobbies）：两端对齐并允许连字符断词，
 % 免得窄栏里右边缘参差不齐；列表式的短行仍沿用左栏的左对齐、不断词。
 \newcommand{\leftpara}[1]{{\rightskip=0pt\relax\parfillskip=0pt plus 1fil\relax\hyphenpenalty=1500\relax\exhyphenpenalty=1500\relax\tolerance=4000\relax\emergencystretch=2em\relax #1\par}}
@@ -91,7 +95,7 @@
   \noindent\textbf{#1}%
   \notblank{#2}{\hfill{\color{DescriptionGray}\small #2}}{}%
   \notblank{#3}{\par\vspace{0.05em}\noindent{\color{DescriptionGray}\small\textit{#3}}}{}%
-  \par\vspace{0.45em}%
+  \par\vspace{0.25em}%
 }
 
 % Five-dot skill bar
@@ -120,7 +124,7 @@
     {\color{DescriptionGray}
       \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichenwang.com}{sichenwang.com} \quad
       \faIcon{github}\ \href{https://github.com/sichen-wang}{github.com/sichen-wang} \quad
-      {\aiOrcid}\ \href{https://orcid.org/0009-0008-3734-4006}{0009-0008-3734-4006}\\[0.3em]
+      {\aiOrcid}\ \href{https://orcid.org/0009-0008-3734-4006}{0009-0008-3734-4006}\\[0.2em]
       \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \quad
       \faIcon{envelope}\ \href{mailto:me@sichenwang.com}{me@sichenwang.com}}
   \end{minipage}%
@@ -169,7 +173,7 @@ Excellence in Sci-Tech Innovation
 }
 
 % --- Interests ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Interests}
 {\color{DescriptionGray}
 \textbf{Algorithms \& Complexity}\\[0.2em]
@@ -179,7 +183,7 @@ Excellence in Sci-Tech Innovation
 }
 
 % --- Skills ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Skills}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -187,20 +191,21 @@ Excellence in Sci-Tech Innovation
 \skillRow{Python}{3}
 \skillRow{\LaTeX}{3}
 \skillRow{MATLAB}{2}
+\skillRow{Lean}{2}
 \end{tabular*}}
 
 % --- Languages ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Languages}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
 Chinese & Native \\
-English & B2 \\
-Russian & A2 \\
+English & Professional \\
+Russian & Elementary \\
 \end{tabular*}}
 
 % --- Hobbies ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Hobbies}
 {\color{DescriptionGray}
 \leftpara{Badminton (Intramural Quarterfinalist), Debate (Intramural 2nd \& Best Debater), Piano, Violin, Drums (CMA Grade~10, Distinction)}
@@ -216,31 +221,34 @@ Russian & A2 \\
 \hyphenpenalty=200\relax\exhyphenpenalty=200\relax\tolerance=1000\relax\emergencystretch=1em\relax\spaceskip=0.3333em plus 0.1667em minus 0.15em\relax
 
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/online-isotonic-regression/}{\textit{The Minimax Rate of Online Isotonic Regression on Product Orders}}.\ \href{https://openreview.net/forum?id=OZYmFCFi3w}{\textcolor{VenueColor}{NeurIPS 2026}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/implicit-midpoint-langevin/}{\textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}}.\ \href{https://openreview.net/forum?id=6vWdtoSoVB}{\textcolor{VenueColor}{NeurIPS 2026}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/depth-over-fidelity/}{\textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}}.\ \href{https://proceedings.mlr.press/v306/wang26ff.html}{\textcolor{VenueColor}{ICML 2026}}.
 
 \endgroup
 
-% --- Selected Preprints ---
-\section{Selected Preprints}
+% --- Preprints ---
+\vspace*{\secgap}
+\section{Preprints}
 \begingroup
 \hyphenpenalty=200\relax\exhyphenpenalty=200\relax\tolerance=1000\relax\emergencystretch=1em\relax\spaceskip=0.3333em plus 0.1667em minus 0.15em\relax
 
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/denoising-flows-on-trees/}{\textit{The Minimax Rate of Denoising Flows on Trees}}.\ \href{https://arxiv.org/abs/2609.14091}{\textcolor{black}{arXiv:2609.14091}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/unitary-synthesis-pspace-oracle/}{\textit{Unitary Synthesis with a PSPACE Oracle}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/movement-complexity-of-sorting/}{\textit{The Movement Complexity of Sorting}}.\ \href{https://arxiv.org/abs/2611.01157}{\textcolor{black}{arXiv:2611.01157}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}, Zhipeng Lu, Jingbang Chen.\ \href{https://sichenwang.com/publications/price-of-order/}{\textit{The Price of Order in the Logarithmic Method}}.\ \href{https://arxiv.org/abs/2608.06388}{\textcolor{black}{arXiv:2608.06388}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/tuza-conjecture/}{\textit{A Bound Below 2.8 for Tuza's Conjecture}}.\ \href{https://arxiv.org/abs/2609.13831}{\textcolor{black}{arXiv:2609.13831}}.
 
 \endgroup
 
 % --- Awards ---
+\renewcommand{\arraystretch}{1.2}
+\vspace*{\secgap}
 \section{Awards}
 \begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{2.8cm}@{\hspace{0.6em}} r@{}}
 NOI 2022 Winter Camp & \textbf{Silver Medal} & \\
@@ -253,22 +261,23 @@ AdventureX 2025 Hackathon & \textbf{Champion} & \\
 \end{tabular*}
 
 % --- Experience ---
+\vspace*{\secgap}
 \section{Experience}
 
 \subSection{Research}
-\jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec.\ 2024 -- Present}{Frontier research on the foundations of large language models with Prof.\ Xiaoying Tang, School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen.}
-\jobEntry{Research Assistant @ SMBU}{Nov.\ 2025 -- Present}{Frontier research in computational mathematics with Prof.\ Zhipeng Lu, Faculty of Engineering, Shenzhen MSU-BIT University.}
-\jobEntry{Research Assistant @ CUHK-Shenzhen}{Nov.\ 2025 -- Present}{Frontier research on algorithm analysis, data structures, graph theory and graph mining with Prof.\ Jingbang Chen, The Chinese University of Hong Kong, Shenzhen.}
+\jobEntry{Research Assistant @ CUHK-Shenzhen}{Dec.\ 2024 -- Present}{Research with Prof.\ Xiaoying Tang (School of Science and Engineering) on the foundations of large language models.}
+\jobEntry{Research Assistant @ SMBU}{Nov.\ 2025 -- Present}{Research with Dr.\ Zhipeng Lu (Faculty of Engineering) on optimization theory, extremal combinatorics and probability theory.}
+\jobEntry{Research Assistant @ CUHK-Shenzhen}{Nov.\ 2025 -- Present}{Research with Prof.\ Jingbang Chen (School of Data Science) on algorithm analysis, data structures, graph theory and graph mining.}
 
 \subSection{Industry}
-\jobEntry{Algorithm Researcher @ RobustMotion}{May 2025 -- May 2026}{Authored an internal technical report; proposed the ``Turning-Potential Avoidance'' method for a class of data scheduling problems on planar grid graphs.}
+\jobEntry{Algorithm Researcher @ RobustMotion}{May 2025 -- May 2026}{Proposed the ``Turning-Potential Avoidance'' method for a class of data scheduling problems on planar grid graphs, documented in an internal technical report.}
 
 \subSection{Competitive Programming}
 \jobEntry{Lecturer @ NOI 2026 Hunan Provincial Team Training}{Apr.\ 2026}{}
 \jobEntry{Lecturer @ Xuejun Xinyou Team Summer Camp}{Jul.\ -- Aug.\ 2026}{}
 \jobEntry{Lecturer @ CCF Informatics Summer Camp}{Aug.\ 2023}{}
-\jobEntry{Coach @ SMBU Experimental High School}{Aug.\ 2023 -- Feb.\ 2025}{Specially appointed by the principal as the informatics olympiad coach.}
-\jobEntry{Problem Setter @ Nowcoder}{}{Solely responsible for problem setting and editorials of 6 contests, each with 2000+ participants.}
+\jobEntry{Coach @ SMBU Experimental High School}{Aug.\ 2023 -- Feb.\ 2025}{Appointed by the principal as the school's informatics olympiad coach.}
+\jobEntry{Problem Setter @ Nowcoder}{}{Set the problems and wrote the editorials for six contests, each with over 2,000 participants.}
 
 \end{minipage}
 \endgroup

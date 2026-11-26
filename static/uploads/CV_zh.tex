@@ -17,6 +17,10 @@
 \usepackage{array}
 \usepackage{tikz}
 \newsavebox{\headerbox}
+% 论文条目之间的间距（模板里 \parskip 在两栏中不起作用，改用显式 \vspace）
+\newlength{\pubgap}\setlength{\pubgap}{0.45em}
+% 节标题前的间距（titlesec 的节前距在两栏里不起作用，改用显式 \vspace*）
+\newlength{\secgap}\setlength{\secgap}{0.8em}
 % 左栏的整段文字（Interests 简介、Hobbies）：两端对齐并允许连字符断词，
 % 免得窄栏里右边缘参差不齐；列表式的短行仍沿用左栏的左对齐、不断词。
 \newcommand{\leftpara}[1]{{\rightskip=0pt\relax\parfillskip=0pt plus 1fil\relax\hyphenpenalty=1500\relax\exhyphenpenalty=1500\relax\tolerance=4000\relax\emergencystretch=2em\relax #1\par}}
@@ -95,7 +99,7 @@
   \noindent\textbf{#1}%
   \notblank{#2}{\hfill{\color{DescriptionGray}\small #2}}{}%
   \notblank{#3}{\par\vspace{0.05em}\noindent{\color{DescriptionGray}\small\textit{#3}}}{}%
-  \par\vspace{0.45em}%
+  \par\vspace{0.35em}%
 }
 
 % 五圆点技能条
@@ -125,7 +129,7 @@
     {\color{DescriptionGray}
       \raisebox{-0.2em}{\includegraphics[height=1em]{yourphoto.png}}\ \href{https://sichenwang.com}{sichenwang.com} \quad
       \faIcon{github}\ \href{https://github.com/sichen-wang}{github.com/sichen-wang} \quad
-      {\aiOrcid}\ \href{https://orcid.org/0009-0008-3734-4006}{0009-0008-3734-4006}\\[0.3em]
+      {\aiOrcid}\ \href{https://orcid.org/0009-0008-3734-4006}{0009-0008-3734-4006}\\[0.2em]
       \faIcon{envelope}\ \href{mailto:sichenwang@cuhk.edu.cn}{sichenwang@cuhk.edu.cn} \quad
       \faIcon{envelope}\ \href{mailto:me@sichenwang.com}{me@sichenwang.com}}
   \end{minipage}%
@@ -152,7 +156,7 @@
 % 双栏正文
 % =====================================================================
 \begingroup
-\linespread{1.0}\selectfont
+\linespread{1.05}\selectfont
 \begin{minipage}[t]{0.30\textwidth}
 % 左栏偏窄：左对齐 + 禁连字断词，避免两端对齐在窄栏里拉出大间隙
 \raggedright\hyphenpenalty=10000\exhyphenpenalty=10000\relax
@@ -175,7 +179,7 @@
 }
 
 % --- 方向 ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Interests}
 {\color{DescriptionGray}
 \textbf{算法与复杂性}\\[0.2em]
@@ -185,7 +189,7 @@
 }
 
 % --- 技能 ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Skills}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
@@ -193,20 +197,21 @@
 \skillRow{Python}{3}
 \skillRow{\LaTeX}{3}
 \skillRow{MATLAB}{2}
+\skillRow{Lean}{2}
 \end{tabular*}}
 
 % --- 语言 ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Languages}
 {\color{DescriptionGray}
 \begin{tabular*}{\linewidth}{@{}l@{\extracolsep{\fill}}r@{}}
 Chinese & Native \\
-English & B2 \\
-Russian & A2 \\
+English & Professional \\
+Russian & Elementary \\
 \end{tabular*}}
 
 % --- 兴趣 ---
-\vspace*{0.3em}
+\vspace*{\secgap}
 \section{Hobbies}
 {\color{DescriptionGray}
 \leftpara{钢琴、小提琴、架子鼓（中国音协 \mbox{10 级}优等）、羽毛球（校赛八强）、辩论（校赛亚军及最佳辩手）}
@@ -222,31 +227,34 @@ Russian & A2 \\
 \hyphenpenalty=200\relax\exhyphenpenalty=200\relax\tolerance=1000\relax\emergencystretch=1em\relax\spaceskip=0.3333em plus 0.1667em minus 0.15em\relax
 
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/online-isotonic-regression/}{\textit{The Minimax Rate of Online Isotonic Regression on Product Orders}}.\ \href{https://openreview.net/forum?id=OZYmFCFi3w}{\textcolor{VenueColor}{NeurIPS 2026}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/implicit-midpoint-langevin/}{\textit{Preconditioned Implicit Midpoint Langevin Sampling for Non-Smooth Bayesian Imaging}}.\ \href{https://openreview.net/forum?id=6vWdtoSoVB}{\textcolor{VenueColor}{NeurIPS 2026}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}, Zhipeng Lu.\ \href{https://sichenwang.com/publications/depth-over-fidelity/}{\textit{Depth over Fidelity in Fixed-Budget Noisy Evolution Strategies}}.\ \href{https://proceedings.mlr.press/v306/wang26ff.html}{\textcolor{VenueColor}{ICML 2026}}.
 
 \endgroup
 
-% --- Selected Preprints ---
-\section{Selected Preprints}
+% --- Preprints ---
+\vspace*{\secgap}
+\section{Preprints}
 \begingroup
 \hyphenpenalty=200\relax\exhyphenpenalty=200\relax\tolerance=1000\relax\emergencystretch=1em\relax\spaceskip=0.3333em plus 0.1667em minus 0.15em\relax
 
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/denoising-flows-on-trees/}{\textit{The Minimax Rate of Denoising Flows on Trees}}.\ \href{https://arxiv.org/abs/2609.14091}{\textcolor{black}{arXiv:2609.14091}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/unitary-synthesis-pspace-oracle/}{\textit{Unitary Synthesis with a PSPACE Oracle}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/movement-complexity-of-sorting/}{\textit{The Movement Complexity of Sorting}}.\ \href{https://arxiv.org/abs/2611.01157}{\textcolor{black}{arXiv:2611.01157}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}, Zhipeng Lu, Jingbang Chen.\ \href{https://sichenwang.com/publications/price-of-order/}{\textit{The Price of Order in the Logarithmic Method}}.\ \href{https://arxiv.org/abs/2608.06388}{\textcolor{black}{arXiv:2608.06388}}.
-
+\par\vspace{\pubgap}
 \textbf{Sichen Wang}.\ \href{https://sichenwang.com/publications/tuza-conjecture/}{\textit{A Bound Below 2.8 for Tuza's Conjecture}}.\ \href{https://arxiv.org/abs/2609.13831}{\textcolor{black}{arXiv:2609.13831}}.
 
 \endgroup
 
 % --- 获奖 ---
+\renewcommand{\arraystretch}{1.25}
+\vspace*{\secgap}
 \section{Awards}
 \begin{tabular*}{\linewidth}{@{}l @{\extracolsep{\fill}} >{\raggedleft\arraybackslash}p{1.8cm}@{\hspace{-0.15em}} r@{}}
 NOI 2022 冬令营 & \textbf{银牌} & \\
@@ -259,22 +267,23 @@ CCF CSP 计算机软件能力认证 & \textbf{480 分} & Top 0.1\% \\
 \end{tabular*}
 
 % --- 经历 ---
+\vspace*{\secgap}
 \section{Experience}
 
 \subSection{Research}
-\jobEntry{科研助理 @ 香港中文大学（深圳）}{Dec. 2024 -- Present}{跟随香港中文大学（深圳）理工学院唐晓莹教授进行大模型基础领域的前沿研究}
-\jobEntry{科研助理 @ 深圳北理莫斯科大学}{Nov. 2025 -- Present}{与深圳北理莫斯科大学工程系路志鹏老师合作进行计算数学领域的前沿研究}
-\jobEntry{科研助理 @ 香港中文大学（深圳）}{Nov. 2025 -- Present}{与香港中文大学（深圳）陈靖邦教授合作进行算法分析、数据结构、图论与图挖掘方向的前沿研究}
+\jobEntry{科研助理 @ 香港中文大学（深圳）}{Dec. 2024 -- Present}{与理工学院唐晓莹教授合作，研究大语言模型的基础问题}
+\jobEntry{科研助理 @ 深圳北理莫斯科大学}{Nov. 2025 -- Present}{与工程系路志鹏老师合作，研究优化理论、极值组合与概率论}
+\jobEntry{科研助理 @ 香港中文大学（深圳）}{Nov. 2025 -- Present}{与数据科学学院陈靖邦教授合作，研究算法分析、数据结构、图论与图挖掘}
 
 \subSection{Industry}
-\jobEntry{算法研究员 @ 增广智能}{May 2025 -- May 2026}{完成内部技术论文，对一类平面网格图上的数据调度问题提出「转向势能避让」方法.}
+\jobEntry{算法研究员 @ 增广智能}{May 2025 -- May 2026}{针对一类平面网格图上的数据调度问题提出「转向势能避让」方法，并撰写内部技术报告}
 
 \subSection{Competitive Programming}
 \jobEntry{讲师 @ NOI 2026 湖南省队集训}{Apr. 2026}{}
 \jobEntry{讲师 @ 学军信友队暑期集训}{Jul. -- Aug. 2026}{}
 \jobEntry{讲师 @ 中国计算机学会 · 信息学夏令营}{Aug. 2023}{}
-\jobEntry{教练 @ 深北莫附中}{Aug. 2023 -- Feb. 2025}{由校长特聘担任信息学竞赛教练}
-\jobEntry{出题人 @ 牛客竞赛}{}{全权负责 6 场参与人数 2000+ 的比赛的出题与讲解}
+\jobEntry{教练 @ 深北莫附中}{Aug. 2023 -- Feb. 2025}{受校长特聘，担任学校的信息学竞赛教练}
+\jobEntry{出题人 @ 牛客竞赛}{}{独立完成 6 场比赛的命题与题解，每场参赛人数超过 2000}
 
 \end{minipage}
 \endgroup

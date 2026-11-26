@@ -20,8 +20,11 @@ publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2608.06388"
 publication_short: "Preprint"
 
-# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
-tldr: 'The optimal write-read product of the logarithmic method is $\Theta(n\log^2 n)$ for membership, $\Theta(n\log^3 n)$ for ordered queries, and $\Theta(n^2)$ for select.'
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 7
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'In the logarithmic method, the optimal write-read product is $\Theta(n\log^2 n)$ for membership, $\Theta(n\log^3 n)$ for order and range queries, and $\Theta(n^2)$ for select.'
 
 # 与 main.tex 的 \begin{abstract} 逐字一致：保留 itemize 的列表结构，数学用原始
 # LaTeX（abstract 走 markdownify，KaTeX 扫 document.body，两者都渲染得出来）。

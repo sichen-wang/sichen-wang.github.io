@@ -13,8 +13,11 @@ publication_types: ["paper-conference"]
 publication: "*Advances in Neural Information Processing Systems*<br>(NeurIPS 2026), accepted"
 publication_short: "NeurIPS 2026"
 
-# 列表页卡片显示的一句话摘要，取自 OpenReview 投稿页的 TL;DR 字段。
-tldr: "We determine the minimax regret of online isotonic regression on $[m]^d$ up to constant factors and attain it in polynomial time."
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 1
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'We determine the minimax regret of online isotonic regression on $[m]^d$ up to constant factors and attain it in polynomial time.'
 
 # From main.tex; expand manuscript macros for the site's math renderer.
 abstract: |

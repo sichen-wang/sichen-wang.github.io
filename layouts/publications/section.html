@@ -3,23 +3,24 @@
 {{/* Publications 列表页（只用于 /publications/ 这个 section；标签页仍走 layouts/list.html）。
 
      为什么单独一个模板：论文多了以后，原来的 article-grid 大卡片把整段 abstract
-     铺在列表里，一屏只看得到一两篇。这里改成紧凑卡片：标题、作者、venue、
-     一句话 TL;DR、附件按钮，abstract 与全文留在详情页。
+     铺在列表里，一屏只看得到一两篇。这里改成紧凑卡片：标题、作者、venue / 日期、
+     附件按钮，abstract 与全文留在详情页。各条目 front matter 里的 tldr 一句话摘要
+     按作者要求不在页面上显示。
 
-     分组：已录用在前、预印本在后，组内按日期倒序。判断依据是 publication_types
+     分组：已录用在前、Selected Preprints 在后。判断依据是 publication_types
      是否含 manuscript（Hugo Blox 里表示未经同行评审的稿件），与各条目 front matter
      的约定一致；录用后把 manuscript 改成 paper-conference 等，条目会自动移到上一组。
 
-     TL;DR 取 front matter 的 tldr 字段，留空就不显示。不用 summary：主题的取值链是
-     card_summary → summary → description → abstract，summary 为空时会回落到整段
-     abstract，正是这次要去掉的东西。
+     排序：按作者指定的顺序，即各条目 front matter 的 weight（越小越靠前），不按日期。
+     ByWeight 遇到相同 weight 时再按日期倒序；没设 weight 的条目排在最后。
+     详情页的上一篇 / 下一篇导航也用同一顺序。
 
      不分页：所有论文一页列完（站点 pagerSize 是 10，沿用 list.html 的分页会在第 11 篇
      时把预印本组截到第二页）。 */}}
 
 {{ $accepted := slice }}
 {{ $preprints := slice }}
-{{ range .Pages.ByDate.Reverse }}
+{{ range .Pages.ByWeight }}
   {{ $types := .Params.publication_types | default (slice) }}
   {{ if in $types "manuscript" }}
     {{ $preprints = $preprints | append . }}
@@ -29,7 +30,7 @@
 {{ end }}
 {{ $groups := slice
   (dict "id" "accepted" "title" "Accepted Papers" "pages" $accepted)
-  (dict "id" "preprints" "title" "Preprints" "pages" $preprints)
+  (dict "id" "preprints" "title" "Selected Preprints" "pages" $preprints)
 }}
 
 <div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 max-w-[52rem]">

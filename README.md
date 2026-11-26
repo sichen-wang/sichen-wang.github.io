@@ -34,10 +34,13 @@
 每篇一个目录 `content/publications/<slug>/`：`index.md`（front matter + 全文 HTML）、
 `cite.bib`、`paper.pdf`。列表页由 `layouts/publications/section.html` 渲染：
 
-- 按 `publication_types` 分两组：含 `manuscript` 的进 Preprints，其余进 Accepted Papers；
+- 按 `publication_types` 分两组：含 `manuscript` 的进 Selected Preprints，其余进 Accepted Papers；
   录用后改掉 `manuscript`、把 `publication_short` 改成会议名，条目自动换组。
-- 卡片上的一句话摘要取 `tldr` 字段（已录用的取 OpenReview 的 TL;DR），留空不显示；
-  标签页里的论文卡片同样只显示 `tldr`，不再回落到整段 abstract。
+- 顺序由各条目的 `weight` 决定（越小越靠前，作者指定），不按日期；新增论文时记得给 `weight`，
+  否则会排到最后。详情页的上一篇 / 下一篇导航用同一顺序。
+- 卡片只有标题、作者、venue / 日期和附件按钮，不显示摘要。`tldr` 字段保留一句话摘要，
+  但按作者要求不上页面；标签页里的论文卡片同样不显示摘要。
+- 代码仓库若是 Lean 形式化，按钮写 `label: Lean`，不用默认的 Code。
 - 新论文的全文用 `scripts/paper-html/` 转换，不能只放摘要和 PDF。
 
 ## 覆盖了主题的这些文件

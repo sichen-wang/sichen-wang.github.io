@@ -11,8 +11,11 @@ publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2609.14091"
 publication_short: "Preprint"
 
-# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
-tldr: 'We determine the minimax risk of denoising flows on every tree and attain it with a polynomial-time estimator.'
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 4
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'We determine the minimax risk of denoising a flow on any tree and attain it with a polynomial-time estimator.'
 
 abstract: |
   Isotonic regression and mean estimation over a simplex are among the most classical

@@ -12,8 +12,11 @@ publication_types: ["paper-conference"]
 publication: "*Advances in Neural Information Processing Systems*<br>(NeurIPS 2026), accepted"
 publication_short: "NeurIPS 2026"
 
-# 列表页卡片显示的一句话摘要，取自 OpenReview 投稿页的 TL;DR 字段。
-tldr: "We develop a preconditioned implicit-midpoint Langevin sampler for high-dimensional log-concave targets with non-smooth regularization."
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 2
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'We introduce P-IMLA, a preconditioned implicit-midpoint Langevin sampler that is Gaussian-exact at any step size and handles non-smooth regularization.'
 
 # 与 arXiv v1 main.tex 的 \begin{abstract} 一致。
 abstract: |

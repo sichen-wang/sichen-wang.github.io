@@ -11,8 +11,11 @@ publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2611.01157"
 publication_short: "Preprint"
 
-# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
-tldr: 'We determine the optimal head movement for sorting on a $d$-dimensional grid in $r$ rounds, up to polylogarithmic factors.'
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 6
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'For every dimension $d$ and number of rounds $r$, we determine the head movement needed to sort on a grid, up to polylogarithmic factors.'
 
 # 与 arXiv v1 main.tex 的 \begin{abstract} 一致。
 abstract: |

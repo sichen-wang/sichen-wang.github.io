@@ -5,7 +5,9 @@
 
      右上角：已录用显示 venue 徽章（publication_short，如 NeurIPS 2026）；预印本组
      本身已标明 Preprint，再放一个 Preprint 徽章是重复信息，改显示月份（hide_date
-     的条目不显示）。 */}}
+     的条目不显示）。
+
+     front matter 的 tldr 一句话摘要按作者要求不在卡片上显示（字段保留）。 */}}
 
 {{ $p := . }}
 {{ $types := $p.Params.publication_types | default (slice) }}
@@ -39,10 +41,6 @@
       <time class="pub-card-date" datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "Jan 2006" }}</time>
     {{ end }}
   </div>
-
-  {{ with $p.Params.tldr }}
-  <p class="pub-card-tldr"><span class="pub-card-tldr-label">TL;DR</span> {{ $p.RenderString . }}</p>
-  {{ end }}
 
   {{ $links := partial "functions/build_links" (dict "page" $p "is_list" 1) }}
   {{ if $links }}

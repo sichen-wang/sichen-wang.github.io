@@ -4,17 +4,19 @@ title: "Unitary Synthesis with a PSPACE Oracle"
 authors:
   - me
 
-# 尚未上 arXiv，没有公开发布日期。这里是终稿（投稿版）的定稿日期，只用于排序，
-# 不在页面上显示；上 arXiv 后改成 v1 提交日期并去掉 hide_date。
+# 尚未上 arXiv：这里是投稿终稿的定稿日期（2026 年 11 月），按作者要求显示。
+# 上 arXiv 后改成 v1 提交日期。
 date: 2026-11-03
-hide_date: true
 
 publication_types: ["manuscript"]
 publication: "*Preprint*"
 publication_short: "Preprint"
 
-# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
-tldr: 'Every polynomial-space unitary can be implemented in quantum polynomial time with a PSPACE oracle.'
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 5
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'Every unitary implementable in polynomial space can be implemented in quantum polynomial time with a PSPACE oracle.'
 
 # 与投稿版 sections/abstract.tex 一致；\PSPACE、\BQP 宏展开为 \mathsf{...}。
 abstract: |

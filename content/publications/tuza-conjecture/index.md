@@ -11,8 +11,11 @@ publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2609.13831"
 publication_short: "Preprint"
 
-# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
-tldr: 'We prove $\tau(G)\le\frac{165}{59}\nu(G)\approx 2.797\,\nu(G)$, improving Haxell''s 1999 bound of $66/23$.'
+# Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
+weight: 8
+
+# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+tldr: 'We prove $\tau(G)\le\frac{165}{59}\nu(G)$, improving Haxell''s 1999 bound of $66/23$.'
 
 abstract: |
   Let $\nu(G)$ be the maximum number of edge-disjoint triangles in a graph $G$ and
@@ -38,6 +41,7 @@ links:
     label: Paper
   - type: code
     url: https://github.com/sichen-wang/tuza-lean
+    label: Lean
   - type: preprint
     provider: arxiv
     id: 2609.13831

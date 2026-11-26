@@ -11,6 +11,9 @@ publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2609.14091"
 publication_short: "Preprint"
 
+# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
+tldr: 'We determine the minimax risk of denoising flows on every tree and attain it with a polynomial-time estimator.'
+
 abstract: |
   Isotonic regression and mean estimation over a simplex are among the most classical
   denoising problems under geometric constraints. Chatterjee and Lafferty generalized

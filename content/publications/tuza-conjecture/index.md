@@ -11,6 +11,9 @@ publication_types: ["manuscript"]
 publication: "*Preprint*, arXiv:2609.13831"
 publication_short: "Preprint"
 
+# 列表页卡片显示的一句话摘要（作者审定的中文稿译出）。
+tldr: 'We prove $\tau(G)\le\frac{165}{59}\nu(G)\approx 2.797\,\nu(G)$, improving Haxell''s 1999 bound of $66/23$.'
+
 abstract: |
   Let $\nu(G)$ be the maximum number of edge-disjoint triangles in a graph $G$ and
   $\tau(G)$ the minimum number of edges meeting every triangle. Tuza conjectured that

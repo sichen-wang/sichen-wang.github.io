@@ -30,5 +30,12 @@ mounts:
   - source: static
     target: static
   # 项目根 fonts/ 作为站点字体源，Hugo serve 到 /fonts/...
+  # 只发布网页实际引用的字体：woff2（scripts/build-webfonts.py 生成）和西文 TTF 后备。
+  # fonts/ 里其余文件（Sarasa 等，约 250 MB）只供简历等本地排版使用，不部署。
   - source: fonts
     target: static/fonts
+    files:
+      - 'web/**'
+      - 'cmu-serif/*.ttf'
+      - 'Fira_Code/static/FiraCode-Regular.ttf'
+      - 'Fira_Code/static/FiraCode-Bold.ttf'

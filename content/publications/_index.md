@@ -4,15 +4,9 @@ title: Publications
 hide_title: true
 cms_exclude: true
 
-# View：卡片视图（带配图），单栏显示
-view: article-grid
-columns: 1
-# 列表页不放 poster：卡片宽度下 poster 缩放比仅 0.24，正文约 8px 不可读，
-# 只是装饰却把标题挤出首屏；poster 仍可从详情页的 POSTER 按钮打开
-show_image: false
-fill_image: false
-show_read_time: false
-show_read_more: false
+# 列表页由 layouts/publications/section.html 渲染：已录用 / 预印本两组紧凑卡片，
+# 每张卡片显示标题、作者、venue、front matter 里的 tldr 和附件按钮。
+# 原来 article-grid 的 view / columns / show_image 等参数对它不起作用，已删去。
 
 # 本 section 下所有论文条目继承
 cascade:

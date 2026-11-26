@@ -1,0 +1,53 @@
+{{/* Publications 列表的紧凑卡片，由 layouts/publications/section.html 调用。
+     样式在 assets/css/custom.css 的「Publications 列表」一节：用普通 CSS 而不是
+     新的 Tailwind class，因为 Tailwind 只编译 hugo_stats.json 里已出现过的 class，
+     新 class 在 CI 的单次构建里可能不生效（README「几个已知问题」）。
+
+     右上角：已录用显示 venue 徽章（publication_short，如 NeurIPS 2026）；预印本组
+     本身已标明 Preprint，再放一个 Preprint 徽章是重复信息，改显示月份（hide_date
+     的条目不显示）。 */}}
+
+{{ $p := . }}
+{{ $types := $p.Params.publication_types | default (slice) }}
+{{ $isPreprint := in $types "manuscript" }}
+
+<li class="pub-card">
+  <h3 class="pub-card-title">
+    <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+  </h3>
+
+  <div class="pub-card-meta">
+    {{ with $p.Params.authors }}
+    <span class="pub-card-authors">
+      {{- range $i, $a := . -}}
+        {{- if $i }}, {{ end -}}
+        {{/* 传原始字符串：get_author_profile 内部 urlize 后去 data/authors 查找，
+             未登记的合作者保留原文作为显示名（与 card.html 的处理一致）。 */}}
+        {{- $profile := partial "functions/get_author_profile" $a -}}
+        {{- if $profile.is_owner -}}
+          <span class="pub-card-owner">{{ $profile.title }}</span>
+        {{- else -}}{{ $profile.title }}{{- end -}}
+      {{- end -}}
+    </span>
+    {{ end }}
+
+    {{ if not $isPreprint }}
+      {{ with $p.Params.publication_short }}
+      <span class="pub-card-venue">{{ . | markdownify }}</span>
+      {{ end }}
+    {{ else if not $p.Params.hide_date }}
+      <time class="pub-card-date" datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "Jan 2006" }}</time>
+    {{ end }}
+  </div>
+
+  {{ with $p.Params.tldr }}
+  <p class="pub-card-tldr"><span class="pub-card-tldr-label">TL;DR</span> {{ $p.RenderString . }}</p>
+  {{ end }}
+
+  {{ $links := partial "functions/build_links" (dict "page" $p "is_list" 1) }}
+  {{ if $links }}
+  <div class="pub-card-links">
+    {{ partial "page_links" (dict "page" $p "is_list" 1) }}
+  </div>
+  {{ end }}
+</li>

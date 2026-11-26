@@ -28,6 +28,10 @@ function findKatex() {
   const roots = [
     path.join(os.homedir(), "Library/Caches/hugo_cache/modules/filecache/modules/pkg/mod/github.com"),
     path.join(os.homedir(), ".cache/hugo_cache/modules/filecache/modules/pkg/mod/github.com"),
+    // Windows：Hugo 的缓存目录在 %LOCALAPPDATA%\hugo_cache
+    ...(process.env.LOCALAPPDATA
+      ? [path.join(process.env.LOCALAPPDATA, "hugo_cache/modules/filecache/modules/pkg/mod/github.com")]
+      : []),
   ];
   for (const root of roots) {
     if (!fs.existsSync(root)) continue;

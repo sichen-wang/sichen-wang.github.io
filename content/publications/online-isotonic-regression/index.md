@@ -13,6 +13,9 @@ publication_types: ["paper-conference"]
 publication: "*Advances in Neural Information Processing Systems*<br>(NeurIPS 2026), accepted"
 publication_short: "NeurIPS 2026"
 
+# 列表页卡片显示的一句话摘要，取自 OpenReview 投稿页的 TL;DR 字段。
+tldr: "We determine the minimax regret of online isotonic regression on $[m]^d$ up to constant factors and attain it in polynomial time."
+
 # From main.tex; expand manuscript macros for the site's math renderer.
 abstract: |
   Kotłowski et al. (NeurIPS 2017) posed as a central open problem the design of efficient online isotonic regression algorithms beyond totally ordered domains. We resolve this on the product orders $[m]^d = \{1, \ldots, m\}^d$ for every fixed dimension $d \geq 2$, determining the squared-loss minimax regret over $T$ rounds up to constant factors:
@@ -37,6 +40,10 @@ links:
     label: Paper
   - type: code
     url: https://github.com/sichen-wang/Online-Isotonic-Regression_Code
+  - type: source
+    url: https://openreview.net/forum?id=OZYmFCFi3w
+    label: OpenReview
+    icon: hero/chat-bubble-left-right
 ---
 
 <article class="ltx_document ltx_authors_1line">

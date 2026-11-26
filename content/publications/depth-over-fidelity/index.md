@@ -11,6 +11,9 @@ publication_types: ["paper-conference"]
 publication: "*Proceedings of the 43rd International Conference on Machine Learning*<br>(ICML 2026), PMLR 306, Seoul, South Korea"
 publication_short: "ICML 2026"
 
+# 列表页卡片显示的一句话摘要，取自 OpenReview 投稿页的 TL;DR 字段（原文 mechnism 拼写已更正）。
+tldr: "We introduce an effective residual mechanism into rank-based evolution strategies to improve robustness while preserving evolution generation depth."
+
 abstract: >-
   Noisy evolution strategies under fixed evaluation budgets face a depth-fidelity
   trade-off: spending evaluations to denoise intra-generation rankings reduces the
@@ -52,6 +55,10 @@ links:
     provider: arxiv
     id: 2606.06555
     label: arXiv
+  - type: source
+    url: https://openreview.net/forum?id=woocESr6ga
+    label: OpenReview
+    icon: hero/chat-bubble-left-right
   - type: event
     url: https://icml.cc/virtual/2026/poster/60774
     label: ICML Virtual

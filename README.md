@@ -18,6 +18,27 @@
 
 - `scripts/check-math.js` — 站内公式自检，列出文件/行号/错误原因，有问题时退出码为 1
 - `scripts/paper-html/` — 把论文 LaTeX 源转成站内全文页（LaTeXML），详见该目录的 README
+- `scripts/build-webfonts.py` — 从 `fonts/` 的 TTF 生成网页字体并逐字形校验无损：西文转 woff2，
+  方正新书宋按站内字频切成 `unicode-range` 分片（中文页只下载用到的分片，约 200 KB，原 TTF 2.7 MB），
+  同时重写 `custom.css` 里的分片声明。需要 `pip install fonttools brotli`。生成物入库，CI 不需要这套依赖；
+  不重跑也不会缺字，新增大量中文文章后重跑一次能让常用字集中到前几片。
+
+## 字体与部署体积
+
+`fonts/` 挂载到站点的 `/fonts/`，但 `config/_default/module.yaml` 只发布网页实际引用的文件
+（`fonts/web/` 的 woff2 和西文 TTF 后备）。其余字体（Sarasa 等约 250 MB）只供简历等本地排版用，
+不进部署产物。CSS 新引用 `fonts/` 下的其他文件时，要同步把它加进挂载的 `files` 列表。
+
+## 论文条目
+
+每篇一个目录 `content/publications/<slug>/`：`index.md`（front matter + 全文 HTML）、
+`cite.bib`、`paper.pdf`。列表页由 `layouts/publications/section.html` 渲染：
+
+- 按 `publication_types` 分两组：含 `manuscript` 的进 Preprints，其余进 Accepted Papers；
+  录用后改掉 `manuscript`、把 `publication_short` 改成会议名，条目自动换组。
+- 卡片上的一句话摘要取 `tldr` 字段（已录用的取 OpenReview 的 TL;DR），留空不显示；
+  标签页里的论文卡片同样只显示 `tldr`，不再回落到整段 abstract。
+- 新论文的全文用 `scripts/paper-html/` 转换，不能只放摘要和 PDF。
 
 ## 覆盖了主题的这些文件
 
@@ -38,15 +59,15 @@ assets/js/hb-citation.js
 
 ## 简历
 
-`static/uploads/CV.tex`（中文）/ `CV_en.tex`（英文），XeLaTeX。
+`static/uploads/CV_zh.tex`（中文）/ `CV_en.tex`（英文），XeLaTeX。
 **必须在 `static/uploads/` 目录下编译**（字体与图片走相对路径）：
 
 ```bash
-cd static/uploads && latexmk -xelatex CV.tex
+cd static/uploads && latexmk -xelatex CV_zh.tex && latexmk -xelatex CV_en.tex
 ```
 
 顶栏用 tikz overlay 定位，**必须连编两遍**（`latexmk` 会自动跑足）。只编一遍顶栏会静默
-消失——编译照样报成功、照样单页。改完用 `pdffonts CV.pdf | grep -ic fontawesome`
+消失——编译照样报成功、照样单页。改完用 `pdffonts CV_en.pdf | grep -ic fontawesome`
 确认顶栏还在（应 ≥1），再渲染首屏肉眼看一眼。
 
 ## 几个已知问题

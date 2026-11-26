@@ -1,0 +1,61 @@
+{{ define "main" }}
+
+{{/* Publications 列表页（只用于 /publications/ 这个 section；标签页仍走 layouts/list.html）。
+
+     为什么单独一个模板：论文多了以后，原来的 article-grid 大卡片把整段 abstract
+     铺在列表里，一屏只看得到一两篇。这里改成紧凑卡片：标题、作者、venue、
+     一句话 TL;DR、附件按钮，abstract 与全文留在详情页。
+
+     分组：已录用在前、预印本在后，组内按日期倒序。判断依据是 publication_types
+     是否含 manuscript（Hugo Blox 里表示未经同行评审的稿件），与各条目 front matter
+     的约定一致；录用后把 manuscript 改成 paper-conference 等，条目会自动移到上一组。
+
+     TL;DR 取 front matter 的 tldr 字段，留空就不显示。不用 summary：主题的取值链是
+     card_summary → summary → description → abstract，summary 为空时会回落到整段
+     abstract，正是这次要去掉的东西。
+
+     不分页：所有论文一页列完（站点 pagerSize 是 10，沿用 list.html 的分页会在第 11 篇
+     时把预印本组截到第二页）。 */}}
+
+{{ $accepted := slice }}
+{{ $preprints := slice }}
+{{ range .Pages.ByDate.Reverse }}
+  {{ $types := .Params.publication_types | default (slice) }}
+  {{ if in $types "manuscript" }}
+    {{ $preprints = $preprints | append . }}
+  {{ else }}
+    {{ $accepted = $accepted | append . }}
+  {{ end }}
+{{ end }}
+{{ $groups := slice
+  (dict "id" "accepted" "title" "Accepted Papers" "pages" $accepted)
+  (dict "id" "preprints" "title" "Preprints" "pages" $preprints)
+}}
+
+<div class="container px-8 mx-auto xl:px-5 py-5 lg:py-8 max-w-[52rem]">
+
+  {{ if or (not .Params.hide_title) .Content }}
+  <article class="prose prose-slate lg:prose-xl dark:prose-invert max-w-none w-full mb-8">
+    {{ if not .Params.hide_title }}<h1 class="lg:text-6xl">{{ .Title }}</h1>{{ end }}
+    {{ .Content }}
+  </article>
+  {{ end }}
+
+  {{ range $groups }}
+    {{ if .pages }}
+    <section class="pub-group" aria-labelledby="pub-group-{{ .id }}">
+      <h2 id="pub-group-{{ .id }}" class="pub-group-title">
+        {{ .title }}<span class="pub-group-count">{{ len .pages }}</span>
+      </h2>
+      <ul class="pub-group-list">
+        {{ range .pages }}
+          {{ partial "components/pub_card.html" . }}
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+  {{ end }}
+
+</div>
+
+{{ end }}

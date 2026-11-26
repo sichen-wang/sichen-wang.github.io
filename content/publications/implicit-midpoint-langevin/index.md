@@ -15,7 +15,7 @@ publication_short: "NeurIPS 2026"
 # Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
 weight: 2
 
-# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+# 一句话摘要，显示在列表卡片上（不带 TL;DR 标签）。
 tldr: 'We introduce P-IMLA, a preconditioned implicit-midpoint Langevin sampler that is Gaussian-exact at any step size and handles non-smooth regularization.'
 
 # 与 arXiv v1 main.tex 的 \begin{abstract} 一致。

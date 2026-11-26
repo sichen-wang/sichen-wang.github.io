@@ -14,7 +14,7 @@ publication_short: "Preprint"
 # Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
 weight: 4
 
-# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+# 一句话摘要，显示在列表卡片上（不带 TL;DR 标签）。
 tldr: 'We determine the minimax risk of denoising a flow on any tree and attain it with a polynomial-time estimator.'
 
 abstract: |

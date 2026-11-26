@@ -15,7 +15,7 @@ publication_short: "Preprint"
 # Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
 weight: 5
 
-# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+# 一句话摘要，显示在列表卡片上（不带 TL;DR 标签）。
 tldr: 'Every unitary implementable in polynomial space can be implemented in quantum polynomial time with a PSPACE oracle.'
 
 # 与投稿版 sections/abstract.tex 一致；\PSPACE、\BQP 宏展开为 \mathsf{...}。

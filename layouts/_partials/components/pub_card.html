@@ -7,7 +7,8 @@
      本身已标明 Preprint，再放一个 Preprint 徽章是重复信息，改显示月份（hide_date
      的条目不显示）。
 
-     front matter 的 tldr 一句话摘要按作者要求不在卡片上显示（字段保留）。 */}}
+     作者信息下面显示 front matter 的 tldr 一句话摘要，不加 "TL;DR" 标签（作者要求）；
+     留空就不显示。 */}}
 
 {{ $p := . }}
 {{ $types := $p.Params.publication_types | default (slice) }}
@@ -41,6 +42,10 @@
       <time class="pub-card-date" datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "Jan 2006" }}</time>
     {{ end }}
   </div>
+
+  {{ with $p.Params.tldr }}
+  <p class="pub-card-tldr">{{ $p.RenderString . }}</p>
+  {{ end }}
 
   {{ $links := partial "functions/build_links" (dict "page" $p "is_list" 1) }}
   {{ if $links }}

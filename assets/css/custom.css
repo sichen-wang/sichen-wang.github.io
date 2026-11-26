@@ -1066,7 +1066,7 @@ samp {
 
 /* ==========================================================================
    Publications 列表（layouts/publications/section.html + components/pub_card.html）
-   紧凑卡片：标题、作者 + venue / 日期、附件按钮；abstract 与全文在详情页。
+   紧凑卡片：标题、作者 + venue / 日期、一句话摘要（不带 TL;DR 标签）、附件按钮；abstract 与全文在详情页。
    用普通 CSS 写：新加的 Tailwind class 要先进 hugo_stats.json 才会被编译，
    CI 单次构建里不可靠。配色沿用主题变量 --color-primary-*，与附件按钮一致。
    ========================================================================== */
@@ -1176,6 +1176,13 @@ samp {
 
 
 
+.pub-card-tldr {
+  margin: 0.55rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgb(63 63 70);
+}
+
 .pub-card-links {
   margin-top: 0.55rem;
 }
@@ -1230,6 +1237,10 @@ samp {
 
 .dark .pub-card-date {
   color: rgb(161 161 170);
+}
+
+.dark .pub-card-tldr {
+  color: rgb(212 212 216);
 }
 
 

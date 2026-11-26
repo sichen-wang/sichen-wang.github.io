@@ -23,7 +23,7 @@ publication_short: "Preprint"
 # Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
 weight: 7
 
-# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+# 一句话摘要，显示在列表卡片上（不带 TL;DR 标签）。
 tldr: 'In the logarithmic method, the optimal write-read product is $\Theta(n\log^2 n)$ for membership, $\Theta(n\log^3 n)$ for order and range queries, and $\Theta(n^2)$ for select.'
 
 # 与 main.tex 的 \begin{abstract} 逐字一致：保留 itemize 的列表结构，数学用原始

@@ -169,10 +169,12 @@
       </div>
       {{ end }}
       
-      {{/* 论文卡片（出现在标签页）与 Publications 列表一致：不显示摘要——既不铺整段
-           abstract，也不显示 tldr（作者要求一句话摘要不上页面）。 */}}
+      {{/* 论文卡片（出现在标签页）与 Publications 列表一致：只显示一句话 tldr，
+           不回落到整段 abstract；tldr 为空就不显示摘要。 */}}
       {{ $summary := "" }}
-      {{ if not $isPublication }}
+      {{ if $isPublication }}
+        {{ $summary = $item.Params.tldr | default "" }}
+      {{ else }}
         {{ $summary = partial "functions/get_preview_summary" $item }}
       {{ end }}
       {{ if $summary }}

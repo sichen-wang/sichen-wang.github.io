@@ -14,10 +14,10 @@ publication_short: "Preprint"
 # Publications 列表与上一篇 / 下一篇导航的顺序（越小越靠前），按作者指定。
 weight: 6
 
-# 一句话摘要（作者审定后润色；按作者要求不在页面上显示，字段保留备用）。
+# 一句话摘要，显示在列表卡片上（不带 TL;DR 标签）。
 tldr: 'For every dimension $d$ and number of rounds $r$, we determine the head movement needed to sort on a grid, up to polylogarithmic factors.'
 
-# 与 arXiv v1 main.tex 的 \begin{abstract} 一致。
+# 与 STOC 投稿版 main.tex 的 \begin{abstract} 一致（相对 arXiv v1 只多了 "worst-case"）。
 abstract: |
   The complexity of sorting is usually measured by the number of comparisons. This
   measure ignores the movement of the read heads between comparisons, which is a real
@@ -25,8 +25,8 @@ abstract: |
   grid, two heads move over the grid and compare the keys beneath them, and the only
   cost is the total movement of the heads. The algorithm plans its route in $r$ rounds
   and sees the outcomes of each round only after running it. For every $d$ and $r$ we
-  determine the expected movement needed to sort $n$ keys: it is $n^{\beta}$ up to
-  polylogarithmic factors, where $\beta=1+D^{r-1}/(D^{r}-(D-1)^{r})$ and $D=2d$,
+  determine the worst-case expected movement needed to sort $n$ keys: it is $n^{\beta}$
+  up to polylogarithmic factors, where $\beta=1+D^{r-1}/(D^{r}-(D-1)^{r})$ and $D=2d$,
   falling from $n^{2}$ at $r=1$ to $n^{1+1/(2d)}$ with unlimited rounds. Our algorithm
   makes every round move about the same amount, and a matching lower bound holds
   against every algorithm.
@@ -67,16 +67,15 @@ comparison must first be brought within reach. On a Turing machine with one work
 read-only input tape, sorting an input of $N$ bits, made of strings of $3\log N$ bits each, takes
 $\Omega(N^{3/2}/\sqrt{\log N})$ steps <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib33" title="An optimal lower bound for Turing machines with one work tape and a two-way input tape" class="ltx_ref">MS86</a>; <a href="#bib.bib14" title="The complexity of matrix transposition on one-tape off-line Turing machines" class="ltx_ref">DMS91</a>]</cite>. This bound comes from the distance the heads must
 travel: two heads on tapes of length $t$ need $\Omega(t^{3/2})$ steps to reach the pairs of tape positions
-given by a well-scattered permutation <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib14" title="The complexity of matrix transposition on one-tape off-line Turing machines" class="ltx_ref">DMS91</a>]</cite>.</p>
+given by the permutation that transposes a $\sqrt{t}\times\sqrt{t}$ matrix <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib14" title="The complexity of matrix transposition on one-tape off-line Turing machines" class="ltx_ref">DMS91</a>]</cite>.</p>
 </div>
 <div id="S1.p2" class="ltx_para">
 <p class="ltx_p">Adaptivity has its own classical measure. In the parallel comparison model <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib40" title="Parallelism in comparison problems" class="ltx_ref">Val75</a>]</cite>, an
 algorithm commits a set of comparisons in each round and learns the outcomes when the round ends, and
 the exponents of the number of comparisons for sorting, selection, and merging in $r$ rounds are
 known <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib40" title="Parallelism in comparison problems" class="ltx_ref">Val75</a>; <a href="#bib.bib12" title="Parallel sorting" class="ltx_ref">BT83</a>; <a href="#bib.bib23" title="Sorting and merging in rounds" class="ltx_ref">HH82</a>; <a href="#bib.bib2" title="Tight complexity bounds for parallel comparison sorting" class="ltx_ref">AAV86</a>; <a href="#bib.bib1" title="Sorting, approximate sorting, and searching in rounds" class="ltx_ref">AA88</a>; <a href="#bib.bib36" title="Sorting and selecting in rounds" class="ltx_ref">Pip87</a>; <a href="#bib.bib5" title="Parallel selection with high probability" class="ltx_ref">BB90</a>]</cite>. This theory charges nothing for moving
-between comparisons, and the bounds on travel above say nothing about rounds. We ask: <em class="ltx_emph ltx_font_italic">How much must
-a processor travel to sort $n$ keys it cannot move, if it plans its route in $r$ rounds and learns the
-outcomes of each round only after running it?</em></p>
+between comparisons, and the bounds on travel above say nothing about rounds. How much must a processor travel to sort $n$ keys it
+cannot move, if it plans its route in $r$ rounds and learns the outcomes of each round only after running it?</p>
 </div>
 <div id="S1.p3" class="ltx_para">
 <p class="ltx_p">We study the simplest model with this cost. The $n$ keys lie one at each position of the grid
@@ -137,9 +136,10 @@ randomized otherwise.</span></p>
 <div id="S1.SS1.p2" class="ltx_para">
 <p class="ltx_p">The exponent decreases from
 $2$ at $r=1$ to $1+\tfrac{1}{2d}$ as $r\to\infty\text{,}$ each further round lowering
-it by a geometrically shrinking amount (<a href="#S2.Thmtheorem6" title="Remark 2.6. ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Remark</span> <span class="ltx_text ltx_ref_tag">2.6</span></a>), and for $r\geq 2$ it also decreases in $d\text{.}$ The
-number of heads, by contrast, does not affect it: two heads are what a comparison needs, and any fixed
-number of heads changes the complexity by at most a constant factor (<a href="#S7.Thmtheorem1" title="Proposition 7.1. ‣ 7 Multiple Heads ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Proposition</span> <span class="ltx_text ltx_ref_tag">7.1</span></a>). We call the range
+it by a geometrically shrinking amount (<a href="#S2.Thmtheorem6" title="Remark 2.6. ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Remark</span> <span class="ltx_text ltx_ref_tag">2.6</span></a>), and for $r\geq 2$ it also decreases in $d\text{.}$ On the
+line with unlimited rounds it is $3/2\text{,}$ the exponent of the head travel on the Turing machine above
+(<a href="#S5.Thmtheorem4" title="Remark 5.4. ‣ 5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Remark</span> <span class="ltx_text ltx_ref_tag">5.4</span></a>). The number of heads does not affect it: two heads are what a comparison needs, and
+any fixed number of heads changes the complexity by at most a constant factor (<a href="#S7.Thmtheorem1" title="Proposition 7.1. ‣ 7 Multiple Heads ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Proposition</span> <span class="ltx_text ltx_ref_tag">7.1</span></a>). We call the range
 $d\geq 2\text{,}$ $3\leq r&lt;\infty$ the <em class="ltx_emph ltx_font_italic">interior</em>. The logarithmic factors hidden by $\widetilde{\Theta}$ occur only there.
 <a href="#S1.T1" title="In 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Table</span> <span class="ltx_text ltx_ref_tag">1</span></a> lists the exponent at small parameters, and <a href="#S6" title="6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6</span></a> ends with the proof of the theorem.</p>
 </div>
@@ -150,7 +150,7 @@ the order is known up to a polylogarithmic factor and conjectured exact (<a href
 <table class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle" style="white-space:nowrap;">
 <thead class="ltx_thead">
 <tr class="ltx_tr">
-<th class="ltx_td ltx_th ltx_th_column ltx_th_row ltx_border_r ltx_border_tt" style="border-right:1px solid currentColor;"></th>
+<th class="ltx_td ltx_th ltx_th_column ltx_th_row ltx_border_r ltx_border_tt"></th>
 <th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">$r=1$</th>
 <th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">$r=2$</th>
 <th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">$r=3$</th>
@@ -160,7 +160,7 @@ the order is known up to a polylogarithmic factor and conjectured exact (<a href
 </thead>
 <tbody class="ltx_tbody">
 <tr class="ltx_tr">
-<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_r ltx_border_t" style="border-right:1px solid currentColor;padding-bottom:2.0pt;">$d=1$</th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_r ltx_border_t" style="padding-bottom:2.0pt;">$d=1$</th>
 <td class="ltx_td ltx_align_center ltx_border_t" style="padding-bottom:2.0pt;">$2$</td>
 <td class="ltx_td ltx_align_center ltx_border_t" style="padding-bottom:2.0pt;">$\tfrac{5}{3}$</td>
 <td class="ltx_td ltx_align_center ltx_border_t" style="padding-bottom:2.0pt;">$\tfrac{11}{7}$</td>
@@ -168,7 +168,7 @@ the order is known up to a polylogarithmic factor and conjectured exact (<a href
 <td class="ltx_td ltx_align_center ltx_border_t" style="padding-bottom:2.0pt;">$\tfrac{3}{2}$</td>
 </tr>
 <tr class="ltx_tr">
-<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_r" style="border-right:1px solid currentColor;padding-bottom:2.0pt;">$d=2$</th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_r" style="padding-bottom:2.0pt;">$d=2$</th>
 <td class="ltx_td ltx_align_center" style="padding-bottom:2.0pt;">$2$</td>
 <td class="ltx_td ltx_align_center" style="padding-bottom:2.0pt;">$\tfrac{11}{7}$</td>
 <td class="ltx_td ltx_align_center" style="padding-bottom:2.0pt;">$\tfrac{53}{37}^{\dagger}$</td>
@@ -176,7 +176,7 @@ the order is known up to a polylogarithmic factor and conjectured exact (<a href
 <td class="ltx_td ltx_align_center" style="padding-bottom:2.0pt;">$\tfrac{5}{4}$</td>
 </tr>
 <tr class="ltx_tr">
-<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_bb ltx_border_r" style="border-right:1px solid currentColor;">$d=3$</th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_bb ltx_border_r">$d=3$</th>
 <td class="ltx_td ltx_align_center ltx_border_bb">$2$</td>
 <td class="ltx_td ltx_align_center ltx_border_bb">$\tfrac{17}{11}$</td>
 <td class="ltx_td ltx_align_center ltx_border_bb">$\tfrac{127}{91}^{\dagger}$</td>
@@ -189,7 +189,7 @@ the order is known up to a polylogarithmic factor and conjectured exact (<a href
 <div id="S1.SS1.p3" class="ltx_para">
 <p class="ltx_p">On the line the exponent is tied to selection rather than to sorting (<a href="#S5.Thmtheorem12" title="Remark 5.12. ‣ 5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Remark</span> <span class="ltx_text ltx_ref_tag">5.12</span></a>): $\beta_{r}^{(1)}=1+\tfrac{1}{2}s_{r}\text{,}$ where $s_{r}=1+1/(2^{r}-1)$ is the
 exponent of the worst-case number of comparisons that a deterministic algorithm needs to find the maximum of $n$ keys in $r$
-rounds <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib40" title="Parallelism in comparison problems" class="ltx_ref">Val75</a>; <a href="#bib.bib23" title="Sorting and merging in rounds" class="ltx_ref">HH82</a>]</cite>, while the number of comparisons for sorting in $r$ rounds has exponent $1+1/r$ <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib2" title="Tight complexity bounds for parallel comparison sorting" class="ltx_ref">AAV86</a>]</cite>.</p>
+rounds <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib40" title="Parallelism in comparison problems" class="ltx_ref">Val75</a>]</cite>, while the number of comparisons for sorting in $r$ rounds has exponent $1+1/r$ <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib2" title="Tight complexity bounds for parallel comparison sorting" class="ltx_ref">AAV86</a>]</cite>.</p>
 </div>
 </section>
 <section id="S1.SS2" class="ltx_subsection">
@@ -199,7 +199,7 @@ rounds <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib40" title="P
 <div id="S1.SS2.p1" class="ltx_para">
 <p class="ltx_p">The cost of a round depends on how many pairs of positions it must visit and on how these pairs are spread. Call an
 unordered pair of positions a <em class="ltx_emph ltx_font_italic">cell</em>. If $Q$ cells are spread evenly over the $n^{2}$ points of the comparison grid,
-their nearest-neighbor spacing is about $(n^{2}/Q)^{1/D}\text{,}$ and a route through them moves about $Q\cdot(n^{2}/Q)^{1/D}\text{:}$
+the distance from each of them to the nearest other one, their <em class="ltx_emph ltx_font_italic">spacing</em>, is about $(n^{2}/Q)^{1/D}\text{,}$ and a route through them moves about $Q\cdot(n^{2}/Q)^{1/D}\text{:}$
 their number times their spacing, as for tours through random point sets <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib9" title="The shortest path through many points" class="ltx_ref">BHH59</a>; <a href="#bib.bib37" title="Subadditive Euclidean functionals and nonlinear growth in geometric probability" class="ltx_ref">Ste81</a>; <a href="#bib.bib43" title="Probability Theory of Classical Euclidean Optimization Problems" class="ltx_ref">Yuk98</a>]</cite>. The two baselines
 are instances of this product. All $\binom{n}{2}$ cells have spacing $1\text{,}$ which gives $n^{2}\text{.}$ The $\Theta(n)$ cells of
 consecutive ranks, which every algorithm must compare, have spacing about $n^{1/D}$ on a random input, which gives
@@ -216,7 +216,7 @@ is the exponent of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Expone
 <div id="S1.SS2.SSS0.Px1.p1" class="ltx_para">
 <p class="ltx_p">The algorithm keeps <em class="ltx_emph ltx_font_italic">segments</em>, sets of keys of consecutive ranks whose internal order is not
 yet known, and refines them round by round. In round $1$ it chooses $n/b_{0}$ random positions, the <em class="ltx_emph ltx_font_italic">splitters</em>, for a parameter $b_{0}\text{.}$ One head stops
-on each splitter in turn while the other sweeps the grid, so the movement is $n^{2}/b_{0}\text{,}$ and the keys between two consecutive
+on each splitter in turn while the other sweeps the grid, so the movement is $n^{2}/b_{0}\text{,}$ and the keys ranked between two consecutive
 splitters form a segment of about $b_{0}$ keys. The final round, the <em class="ltx_emph ltx_font_italic">cleanup</em>, compares all pairs inside segments. If round $2$ is the final one, these
 are about $nb_{0}$ cells, known in advance, and a serpentine route through them moves about their number times their spacing
 (<a href="#S5.SS1" title="5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>), as in the classical tours through given points <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib15" title="The shortest path and the shortest road through n points" class="ltx_ref">Few55</a>; <a href="#bib.bib34" title="Spacefilling curves and the planar travelling salesman problem" class="ltx_ref">PB89</a>]</cite>. Making the two movements equal gives the
@@ -228,18 +228,21 @@ their segment, and these cut the segments further. Selecting each key independen
 the whole grid, and the route through them moves a polynomial factor more than the other rounds. So the round selects pivots in groups
 of nearby positions. It cuts the grid into cubes of side $h\text{,}$ selects each cube with probability $p\text{,}$ and takes the keys of the selected
 cubes as pivots. The cells then lie in the <em class="ltx_emph ltx_font_italic">product boxes</em> $I\times J$ of a selected cube $J$ and another cube $I\text{,}$ and the heads
-go through these boxes one after another. If the segments entering the round have about $b$ keys, this moves about $p\,h\,nb$ for
-$h=(n/b)^{1/D}\text{.}$</p>
+go through these boxes one after another. If the segments entering the round have about $b$ keys, the heads move about $p\,h\,nb$ inside the
+boxes and about $p\,n^{2/d}(nb)^{1-1/d}/h$ between them (Lemmas <a href="#S5.Thmtheorem9" title="Lemma 5.9. ‣ 5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5.9</span></a> and <a href="#S6.Thmtheorem3" title="Lemma 6.3. ‣ 6.2 Two Samples at 𝑟=3 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6.3</span></a>), and
+$h=(n/b)^{1/D}$ makes the two equal.</p>
 </div>
 <div id="S1.SS2.SSS0.Px1.p3" class="ltx_para">
-<p class="ltx_p">The refined segments can still have many keys, but they meet few cubes. List a key’s segment in rank order, starting at the key: each new
+<p class="ltx_p">A segment that meets no selected cube is not cut, so the refined segments can still have many keys, but they
+meet few cubes. List a key’s segment in rank order, starting at the key: each new
 cube is selected with probability $p\text{,}$ so a pivot appears after $1/p$ cubes in expectation. Hence the <em class="ltx_emph ltx_font_italic">dispersion</em>, the sum over the
 keys of the number of cubes that the key’s segment meets, has expectation about $n/p\text{,}$ as for segments of $1/p$ keys. On the line, a bound
 on the dispersion is all that the next round needs.</p>
 </div>
 <div id="S1.SS2.SSS0.Px1.p4" class="ltx_para">
-<p class="ltx_p">So the parameters of the algorithm (<a href="#alg1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Algorithm</span> <span class="ltx_text ltx_ref_tag">1</span></a>) are a decreasing sequence of rank scales $b_{j}=n^{a_{j}}\text{,}$ $0\leq j\leq r-2\text{,}$ the
-<em class="ltx_emph ltx_font_italic">schedule</em>, with finest scale $g=b_{r-2}\text{.}$ On the line, round $j+1$ uses $p=1/b_{j}$ and $h=(n/b_{j-1})^{1/D}\text{.}$ For $d\geq 2$ the
+<p class="ltx_p">The parameters of the algorithm (<a href="#alg1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Algorithm</span> <span class="ltx_text ltx_ref_tag">1</span></a>) are a decreasing sequence of rank scales $b_{j}=n^{a_{j}}\text{,}$ $0\leq j\leq r-2\text{,}$ the
+<em class="ltx_emph ltx_font_italic">schedule</em>, with finest scale $g=b_{r-2}\text{.}$ On the line, round $j+1$ uses $p=1/b_{j}$ and $h=(n/b_{j-1})^{1/D}\text{,}$ so its
+output has dispersion about $nb_{j}\text{,}$ as for segments of $b_{j}$ keys. For $d\geq 2$ the
 samples are more elaborate, as explained below, but the movement has the same exponent. Requiring every round to move the
 same amount $n^{\beta}$ gives one equation per round:</p>
 
@@ -255,12 +258,13 @@ spacing. By <a href="#S2.Thmtheorem5" title="Lemma 2.5. ‣ 2.2 The Scale Schedu
 <div id="S1.SS2.SSS0.Px1.p5" class="ltx_para">
 <p class="ltx_p">For $d\geq 2$ the cleanup needs more. Visiting $Q$ cells in the product box of two cubes of side $h$ moves about $h\,Q^{1-1/D}\text{.}$ On the line
 this exponent is $\tfrac{1}{2}\text{,}$ and the sum of the $\sqrt{Q}$ over the boxes is at most the dispersion. For $d\geq 2$ the exponent is larger, and
-the sum also depends on the sizes of the segments. So the cleanup needs small dispersion, for the tour between the product boxes, and a small
+the sum of the $Q^{1-1/D}$ also depends on the sizes of the segments. So the cleanup needs small dispersion, for the tour between the product boxes, and a small
 sum of squared segment sizes, for the visits inside them. Sampling cubes gives the first and sampling keys gives the second, so at $r=3$ the
-refinement round draws both samples (<a href="#S6.SS2" title="6.2 Two Samples at 𝑟=3 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.2</span></a>). For $r\geq 4$ a refinement round can be followed by another one, whose cost depends
-on the dispersion of its input, counted with boxes of many sizes. So each refinement round draws one sample for each box size of a nested
-partition of the grid, up to a threshold, and the analysis keeps an upper bound on the expected dispersion for each of these sizes
-(<a href="#S6.SS3" title="6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.3</span></a>). This costs a factor $\log n$ for the number of samples and a factor $\log n$ for the number of box sizes per sample.</p>
+refinement round draws both samples (<a href="#S6.SS2" title="6.2 Two Samples at 𝑟=3 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.2</span></a>). For $r\geq 4$ a refinement round can be followed by another one, whose route moves between boxes of every size, so its
+cost depends on the dispersion of its input at every box size. One sample controls one size, so each refinement round draws one
+sample for each box size of a nested partition of the grid, up to a threshold, and the analysis keeps an upper bound on the expected
+dispersion for each of these sizes (<a href="#S6.SS3" title="6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.3</span></a>). One factor $\log n$ comes from the number of samples and the other from the number of box sizes at which each
+route moves.</p>
 </div>
 </section>
 <section id="S1.SS2.SSS0.Px2" class="ltx_paragraph">
@@ -268,9 +272,9 @@ partition of the grid, up to a threshold, and the analysis keeps an upper bound 
 
 <div id="S1.SS2.SSS0.Px2.p1" class="ltx_para">
 <p class="ltx_p">By Yao’s principle, it suffices to consider deterministic algorithms on the <em class="ltx_emph ltx_font_italic">uniform input</em>, a uniformly random assignment of the ranks to
-the positions <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib41" title="Probabilistic computations: toward a unified measure of complexity" class="ltx_ref">Yao77</a>]</cite>. Call a cell <em class="ltx_emph ltx_font_italic">co-blocked at scale $b$</em> if its two ranks lie in one block of $b$ consecutive ranks, the blocks
-being cut from rank $1$ upward. There are $\Theta(ng)$ cells co-blocked at scale $g\text{,}$ and the final round must visit every one of them whose two positions have not been compared in earlier rounds with another
-position of their block. Take such a cell $\{u,v\}\text{.}$ The earlier outcomes do not determine the order of $u$ and $v\text{,}$ because a chain of outcomes from one to the other stays inside
+the positions <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib41" title="Probabilistic computations: toward a unified measure of complexity" class="ltx_ref">Yao77</a>]</cite>. Call a cell <em class="ltx_emph ltx_font_italic">co-blocked at scale $b$</em> if its two ranks lie in a common block
+$\{(i-1)b+1,\dots,ib\}$ for some $i\text{.}$ There are $\Theta(ng)$ cells co-blocked at scale $g\text{.}$ Take one of them, $\{u,v\}\text{,}$ such that neither $u$ nor $v$
+has been compared in earlier rounds with another position of their block. The earlier outcomes do not determine the order of $u$ and $v\text{,}$ because a chain of outcomes from one to the other stays inside
 the block and starts with a comparison of $u$ or $v$ with another position of the block. So these outcomes are consistent with two inputs that
 give $u$ and $v$ adjacent ranks, in opposite orders. The final round runs the same route on both, and only the cell $\{u,v\}$ tells them apart, so
 this route must visit it (<a href="#S4.Thmtheorem2" title="Lemma 4.2. ‣ 4.1 The Augmented Model and Forced Comparisons ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">4.2</span></a>). On the uniform input a constant fraction of these cells are at distance about $(n/g)^{1/D}$ from all
@@ -278,7 +282,9 @@ others (<a href="#S3.Thmtheorem3" title="Lemma 3.3. ‣ 3 Geometry of the Compar
 about $ng\,(n/g)^{1/D}$ (<a href="#S3.Thmtheorem2" title="Fact 3.2. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Fact</span> <span class="ltx_text ltx_ref_tag">3.2</span></a>), and the cleanup equation says that this is $n^{\beta}\text{.}$</p>
 </div>
 <div id="S1.SS2.SSS0.Px2.p2" class="ltx_para">
-<p class="ltx_p">It remains to show that rounds moving much less than $n^{\beta}$ compare few positions inside their blocks. The route of round $1$ is fixed before
+<p class="ltx_p">It remains to show that rounds moving much less than $n^{\beta}$ compare few positions inside their blocks. With the
+scales rounded to powers of two, every block at scale $g$ lies in a block at each scale $b_{j}\text{,}$ so it suffices that
+such a round $j+1$ compares few positions inside their blocks at scale $b_{j}\text{.}$ The route of round $1$ is fixed before
 any outcome is known, so each cell on it is co-blocked at scale $b_{0}$ with probability at most about $b_{0}/n\text{.}$ A route of movement $n^{\beta}$
 therefore visits about $n^{\beta}b_{0}/n$ such cells, and the splitter equation says that this number is $n\text{.}$ So a much shorter route compares only a small fraction of the
 positions inside their blocks. For $r=2$ we have $b_{0}=g\text{,}$ and the proof is complete.</p>
@@ -290,7 +296,7 @@ place of epochs, and like round elimination in communication complexity <cite c
 </div>
 <div id="S1.SS2.SSS0.Px2.p4" class="ltx_para">
 <p class="ltx_p">The first bounds the number
-of cells a route can visit. On the uniform input, with high probability, every route of movement $L$ visits at most about
+of co-blocked cells that a route can visit. On the uniform input, with high probability, every route of movement $L$ visits at most about
 $\bigl(1+L(b_{j-1}/n)^{1/D}\bigr)\log n$ cells co-blocked at scale $b_{j-1}$ (<a href="#S3.Thmtheorem4" title="Lemma 3.4. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">3.4</span></a>). This is a property of the input alone, so it holds for
 adaptive routes.</p>
 </div>
@@ -316,8 +322,8 @@ compares only a small fraction of the positions inside their blocks.</p>
 box sizes, so the upper bound has no logarithmic factor for $d=1$ and for $r\leq 3\text{.}$ The factor $\log n$ comes only from <a href="#S3.Thmtheorem4" title="Lemma 3.4. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">3.4</span></a>, where the
 largest number of co-blocked cells in one product box enters. For $r\leq 2$ the route of the first round is fixed in advance, so this lemma is not needed. On
 the line, <a href="#S4.Thmtheorem13" title="Lemma 4.13. ‣ 4.4 Exact Order on the Line ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemmas</span> <span class="ltx_text ltx_ref_tag">4.13</span></a> and <a href="#S4.Thmtheorem14" title="Lemma 4.14. ‣ 4.4 Exact Order on the Line ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4.14</span></a> avoid the loss: they group nearby co-blocked cells into clusters, a route visits few cells of small clusters per
-unit of movement, and the large clusters hold at most one cell in expectation. For $r=\infty\text{,}$ a merge sort over a partition of the grid into boxes matches the
-bound $n^{1+1/(2d)}$ given by the cells of consecutive ranks (<a href="#S4.Thmtheorem5" title="Proposition 4.5. ‣ 4.2 Two Rounds and the Fully Adaptive Bound ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Propositions</span> <span class="ltx_text ltx_ref_tag">4.5</span></a> and <a href="#S5.Thmtheorem3" title="Proposition 5.3. ‣ 5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5.3</span></a>).</p>
+unit of movement, and in expectation at most one cell lies in a large cluster. For $r=\infty\text{,}$ a merge sort over a partition of the grid into boxes matches the
+bound $n^{1+1/(2d)}$ given by the cells of consecutive ranks (Propositions <a href="#S4.Thmtheorem5" title="Proposition 4.5. ‣ 4.2 Two Rounds and the Fully Adaptive Bound ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4.5</span></a> and <a href="#S5.Thmtheorem3" title="Proposition 5.3. ‣ 5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5.3</span></a>).</p>
 </div>
 <div id="S1.SS2.SSS0.Px3.p2" class="ltx_para">
 <p class="ltx_p"><a href="#S2" title="2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">2</span></a> defines the model and solves the equations, and <a href="#S3" title="3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">3</span></a> proves the geometric facts used by the lower bound.
@@ -334,14 +340,15 @@ heads, and <a href="#S8" title="8 Discussion ‣ The Movement Complexity of Sort
 <div id="S1.SS3.p1" class="ltx_para">
 <p class="ltx_p">The models closest to ours attach costs to comparisons. Priced information charges every query and asks
 for the cheapest correct computation <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib13" title="Query strategies for priced information" class="ltx_ref">CFG<sup class="ltx_sup">+</sup>02</a>]</cite>, and for sorting and selection the costs have been taken
-structured or metric <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib21" title="Sorting and selection with structured costs" class="ltx_ref">GK01</a>; <a href="#bib.bib22" title="Where&#x27;s the winner? Max-finding and sorting with metric costs" class="ltx_ref">GK05</a>]</cite>. In the metric model a comparison costs the distance between its two keys.
+to be structured or metric <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib21" title="Sorting and selection with structured costs" class="ltx_ref">GK01</a>; <a href="#bib.bib22" title="Where&#x27;s the winner? Max-finding and sorting with metric costs" class="ltx_ref">GK05</a>]</cite>. In the metric model a comparison costs the distance between its two keys.
 There the costs of the comparisons add up independently, whereas here consecutive comparisons share the heads, so a
 comparison costs only the move from the previous comparison. As a result, the cost of a round depends on how its
-comparisons are distributed in the comparison grid, and not only on how many there are. <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemmas</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> and <a href="#S3.Thmtheorem2" title="Fact 3.2. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3.2</span></a>
+comparisons are distributed in the comparison grid, and not only on how many there are. <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> and <a href="#S3.Thmtheorem2" title="Fact 3.2. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Fact</span> <span class="ltx_text ltx_ref_tag">3.2</span></a>
 give the upper and the lower bound for a given distribution. The benchmark also differs: these
 works measure a competitive ratio against the cheapest proof of the order, while we determine the absolute cost on a
-worst input. For sorting this ratio is polylogarithmic for metric costs <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib22" title="Where&#x27;s the winner? Max-finding and sorting with metric costs" class="ltx_ref">GK05</a>]</cite>, and for general costs a
-polylogarithmic ratio is known only in a bichromatic special case <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib20" title="An algorithm for bichromatic sorting with polylog competitive ratio" class="ltx_ref">GJ24</a>]</cite>. A separate line restricts which
+worst input. For sorting this ratio is polylogarithmic for metric costs <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib22" title="Where&#x27;s the winner? Max-finding and sorting with metric costs" class="ltx_ref">GK05</a>]</cite>, and also when the
+keys form two classes and comparisons within a class cost more than comparisons across
+them <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib20" title="An algorithm for bichromatic sorting with polylog competitive ratio" class="ltx_ref">GJ24</a>]</cite>. For general costs the question is open. A separate line restricts which
 comparisons are admissible at all, as in generalized sorting and the $1$-$\infty$ cost
 model <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib24" title="Algorithms for the generalized sorting problem" class="ltx_ref">HKK11</a>; <a href="#bib.bib28" title="Stochastic and worst-case generalized sorting revisited" class="ltx_ref">KN21</a>; <a href="#bib.bib11" title="Sorting under forbidden comparisons" class="ltx_ref">BR16</a>]</cite>.</p>
 </div>
@@ -354,8 +361,8 @@ movement, and on the line the movement exponent is determined by the exponent $s
 <div id="S1.SS3.p3" class="ltx_para">
 <p class="ltx_p">A universal tour orders $n$ points once and serves every subset in that order. In the plane, the space-filling curve
 gives a competitive ratio of $\Theta(\log n)$ <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib34" title="Spacefilling curves and the planar travelling salesman problem" class="ltx_ref">PB89</a>; <a href="#bib.bib8" title="Worst-case examples for the spacefilling curve heuristic for the Euclidean traveling salesman problem" class="ltx_ref">BG89</a>]</cite>, and no universal tour has a constant
-ratio <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib25" title="Improved lower and upper bounds for universal TSP in planar metrics" class="ltx_ref">HKL06</a>; <a href="#bib.bib29" title="Lower bounds for the universal TSP on the plane" class="ltx_ref">Kra26</a>]</cite>. On general metrics, sparse partitions <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib17" title="Scattering and sparse partitions, and their applications" class="ltx_ref">Fil24</a>]</cite> give polylogarithmic
-ratios <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib27" title="Universal approximations for TSP, Steiner tree, and set cover" class="ltx_ref">JLN<sup class="ltx_sup">+</sup>05</a>; <a href="#bib.bib19" title="Oblivious network design" class="ltx_ref">GHR06</a>]</cite>. The a priori TSP asks the same question in expectation <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib26" title="A priori solution of a traveling salesman problem in which a random subset of the customers are visited" class="ltx_ref">Jai88</a>]</cite>. These problems share
+ratio <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib25" title="Improved lower and upper bounds for universal TSP in planar metrics" class="ltx_ref">HKL06</a>; <a href="#bib.bib29" title="Lower bounds for the universal TSP on the plane" class="ltx_ref">Kra26</a>]</cite>. On general metrics, sparse partitions <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib27" title="Universal approximations for TSP, Steiner tree, and set cover" class="ltx_ref">JLN<sup class="ltx_sup">+</sup>05</a>; <a href="#bib.bib17" title="Scattering and sparse partitions, and their applications" class="ltx_ref">Fil24</a>]</cite> and tree
+covers <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib19" title="Oblivious network design" class="ltx_ref">GHR06</a>]</cite> give polylogarithmic ratios. The a priori TSP asks the same question in expectation <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib26" title="A priori solution of a traveling salesman problem in which a random subset of the customers are visited" class="ltx_ref">Jai88</a>]</cite>. These problems share
 with ours the commitment of a route before it is known which visits matter. There the tour is fixed once and judged by
 its ratio to the best tour for the subset, while our algorithm commits a new route every round and we determine the
 absolute movement.</p>
@@ -366,8 +373,9 @@ machine without an input tape <cite class="ltx_cite ltx_citemacro_cite">[<a hre
 records travel along the links to their destinations <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib39" title="Sorting on a mesh-connected parallel computer" class="ltx_ref">TK77</a>]</cite>, and on a VLSI chip, the information that must cross the
 chip gives area-time trade-offs <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib38" title="The VLSI complexity of sorting" class="ltx_ref">Tho83</a>]</cite>. Token swapping rearranges labeled tokens along the edges of a
 graph and counts the swaps <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib42" title="Swapping labeled tokens on graphs" class="ltx_ref">YDI<sup class="ltx_sup">+</sup>15</a>]</cite>. External-memory sorting transports records between memory levels, and
-its classical lower bound treats the records as indivisible <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="The input/output complexity of sorting and related problems" class="ltx_ref">AV88</a>]</cite>. Under the network-coding conjecture of Li and
-Li, the same bound holds without this assumption <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib30" title="Network coding: the case of multiple unicast sessions" class="ltx_ref">LL04</a>; <a href="#bib.bib16" title="Lower bounds for external memory integer sorting via network coding" class="ltx_ref">FHLS19</a>]</cite>. Here the keys stay in their positions, so the
+its classical lower bound treats the records as indivisible <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib3" title="The input/output complexity of sorting and related problems" class="ltx_ref">AV88</a>]</cite>. Under the conjecture of Li and Li that, in undirected
+networks with several source-sink pairs, network coding achieves no higher throughput than routing <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib30" title="Network coding: the case of multiple unicast sessions" class="ltx_ref">LL04</a>]</cite>, the
+same bound holds without this assumption <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib16" title="Lower bounds for external memory integer sorting via network coding" class="ltx_ref">FHLS19</a>]</cite>. Here the keys stay in their positions, so the
 lower bound needs neither assumption, and the comparisons it counts are forced by correctness alone (<a href="#S4.Thmtheorem11" title="Remark 4.11. ‣ 4.3 Adaptive Rounds ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Remark</span> <span class="ltx_text ltx_ref_tag">4.11</span></a>).</p>
 </div>
 </section>
@@ -486,8 +494,8 @@ $\operatorname{dist}(w,\emptyset)=+\infty\text{.}$</p>
 <p class="ltx_p"><span class="ltx_text ltx_font_italic">The two orientations of a cell carry the same information, and a configuration </span>$(x,x)$<span class="ltx_text ltx_font_italic">
 carries none. On the configurations with </span>$x\neq y$<span class="ltx_text ltx_font_italic">, the map
 </span>$(x,y)\mapsto\{x,y\}$<span class="ltx_text ltx_font_italic"> is </span>$1$<span class="ltx_text ltx_font_italic">-Lipschitz from </span>$\ell_{1}$<span class="ltx_text ltx_font_italic"> to </span>$\operatorname{dist}$<span class="ltx_text ltx_font_italic">. Hence deleting the
-configurations </span>$(x,x)$<span class="ltx_text ltx_font_italic"> from a route of movement </span>$L$<span class="ltx_text ltx_font_italic"> leaves a sequence of cells of
-</span>$\operatorname{dist}$<span class="ltx_text ltx_font_italic">-length at most </span>$L$<span class="ltx_text ltx_font_italic">. The number of cells within </span>$\operatorname{dist}$<span class="ltx_text ltx_font_italic">-distance </span>$\rho$<span class="ltx_text ltx_font_italic"> of a cell
+configurations </span>$(x,x)$<span class="ltx_text ltx_font_italic"> from a route of movement </span>$L$<span class="ltx_text ltx_font_italic"> leaves a sequence of cells whose
+</span>$\operatorname{dist}$<span class="ltx_text ltx_font_italic">-length, the sum of the </span>$\operatorname{dist}$<span class="ltx_text ltx_font_italic"> distances between consecutive cells, is at most </span>$L$<span class="ltx_text ltx_font_italic">. The number of cells within </span>$\operatorname{dist}$<span class="ltx_text ltx_font_italic">-distance </span>$\rho$<span class="ltx_text ltx_font_italic"> of a cell
 </span>$\{x,y\}$<span class="ltx_text ltx_font_italic"> is at most the number of points of </span>$[m]^{D}$<span class="ltx_text ltx_font_italic"> within </span>$\ell_{1}$<span class="ltx_text ltx_font_italic">-distance </span>$\rho$<span class="ltx_text ltx_font_italic"> of
 </span>$(x,y)$<span class="ltx_text ltx_font_italic">.
 On the line, </span>$(x,y)\mapsto(\min\{x,y\},\max\{x,y\})$<span class="ltx_text ltx_font_italic"> folds the configurations onto
@@ -582,7 +590,7 @@ movement of that round is $n^{\beta}\text{,}$ and <a href="#S1.SS2" title="1.2 O
 <span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Lemma 2.5</span></span><span class="ltx_text ltx_font_bold">.</span>
 </h6>
 <div id="S2.Thmtheorem5.p1" class="ltx_para">
-<p class="ltx_p"><span class="ltx_text ltx_font_italic">Let $r\geq 2$ and let $q=(D-1)/D\text{.}$ The system of <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equations</span> <span class="ltx_text ltx_ref_tag">2.1</span></a>, <a href="#S2.E2" title="Equation 2.2 ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2.2</span></a> and <a href="#S2.E3" title="Equation 2.3 ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2.3</span></a> has
+<p class="ltx_p"><span class="ltx_text ltx_font_italic">Let $r\geq 2$ and let $q=(D-1)/D\text{.}$ The system of <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equations</span> <span class="ltx_text ltx_ref_tag">(2.1)</span></a> to <a href="#S2.E3" title="Equation 2.3 ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">(2.3)</span></a> has
 the unique solution</span></p>
 <table id="S2.Ex3" class="ltx_equation ltx_eqn_table">
 
@@ -599,8 +607,8 @@ $\delta=\beta_{r}^{(d)}-1=(1-q)/(1-q^{\,r})\text{,}$ so $a_{0}=1-\delta\text{.}$
 <div class="ltx_proof">
 <h6 class="ltx_title ltx_runin ltx_font_italic ltx_title_proof">Proof.</h6>
 <div id="S2.SS2.p2" class="ltx_para">
-<p class="ltx_p">For a solution, write $\delta=\beta-1$ and $t_{j}=1-a_{j}\text{.}$ <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.1</span></a> gives $t_{0}=\delta\text{.}$
-Since $q=1-1/D\text{,}$ <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.2</span></a> reads $t_{j}=q\,t_{j-1}+\delta\text{,}$ so</p>
+<p class="ltx_p">For a solution, write $\delta=\beta-1$ and $t_{j}=1-a_{j}\text{.}$ <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.1)</span></a> gives $t_{0}=\delta\text{.}$
+Since $q=1-1/D\text{,}$ <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.2)</span></a> reads $t_{j}=q\,t_{j-1}+\delta\text{,}$ so</p>
 <table id="S2.Ex4" class="ltx_equation ltx_eqn_table">
 
 <tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
@@ -609,7 +617,7 @@ Since $q=1-1/D\text{,}$ <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">and <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equations</span> <span class="ltx_text ltx_ref_tag">2.1</span></a> and <a href="#S2.E2" title="Equation 2.2 ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2.2</span></a> determine every $a_{j}$ from $\delta\text{.}$ <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.3</span></a> reads
+<p class="ltx_p">and <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equations</span> <span class="ltx_text ltx_ref_tag">(2.1)</span></a> and <a href="#S2.E2" title="Equation 2.2 ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">(2.2)</span></a> determine every $a_{j}$ from $\delta\text{.}$ <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.3)</span></a> reads
 $\delta=1-q\,t_{r-2}\text{,}$ that is, $\delta\,(1+q+\dots+q^{\,r-1})=1\text{,}$ whose unique solution is
 $\delta=(1-q)/(1-q^{\,r})\text{.}$ Hence $\beta=\beta_{r}^{(d)}\text{,}$ and $t_{j}=(1-q^{\,j+1})/(1-q^{\,r})$ gives
 $a_{j}=(q^{\,j+1}-q^{\,r})/(1-q^{\,r})\text{.}$ Finally,
@@ -912,7 +920,7 @@ correct on every input and for every outcome of its coins gives a deterministic 
 that is correct on every input. Hence, by Yao’s principle <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib41" title="Probabilistic computations: toward a unified measure of complexity" class="ltx_ref">Yao77</a>]</cite>, a lower bound on the
 expected movement on the uniform input that holds for every deterministic $r$-round algorithm
 correct on every input is a lower bound on $M_{r}^{(d)}(n)\text{.}$ The lemmas of <a href="#S4.SS1" title="4.1 The Augmented Model and Forced Comparisons ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">4.1</span></a>
-hold for every input, and the uniform input enters only when we count.</p>
+hold for every input, and the uniform input is used only when we count.</p>
 </div>
 <section id="S4.SS1" class="ltx_subsection">
 <h3 class="ltx_title ltx_title_subsection" id="the-augmented-model-and-forced-comparisons">
@@ -1071,7 +1079,7 @@ visits every cell. By <a href="#S2.Thmtheorem3" title="Observation 2.3. ‣ 2.1 
 $\beta_{1}^{(d)}=2\text{.}$</p>
 </div>
 <div id="S4.SS2.p4" class="ltx_para">
-<p class="ltx_p">Now let $r=2\text{,}$ so that $g=b_{0}$ and, by <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.1</span></a>, $\beta=2-a_{0}\text{.}$ Write $L_{1}$ and
+<p class="ltx_p">Now let $r=2\text{,}$ so that $g=b_{0}$ and, by <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.1)</span></a>, $\beta=2-a_{0}\text{.}$ Write $L_{1}$ and
 $L_{2}$ for the movements of the two routes. No outcome is known before round $1\text{,}$ so the route of
 round $1$ and $L_{1}$ do not depend on $\pi\text{.}$ Let $\varepsilon=1/192\text{.}$ If $L_{1}\geq\varepsilon n^{\beta}\text{,}$ then
 $\mathrm{Move}\geq\varepsilon n^{\beta}$ and there is nothing to prove, so assume $L_{1}&lt;\varepsilon n^{\beta}\text{.}$
@@ -1114,7 +1122,7 @@ give</p>
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">where the second step uses $g&gt;n^{a_{0}}/2$ and the last is <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.3</span></a> for $r=2\text{.}$ So, when
+<p class="ltx_p">where the second step uses $g&gt;n^{a_{0}}/2$ and the last is <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.3)</span></a> for $r=2\text{.}$ So, when
 $L_{1}&lt;\varepsilon n^{\beta}\text{,}$ we have $L_{2}=\Omega_{d}(n^{\beta})$ on an event of probability at least $3/8\text{,}$ and hence
 $\mathbb{E}[L_{2}]=\Omega_{d}(n^{\beta})\text{.}$ In both cases
 $\mathbb{E}[\mathrm{Move}]=\Omega_{d}(n^{\beta})\text{.}$
@@ -1252,7 +1260,8 @@ $b_{j-1}\text{.}$ <a href="#S4.Thmtheorem9" title="Lemma 4.9. ‣ 4.3 Adaptive R
 $b_{0},\dots,b_{j-1}$ and the outcomes of rounds $1,\dots,j\text{.}$ In words, $\mathcal{F}_{j}$ is what
 the algorithm knows when it commits the route of round $j+1\text{.}$ An <em class="ltx_emph ltx_font_italic">atom</em> of $\mathcal{F}_{j}$ is
 one possible value of these labels and outcomes. Given an atom, that route is fixed. The lemma below
-conditions on the positions clean at level $j\text{,}$ so they must be determined by $\mathcal{F}_{j}\text{.}$ Indeed, by induction on $i\text{,}$ the sets $\mathcal{A}_{i-1}$ and
+conditions on $\mathcal{F}_{j}$ and refers to the positions clean at level $j\text{,}$ so we check that these positions are
+determined by $\mathcal{F}_{j}\text{.}$ By induction on $i\text{,}$ the sets $\mathcal{A}_{i-1}$ and
 $\mathcal{A}_{i}^{-}$ are determined by $\mathcal{F}_{j}$ for every $i\leq j\text{.}$ The set
 $\mathcal{A}_{-1}$ is determined by the labels at scale $b_{0}\text{.}$ Whether a block is heavy at level
 $i$ depends only on $\mathcal{A}_{i-1}$ and the labels at scale $b_{i-1}\text{.}$ For $i&lt;j\text{,}$ the set
@@ -1418,7 +1427,7 @@ paragraph.</p>
 <div id="S4.SS3.p14" class="ltx_para">
 <p class="ltx_p"><em class="ltx_emph ltx_font_italic">Exposure.</em> We show that $\mathbb{E}|\mathcal{A}|\leq n/64$ for large $n\text{.}$ By
 <a href="#S4.Thmtheorem9" title="Lemma 4.9. ‣ 4.3 Adaptive Rounds ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">4.9</span></a> and Case 2, $\mathbb{E}|X_{0}|\leq 2(T/100+1)b_{0}/n\text{.}$ Since
-$b_{0}\leq n^{a_{0}}$ and, by <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.1</span></a>, $\beta+a_{0}-1=1\text{,}$ this gives
+$b_{0}\leq n^{a_{0}}$ and, by <a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.1)</span></a>, $\beta+a_{0}-1=1\text{,}$ this gives
 $\mathbb{E}|X_{0}|\leq\varepsilon n/50+2\text{.}$ For $1\leq j\leq r-2\text{,}$ let $C$ be the constant of <a href="#S4.Thmtheorem9" title="Lemma 4.9. ‣ 4.3 Adaptive Rounds ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">4.9</span></a>,
 which depends only on $d$ and $r\text{.}$ With Case 2 and $T\log n=\varepsilon n^{\beta}\text{,}$ that lemma gives
 $\mathbb{E}|X_{j}|\leq C\log n+C\varepsilon\,(b_{j}/b_{j-1})\,n^{\beta}(b_{j-1}/n)^{1/D}\text{.}$
@@ -1431,7 +1440,7 @@ Since $b_{j}\leq n^{a_{j}}\text{,}$ $b_{j-1}&gt;n^{a_{j-1}}/2\text{,}$ and $1-1/
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">where the last step is <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.2</span></a>. Hence $\mathbb{E}|X_{j}|\leq C\log n+2C\varepsilon n\text{.}$ By
+<p class="ltx_p">where the last step is <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.2)</span></a>. Hence $\mathbb{E}|X_{j}|\leq C\log n+2C\varepsilon n\text{.}$ By
 <a href="#S4.Thmtheorem10" title="Observation 4.10. ‣ 4.3 Adaptive Rounds ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Observation</span> <span class="ltx_text ltx_ref_tag">4.10</span></a> and $|\mathcal{A}_{-1}|&lt;b_{0}\leq n^{a_{0}}\text{,}$
 $\mathbb{E}|\mathcal{A}|\leq 3^{r-1}\bigl(n^{a_{0}}+(2C+1/50)\,\varepsilon n+C\log n+2\bigr)\text{.}$ Choose $\varepsilon$ with
 $3^{r-1}(2C+1/50)\,\varepsilon\leq 1/128\text{.}$ Then $\mathbb{E}|\mathcal{A}|\leq n/64$ for large $n\text{,}$ since $a_{0}&lt;1\text{.}$</p>
@@ -1469,7 +1478,7 @@ $\rho$ apart, <a href="#S2.Thmtheorem3" title="Observation 2.3. ‣ 2.1 The Mode
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">where the second step uses $g&gt;n^{a_{r-2}}/2$ and the last is <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.3</span></a>. So
+<p class="ltx_p">where the second step uses $g&gt;n^{a_{r-2}}/2$ and the last is <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.3)</span></a>. So
 $L_{r}=\Omega_{d}(n^{\beta})$ on an event of probability at least $3/8\text{.}$</p>
 </div>
 <div id="S4.SS3.p18" class="ltx_para">
@@ -1513,8 +1522,8 @@ subsection $d=1\text{,}$ and we write $\beta_{r}=\beta_{r}^{(1)}\text{.}$</p>
 <p class="ltx_p">Together with <a href="#S5.Thmtheorem11" title="Theorem 5.11. ‣ 5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">5.11</span></a>, it gives $M_{r}^{(1)}(n)=\Theta_{r}\bigl(n^{\beta_{r}}\bigr)\text{.}$</p>
 </div>
 <div id="S4.SS4.p3" class="ltx_para">
-<p class="ltx_p">The logarithm in <a href="#S3.Thmtheorem4" title="Lemma 3.4. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">3.4</span></a> comes from a product box that holds about $\log n$ cells, and such crowded
-places are rare. So we group nearby cells into clusters. Small clusters are far apart for their size, so a route must
+<p class="ltx_p">The logarithm in <a href="#S3.Thmtheorem4" title="Lemma 3.4. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">3.4</span></a> comes from a product box that holds about $\log n$ cells, and such boxes
+are rare. So we group nearby cells into clusters. Small clusters are far apart for their size, so a route must
 move to visit their cells, and large clusters almost never occur. The bound that replaces <a href="#S3.Thmtheorem4" title="Lemma 3.4. ‣ 3 Geometry of the Comparison Grid ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">3.4</span></a> has an
 additive term $\Xi_{b}\text{,}$ which counts the cells of large clusters and which we define first.</p>
 </div>
@@ -1823,11 +1832,11 @@ $n\geq n_{0}\text{.}$
 <span class="ltx_tag ltx_tag_section">5 </span>Routing and the Sampling Algorithm</h2>
 
 <div id="S5.p1" class="ltx_para">
-<p class="ltx_p">This section and the next prove the upper-bound half of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a>. Every route of our algorithms
-visits configurations known when the round starts, and <a href="#S5.SS1" title="5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> bounds the movement this takes. A
-merge sort then gives the fully adaptive bound (<a href="#S5.SS2" title="5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.2</span></a>). For a fixed number $r\geq 2$ of rounds we use the
-sampling algorithm, which refines the rank order round by round (<a href="#S5.SS3" title="5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.3</span></a>). On the line, each refinement round
-selects intervals of one length (<a href="#S5.SS4" title="5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.4</span></a>).</p>
+<p class="ltx_p">The upper bounds of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a> are attained by algorithms in which every route visits configurations
+known when the round starts, and <a href="#S5.SS1" title="5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> bounds the movement this takes. A merge sort
+then gives the fully adaptive bound (<a href="#S5.SS2" title="5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.2</span></a>). For a fixed number $r\geq 2$ of rounds, the sampling
+algorithm refines the rank order round by round (<a href="#S5.SS3" title="5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.3</span></a>). On the line, each refinement round
+selects intervals of one length (<a href="#S5.SS4" title="5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">5.4</span></a>), and <a href="#S6" title="6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6</span></a> treats $d\geq 2\text{.}$</p>
 </div>
 <section id="S5.SS1" class="ltx_subsection">
 <h3 class="ltx_title ltx_title_subsection" id="routing">
@@ -1865,8 +1874,9 @@ the current configuration and has movement </span>$O_{d}\bigl(n^{1/d}Q^{1-1/D}+n
 <div class="ltx_proof">
 <h6 class="ltx_title ltx_runin ltx_font_italic ltx_title_proof">Proof.</h6>
 <div id="S5.SS1.p2" class="ltx_para">
-<p class="ltx_p">For (i), we cut the box into small cubes and traverse them in serpentine order, visiting the points
-of $\mathcal{Q}$ in each cube on the way. Let $\Delta=\lceil m^{\prime}Q^{-1/D^{\prime}}\rceil$ and cut the box into
+<p class="ltx_p">For (i), we cut the box into small cubes and traverse them in <em class="ltx_emph ltx_font_italic">serpentine order</em>, visiting the
+points of $\mathcal{Q}$ in each cube on the way. This order is lexicographic, except that the direction along
+each axis is reversed at every step along an earlier axis. Let $\Delta=\lceil m^{\prime}Q^{-1/D^{\prime}}\rceil$ and cut the box into
 cubes of side $\Delta\text{.}$ There are at most $(m^{\prime}/\Delta+1)^{D^{\prime}}\leq(Q^{1/D^{\prime}}+1)^{D^{\prime}}\leq 2^{D^{\prime}}Q$ of
 them. Consecutive cubes of the serpentine order are adjacent, so the path moves $O_{D^{\prime}}(\Delta)$
 from one cube to the next. Inside a cube it moves $O_{D^{\prime}}(\Delta)$ from one point of $\mathcal{Q}$
@@ -1880,7 +1890,7 @@ $\Delta Q\leq m^{\prime}Q^{1-1/D^{\prime}}+Q\leq 2m^{\prime}Q^{1-1/D^{\prime}}\t
 </div>
 </div>
 <div id="S5.SS1.p4" class="ltx_para">
-<p class="ltx_p">Merging two sorted lists by walking them in rank order can cost a long jump per comparison. The next
+<p class="ltx_p">Merging two sorted lists by walking them in rank order can move the heads far for every comparison. The next
 lemma instead advances many binary searches in one round, so that one route serves them all.</p>
 </div>
 <div id="S5.Thmtheorem2" class="ltx_theorem ltx_theorem_lemma">
@@ -2007,7 +2017,7 @@ algorithm. A segment may be a single position.</p>
 </div>
 <div id="S5.SS3.p2" class="ltx_para">
 <p class="ltx_p">The comparisons that remain are the pairs within segments, and the movement they take depends on
-where each segment lies: a segment with many keys in a small region is cheap. The following
+where each segment lies: a segment with many keys in a small region needs little movement. The following
 quantity records this, by weighting each key with the number of boxes that its segment meets.</p>
 </div>
 <div id="S5.Thmtheorem6" class="ltx_theorem ltx_theorem_definition">
@@ -2142,7 +2152,7 @@ analysis tracks the dispersion of the segments. The required configurations of a
 starts, so its route depends only on the coins and on the outcomes of earlier rounds, and in every
 instance it is computed in polynomial time. Line <a href="#alg1.l2" title="In Algorithm 1 ‣ 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> moves $O(n)$ per splitter, so
 round $1$ has movement $O(n\lceil n/b_{0}\rceil)=O(n^{2-a_{0}})\text{,}$ and $2-a_{0}=\beta_{r}^{(d)}$ by
-<a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.1</span></a>.</p>
+<a href="#S2.E1" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.1)</span></a>.</p>
 </div>
 <div id="S5.SS3.p6" class="ltx_para">
 <p class="ltx_p">The algorithm is correct for every input and every outcome of its coins. Every key other than a
@@ -2152,7 +2162,7 @@ new state is known. The cleanup compares all pairs within a segment, and the sta
 order of every other pair.</p>
 </div>
 <div id="S5.SS3.p7" class="ltx_para">
-<p class="ltx_p">The next lemma bounds the <em class="ltx_emph ltx_font_italic">squared mass</em> $A=\sum_{G}|G|^{2}$ of the family after round $1\text{,}$ which counts the pairs of
+<p class="ltx_p">The next lemma bounds the <em class="ltx_emph ltx_font_italic">squared mass</em> $A=\sum_{G}|G|^{2}$ of the family after round $1\text{,}$ which counts the ordered pairs of
 keys in a common segment. The
 squared mass is the dispersion for the partition into single positions, where $|\mathcal{P}(G)|=|G|\text{.}$</p>
 </div>
@@ -2243,7 +2253,7 @@ Cauchy–Schwarz inequality over the $|\mathcal{P}(G)|$ nonzero terms $\sqrt{|G\
 <span class="ltx_tag ltx_tag_subsection">5.4 </span>The Upper Bound on the Line</h3>
 
 <div id="S5.SS4.p1" class="ltx_para">
-<p class="ltx_p">On the line, the dispersion bounds both the tour of the next round and its visits (<a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>), so each refinement round draws one sample. In this
+<p class="ltx_p">On the line, the dispersion bounds both the tour of the next round and its visits (<a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a>), so each refinement round draws one sample. In this
 subsection $d=1\text{,}$ so $D=2$ and $q=\tfrac{1}{2}\text{,}$ and we write $\beta=\beta_{r}\text{.}$ An
 <em class="ltx_emph ltx_font_italic">interval of length $h$</em> is a set of $h$ consecutive positions. We partition the line into
 intervals of length $h\text{,}$ the last possibly shorter, and write $\mathcal{P}_{h}(G)$ and $S_{h}$ for
@@ -2380,7 +2390,7 @@ expectation there are at most $p(n/h+1)$ selected intervals, so these moves tota
 $O(p\,n^{2}/h+n)\text{.}$ For an occupied $I\times J$ with $J$ selected, at most $Q_{I,J}$ required configurations lie
 in $I\times J\text{,}$ so by <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>(i) visiting them and returning takes movement
 $O\bigl(h\sqrt{Q_{I,J}}\bigr)\text{,}$ because $Q_{I,J}\geq 1\text{.}$ Each $J$ is selected with probability $p\text{,}$ so by
-<a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> these visits have expected total $O\bigl(p\,h\sum_{I,J}\sqrt{Q_{I,J}}\bigr)=O(p\,h\,S_{h})\text{.}$
+<a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a> these visits have expected total $O\bigl(p\,h\sum_{I,J}\sqrt{Q_{I,J}}\bigr)=O(p\,h\,S_{h})\text{.}$
 ∎</p>
 </div>
 </div>
@@ -2397,11 +2407,11 @@ cleanup and has movement $O\bigl(n\sqrt{S_{h}}+h\,S_{h}+n\bigr)\text{.}$</span><
 <div class="ltx_proof">
 <h6 class="ltx_title ltx_runin ltx_font_italic ltx_title_proof">Proof.</h6>
 <div id="S5.SS4.p5" class="ltx_para">
-<p class="ltx_p">By <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>, $P\leq S_{h}\text{.}$ By <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>(i) on the grid of $\lceil n/h\rceil^{2}$ product
+<p class="ltx_p">By <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a>, $P\leq S_{h}\text{.}$ By <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>(i) on the grid of $\lceil n/h\rceil^{2}$ product
 boxes, the lattice path has $O\bigl(\lceil n/h\rceil\sqrt{P}+\lceil n/h\rceil\bigr)$ steps, each of
 movement $O(h)\text{,}$ so it contributes $O\bigl(n\sqrt{S_{h}}+n\bigr)\text{.}$ Each occupied $I\times J$ holds at
 most $Q_{I,J}$ required configurations, so by <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>(i) visiting them and returning takes
-movement $O\bigl(h\sqrt{Q_{I,J}}\bigr)\text{,}$ because $Q_{I,J}\geq 1\text{.}$ By <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>, these visits total
+movement $O\bigl(h\sqrt{Q_{I,J}}\bigr)\text{,}$ because $Q_{I,J}\geq 1\text{.}$ By <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a>, these visits total
 $O(h\,S_{h})\text{.}$
 ∎</p>
 </div>
@@ -2446,7 +2456,7 @@ $S_{h_{j}}\leq 2S_{h_{j-1}}$ because $h_{j-1}\leq h_{j}\text{.}$</p>
 </tr></tbody>
 </table>
 <p class="ltx_p">because $\sqrt{n/b_{j-1}}\leq h_{j}\leq 2\sqrt{n/b_{j-1}}\text{.}$ The exponent of $p_{j}\,n\sqrt{nb_{j-1}}$
-is $\tfrac{3}{2}+a_{j-1}/2-a_{j}\text{,}$ which equals $\beta$ by <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.2</span></a> with $D=2\text{.}$ Hence
+is $\tfrac{3}{2}+a_{j-1}/2-a_{j}\text{,}$ which equals $\beta$ by <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.2)</span></a> with $D=2\text{.}$ Hence
 $\mathbb{E}[L_{j+1}]=O(n^{\beta})\text{.}$</p>
 </div>
 <div id="S5.SS4.p10" class="ltx_para">
@@ -2459,7 +2469,7 @@ $\mathbb{E}[L_{j+1}]=O(n^{\beta})\text{.}$</p>
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">The exponent $\tfrac{3}{2}+a_{r-2}/2$ equals $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.3</span></a> with $D=2\text{.}$ Summing over the
+<p class="ltx_p">The exponent $\tfrac{3}{2}+a_{r-2}/2$ equals $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.3)</span></a> with $D=2\text{.}$ Summing over the
 $r$ rounds gives $\mathbb{E}[\mathrm{Move}]=O_{r}(n^{\beta})\text{.}$
 ∎</p>
 </div>
@@ -2487,15 +2497,20 @@ $\Omega\bigl((n/g)^{1/2}\bigr)\text{,}$ which takes movement $\Omega(n^{\beta_{r
 <span class="ltx_tag ltx_tag_section">6 </span>Higher Dimensions</h2>
 
 <div id="S6.p1" class="ltx_para">
-<p class="ltx_p">This section completes the upper-bound half of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a>. For $d\geq 2\text{,}$ the three ranges of $r$
-use three kinds of refinement: none for $r\leq 2$ (<a href="#S6.SS1" title="6.1 At Most Two Rounds ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.1</span></a>), two independent
-samples in one round for $r=3$ (<a href="#S6.SS2" title="6.2 Two Samples at 𝑟=3 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.2</span></a>), and one sample for each box size of a nested
-partition for $r\geq 4$ (<a href="#S6.SS3" title="6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.3</span></a>). The section ends with the proof of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a>.</p>
+<p class="ltx_p">For $d\geq 2$ the movement of a round depends on the dispersion of its input at more than one box size, and a
+refinement round controls each size with a sample of its own. The three ranges of $r$ use three kinds of
+refinement: none for $r\leq 2$ (<a href="#S6.SS1" title="6.1 At Most Two Rounds ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.1</span></a>), two independent samples in one round for $r=3$
+(<a href="#S6.SS2" title="6.2 Two Samples at 𝑟=3 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.2</span></a>), and one sample for each box size of a nested partition for $r\geq 4$
+(<a href="#S6.SS3" title="6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Section</span> <span class="ltx_text ltx_ref_tag">6.3</span></a>). The section ends with the proof of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a>.</p>
 </div>
 <section id="S6.SS1" class="ltx_subsection">
 <h3 class="ltx_title ltx_title_subsection" id="at-most-two-rounds">
 <span class="ltx_tag ltx_tag_subsection">6.1 </span>At Most Two Rounds</h3>
 
+<div id="S6.SS1.p1" class="ltx_para">
+<p class="ltx_p">For $r\leq 2$ there is no refinement round: a serpentine route sorts in one round, and for $r=2$ the cleanup
+after the splitters is a visit to a known set of configurations.</p>
+</div>
 <div id="S6.Thmtheorem1" class="ltx_theorem ltx_theorem_proposition">
 <h6 class="ltx_title ltx_runin ltx_title_theorem">
 <span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Proposition 6.1</span></span><span class="ltx_text ltx_font_bold">.</span>
@@ -2507,11 +2522,11 @@ partition for $r\geq 4$ (<a href="#S6.SS3" title="6.3 Multiscale Refinement for 
 </div>
 <div class="ltx_proof">
 <h6 class="ltx_title ltx_runin ltx_font_italic ltx_title_proof">Proof.</h6>
-<div id="S6.SS1.p1" class="ltx_para">
+<div id="S6.SS1.p2" class="ltx_para">
 <p class="ltx_p">For $r=1\text{,}$ a serpentine route through $[m]^{D}$ visits every cell, with movement $O_{d}(n^{2})\text{,}$ and it
 is deterministic.</p>
 </div>
-<div id="S6.SS1.p2" class="ltx_para">
+<div id="S6.SS1.p3" class="ltx_para">
 <p class="ltx_p">For $r=2\text{,}$ we run <a href="#alg1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Algorithm</span> <span class="ltx_text ltx_ref_tag">1</span></a> without refinement rounds, with $b_{0}=n^{a_{0}}$ for the
 exponent $a_{0}$ of <a href="#S2.Thmtheorem5" title="Lemma 2.5. ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">2.5</span></a> at $r=2\text{.}$ Round $1$ has movement $O(n^{\beta})\text{,}$ where
 $\beta=\beta_{2}^{(d)}\text{.}$ By <a href="#S5.Thmtheorem7" title="Lemma 5.7. ‣ 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.7</span></a> with $s=\lceil n/b_{0}\rceil\text{,}$ its output has
@@ -2520,7 +2535,7 @@ are known, so by <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣
 $t\mapsto t^{1-1/D}\text{,}$ its expected movement is
 $O_{d}\bigl(n^{1/d}(nb_{0})^{1-1/D}+n^{1/d}\bigr)\text{.}$ The exponent
 $\tfrac{1}{d}+(1+a_{0})\bigl(1-\tfrac{1}{D}\bigr)$ equals $1+a_{0}+(1-a_{0})/D\text{,}$ because $1/d=2/D\text{,}$ and this
-is $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.3</span></a>.
+is $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.3)</span></a>.
 ∎</p>
 </div>
 </div>
@@ -2534,7 +2549,7 @@ is $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminar
 <p class="ltx_p">The cost of the cleanup has two parts. Its route moves along a lattice path through the occupied
 product boxes $I\times J$ of two cubes of side $H\text{,}$ and inside each of them it visits the required configurations, with
 movement $O_{d}\bigl(H\,Q_{I,J}^{1-1/D}+H\bigr)$ by <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>(i). On the line, $1-1/D=\tfrac{1}{2}\text{,}$ so by
-<a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> the dispersion bounds both parts, and one sample of intervals suffices. For $d\geq 2$ the
+<a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a> the dispersion bounds both parts, and one sample of intervals suffices. For $d\geq 2$ the
 exponent $1-1/D$ is larger, and we bound a visit by $H\,Q_{I,J}\text{,}$ whose sum over the boxes is $H$ times the squared mass. Sampling cubes controls the
 dispersion, which bounds the lattice path, and sampling keys controls the squared mass, which bounds the visits, so
 the refinement round does both.</p>
@@ -2554,8 +2569,8 @@ sample</em> is a sample on the partition into single positions.</p>
 <div id="S6.SS2.p3" class="ltx_para">
 <p class="ltx_p">Take $a_{0}&gt;a_{1}$ from <a href="#S2.Thmtheorem5" title="Lemma 2.5. ‣ 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">2.5</span></a> at $r=3\text{,}$ and let $b_{0}=n^{a_{0}}\text{,}$ $A_{\star}=nb_{0}\text{,}$
 and $H=\lceil n^{(1-a_{0})/D}\rceil\text{.}$ Let $p=n^{-a_{1}}$ and
-$\sigma=n^{-(a_{0}-a_{1})}\text{.}$ Both rates lie in $(0,1)\text{.}$ The rate $p$ serves the tour of the cleanup, since a cube
-sample leaves dispersion about $n/p\text{,}$ and the rate $\sigma$ serves its visits, since a key sample leaves squared mass about
+$\sigma=n^{-(a_{0}-a_{1})}\text{.}$ Both rates lie in $(0,1)\text{.}$ The rate $p$ is for the tour of the cleanup, since a cube
+sample leaves dispersion about $n/p\text{,}$ and the rate $\sigma$ is for its visits, since a key sample leaves squared mass about
 $n/\sigma\text{.}$ The minimum corner of a cube is its point
 with all coordinates smallest. For the family entering round $2\text{,}$ let $P_{J}$ be the number of cubes
 $I$ with $Q_{I,J}&gt;0\text{.}$</p>
@@ -2686,7 +2701,7 @@ the first head has $O_{d}\bigl((n^{1/d}/H)P_{J}^{1-1/d}\bigr)$ steps, each of mo
 Here $P_{J}\geq 1$ absorbs the additive term, and also the $O_{d}(n^{1/d})$ movement of the first head
 from the previous path to this one. So the first head moves $O_{d}\bigl(n^{1/d}P_{J}^{1-1/d}\bigr)$
 for $J\text{.}$ Each $J$ is selected with probability $p\text{.}$ Moreover,
-$\sum_{J}P_{J}=P\leq\sum_{G}|\mathcal{P}_{H}(G)|^{2}\leq A$ by <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a> and
+$\sum_{J}P_{J}=P\leq\sum_{G}|\mathcal{P}_{H}(G)|^{2}\leq A$ by <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a> and
 $|\mathcal{P}_{H}(G)|\leq|G|\text{.}$ By the concavity of $t\mapsto t^{1-1/d}$ over the at most
 $2^{d}n/H^{d}$ cubes,</p>
 <table id="S6.Ex2" class="ltx_equation ltx_eqn_table">
@@ -2743,13 +2758,13 @@ for $t\mapsto t^{1-1/d}\text{.}$ The value of $H$ makes the two main terms equal
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">where the last step is <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.2</span></a> for $j=1\text{.}$ For the key sample, $\sigma A_{\star}=n^{1+a_{1}}\text{,}$
+<p class="ltx_p">where the last step is <a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.2)</span></a> for $j=1\text{.}$ For the key sample, $\sigma A_{\star}=n^{1+a_{1}}\text{,}$
 so its expected movement is $O_{d}\bigl(n^{1/d+(1+a_{1})(1-1/D)}+n^{1/d}\bigr)\text{.}$ The exponent equals
-$1+a_{1}+(1-a_{1})/D\text{,}$ which is $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.3</span></a>.</p>
+$1+a_{1}+(1-a_{1})/D\text{,}$ which is $\beta$ by <a href="#S2.E3" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.3)</span></a>.</p>
 </div>
 <div id="S6.SS2.p11" class="ltx_para">
 <p class="ltx_p">For round $3\text{,}$ the output of round $2$ is obtained from the output of the cube sample by splitting
-segments, so <a href="#S5.Thmtheorem8" title="Lemma 5.8. ‣ 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.8</span></a> gives $\mathbb{E}[S_{H}]\leq 3n/p\text{.}$ By <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>, $P\leq S_{H}\text{.}$ By
+segments, so <a href="#S5.Thmtheorem8" title="Lemma 5.8. ‣ 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.8</span></a> gives $\mathbb{E}[S_{H}]\leq 3n/p\text{.}$ By <a href="#S5.E1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(5.1)</span></a>, $P\leq S_{H}\text{.}$ By
 <a href="#S5.Thmtheorem1" title="Lemma 5.1. ‣ 5.1 Routing ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.1</span></a>(i) on the grid of product boxes, the lattice path has
 $O_{d}\bigl((n^{1/d}/H)(P^{1-1/D}+1)\bigr)$ steps, each of movement $O_{d}(H)\text{.}$ By Jensen’s
 inequality, the path has expected movement $O_{d}\bigl(n^{1/d}(n/p)^{1-1/D}+n^{1/d}\bigr)\text{.}$ Since
@@ -2759,7 +2774,7 @@ $O_{d}\bigl(H\sum_{I,J}Q_{I,J}\bigr)\text{,}$ and $\sum_{I,J}Q_{I,J}$ is the squ
 output is obtained from the output of the key sample by splitting segments, so <a href="#S5.Thmtheorem8" title="Lemma 5.8. ‣ 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">5.8</span></a> for the partition
 into single positions shows that its squared mass has expectation at most $3n/\sigma\text{.}$ Hence the visits have expected
 movement $O_{d}(Hn/\sigma)=O_{d}\bigl(n^{1+(1-a_{0})/D+a_{0}-a_{1}}\bigr)=O_{d}(n^{\beta})\text{,}$ where the last step is
-<a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.2</span></a> for $j=1\text{.}$</p>
+<a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.2)</span></a> for $j=1\text{.}$</p>
 </div>
 <div id="S6.SS2.p12" class="ltx_para">
 <p class="ltx_p">Summing over the three rounds gives $\mathbb{E}[\mathrm{Move}]=O_{d}(n^{\beta})\text{.}$
@@ -2775,7 +2790,7 @@ movement $O_{d}(Hn/\sigma)=O_{d}\bigl(n^{1+(1-a_{0})/D+a_{0}-a_{1}}\bigr)=O_{d}(
 <div id="S6.SS3.p1" class="ltx_para">
 <p class="ltx_p">At $r=3$ the refinement round is followed by the cleanup, whose cost is controlled by one dispersion and
 the squared mass. For $r\geq 4$ a refinement round can be followed by another one, whose route moves
-at every box size (<a href="#S6.Thmtheorem6" title="Lemma 6.6. ‣ 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">6.6</span></a>), so its cost depends on the dispersion of its input at all these sizes. So the analysis keeps an upper bound on the expected dispersion for each box size, and
+at every box size (<a href="#S6.Thmtheorem6" title="Lemma 6.6. ‣ 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Lemma</span> <span class="ltx_text ltx_ref_tag">6.6</span></a>), so its cost depends on the dispersion of its input at all these sizes. The analysis therefore keeps an upper bound on the expected dispersion for each box size, and
 the rates of each round are chosen in advance from this bound.</p>
 </div>
 <div id="S6.SS3.p2" class="ltx_para">
@@ -2834,14 +2849,15 @@ $x\text{.}$ The route can be computed from $W$ in polynomial time.</span></p>
 $[m]^{D}\text{.}$ A box has at most $2^{D}$ children, and the leaves are the single configurations of $W\text{.}$
 Mark one configuration of $W$ in each node, and traverse the tree in depth-first order, moving between
 marked configurations. Each edge is crossed twice. A crossing into or out of a child of a scale-$x$
-node moves $O_{d}(n^{cx})\text{,}$ because both marked configurations lie in this node. So the traversal
+node moves $O_{d}(n^{cx})\text{,}$ because both marked configurations lie in this node, and the $N_{x}(W)$ nodes of
+scale $x$ have at most $2^{D}N_{x}(W)$ children. So the traversal
 visits every configuration of $W$ and moves $O_{d}\bigl(\sum_{x}n^{cx}N_{x}(W)\bigr)\text{,}$ and it moves
 $O_{d}(n^{1/d})$ from the current configuration to the mark of the root.
 ∎</p>
 </div>
 </div>
 <div id="S6.SS3.p4" class="ltx_para">
-<p class="ltx_p">For the required configurations of a sample, the next lemma bounds $N_{x}$ at the coarse scales.</p>
+<p class="ltx_p">For the required configurations of a sample, the next lemma bounds $N_{x}$ through the dispersion $S_{x}\text{.}$</p>
 </div>
 <div id="S6.Thmtheorem7" class="ltx_theorem ltx_theorem_lemma">
 <h6 class="ltx_title ltx_runin ltx_title_theorem">
@@ -3046,7 +3062,7 @@ $p\leq n^{-\psi_{y}(x)}\text{.}$ In the first case, <a href="#S6.Thmtheorem7" ti
 <td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
 </tr></tbody>
 </table>
-<p class="ltx_p">In the second case, <a href="#S6.E1" title="In 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">6.1</span></a> gives</p>
+<p class="ltx_p">In the second case, <a href="#S6.E1" title="In 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(6.1)</span></a> gives</p>
 <table id="S6.Ex7" class="ltx_equation ltx_eqn_table">
 
 <tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
@@ -3067,8 +3083,8 @@ is obtained from them by splitting segments, so it satisfies the same bound.
 </div>
 </div>
 <div id="S6.SS3.p14" class="ltx_para">
-<p class="ltx_p">The cleanup needs the value of $f_{r-2}$ at $x_{\star}\text{.}$ The next lemma gives it, together with the monotonicity that
-carries it to smaller $x\text{.}$</p>
+<p class="ltx_p">The cleanup needs $\varphi_{f_{r-2}}\leq 0$ on $[0,x_{\star}]\text{,}$ which follows from two facts given by the next lemma:
+the value of $f_{r-2}$ at $x_{\star}$ and the monotonicity of $\varphi_{f_{r-2}}\text{.}$</p>
 </div>
 <div id="S6.Thmtheorem10" class="ltx_theorem ltx_theorem_lemma">
 <h6 class="ltx_title ltx_runin ltx_title_theorem">
@@ -3111,7 +3127,7 @@ claim.</p>
 </div>
 <div id="S6.SS3.p17" class="ltx_para">
 <p class="ltx_p">For the value on the interval, let $a^{\prime}=q\,a+c/2-\delta$ and $\xi^{\prime}=(a_{0}-a^{\prime})/(2-c)\text{.}$ Since $c/2=1/D\text{,}$
-<a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">2.2</span></a> gives $a^{\prime}=a_{j+1}\text{,}$ so $a&gt;a^{\prime}&gt;0$ and $\xi&lt;\xi^{\prime}&lt;x_{\star}\text{.}$ Thus $f(\xi^{\prime})=a\text{,}$ and a
+<a href="#S2.E2" title="In 2.2 The Scale Schedule ‣ 2 Preliminaries ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(2.2)</span></a> gives $a^{\prime}=a_{j+1}\text{,}$ so $a&gt;a^{\prime}&gt;0$ and $\xi&lt;\xi^{\prime}&lt;x_{\star}\text{.}$ Thus $f(\xi^{\prime})=a\text{,}$ and a
 direct computation from $a_{0}=1-\delta$ and $q+c/2=1$ gives $a+c\xi^{\prime}-\delta=a^{\prime}\text{.}$ Hence, for $y\geq\xi^{\prime}\text{,}$</p>
 <table id="S6.Ex9" class="ltx_equation ltx_eqn_table">
 
@@ -3159,7 +3175,7 @@ $O_{d}(n^{\beta}\log^{2}n)\text{,}$ and $f_{j}$ is a profile of its output.</p>
 <p class="ltx_p">It remains to bound the cleanup, whose required configurations we call $W\text{.}$ At a dyadic $x\text{,}$ a product box of
 two scale-$x$ boxes contains a configuration of $W$ only if a segment meets both boxes, so
 $N_{x}(W)\leq\sum_{G}|\mathcal{P}_{x}(G)|^{2}\leq S_{x}\text{.}$ Also $N_{x}(W)\leq B_{x}^{2}\text{.}$ Let $x\leq x_{\star}\text{.}$
-Since $\varphi_{f_{r-2}}$ is nondecreasing and $f_{r-2}(x_{\star})=a_{r-2}\text{,}$ <a href="#S6.E2" title="In 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">6.2</span></a> gives</p>
+Since $\varphi_{f_{r-2}}$ is nondecreasing and $f_{r-2}(x_{\star})=a_{r-2}\text{,}$ <a href="#S6.E2" title="In 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Equation</span> <span class="ltx_text ltx_ref_tag">(6.2)</span></a> gives</p>
 <table id="S6.Ex10" class="ltx_equation ltx_eqn_table">
 
 <tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
@@ -3184,10 +3200,10 @@ expected movement $O_{d}(n^{\beta}\log n)\text{,}$ since there are $O(\log n)$ d
 $d\geq 2\text{,}$ <a href="#S6.Thmtheorem1" title="Proposition 6.1. ‣ 6.1 At Most Two Rounds ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Proposition</span> <span class="ltx_text ltx_ref_tag">6.1</span></a> treats $r\leq 2\text{,}$ <a href="#S6.Thmtheorem4" title="Theorem 6.4. ‣ 6.2 Two Samples at 𝑟=3 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">6.4</span></a> treats $r=3\text{,}$ and <a href="#S6.Thmtheorem11" title="Theorem 6.11. ‣ 6.3 Multiscale Refinement for 𝑟≥4 ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">6.11</span></a> treats
 $r\geq 4\text{.}$ These algorithms are explicit and run in polynomial time. Those for $r=1$ are deterministic routes, and
 the others are instances of <a href="#alg1" title="In 5.3 The Sampling Algorithm ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Algorithm</span> <span class="ltx_text ltx_ref_tag">1</span></a>. This gives $M_{r}^{(d)}(n)=\widetilde{\Theta}\bigl(n^{\beta_{r}^{(d)}}\bigr)$ for
-finite $r\text{.}$ For $r=\infty\text{,}$ <a href="#S4.Thmtheorem5" title="Proposition 4.5. ‣ 4.2 Two Rounds and the Fully Adaptive Bound ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Propositions</span> <span class="ltx_text ltx_ref_tag">4.5</span></a> and <a href="#S5.Thmtheorem3" title="Proposition 5.3. ‣ 5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5.3</span></a> give $M_{\infty}^{(d)}(n)=\Theta_{d}\bigl(n^{1+1/(2d)}\bigr)\text{,}$
+finite $r\text{.}$ For $r=\infty\text{,}$ Propositions <a href="#S4.Thmtheorem5" title="Proposition 4.5. ‣ 4.2 Two Rounds and the Fully Adaptive Bound ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4.5</span></a> and <a href="#S5.Thmtheorem3" title="Proposition 5.3. ‣ 5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5.3</span></a> give $M_{\infty}^{(d)}(n)=\Theta_{d}\bigl(n^{1+1/(2d)}\bigr)\text{,}$
 and the algorithm of <a href="#S5.Thmtheorem3" title="Proposition 5.3. ‣ 5.2 The Fully Adaptive Bound ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Proposition</span> <span class="ltx_text ltx_ref_tag">5.3</span></a> is deterministic, explicit, and runs in polynomial time. The order is exact on the line by
 <a href="#S4.Thmtheorem12" title="Theorem 4.12. ‣ 4.4 Exact Order on the Line ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorems</span> <span class="ltx_text ltx_ref_tag">4.12</span></a> and <a href="#S5.Thmtheorem11" title="Theorem 5.11. ‣ 5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5.11</span></a> and for $r\leq 2$ by <a href="#S4.Thmtheorem4" title="Proposition 4.4. ‣ 4.2 Two Rounds and the Fully Adaptive Bound ‣ 4 The Lower Bound ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Proposition</span> <span class="ltx_text ltx_ref_tag">4.4</span></a> together with
-<a href="#S5.Thmtheorem11" title="Theorem 5.11. ‣ 5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorems</span> <span class="ltx_text ltx_ref_tag">5.11</span></a> and <a href="#S6.Thmtheorem1" title="Proposition 6.1. ‣ 6.1 At Most Two Rounds ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6.1</span></a>.
+<a href="#S5.Thmtheorem11" title="Theorem 5.11. ‣ 5.4 The Upper Bound on the Line ‣ 5 Routing and the Sampling Algorithm ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">5.11</span></a> and <a href="#S6.Thmtheorem1" title="Proposition 6.1. ‣ 6.1 At Most Two Rounds ‣ 6 Higher Dimensions ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Proposition</span> <span class="ltx_text ltx_ref_tag">6.1</span></a>.
 ∎</p>
 </div>
 </div>
@@ -3279,10 +3295,10 @@ $\Omega_{d,k}\bigl(M_{\infty}^{(d)}(n)\bigr)\text{.}$
 <span class="ltx_tag ltx_tag_section">8 </span>Discussion</h2>
 
 <div id="S8.p1" class="ltx_para">
-<p class="ltx_p"><a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a> determines the movement exponent for all $d$ and $r\text{.}$ The order is exact on the line, for $r\leq 2\text{,}$ and for
-$r=\infty\text{.}$ In the interior $d\geq 2\text{,}$ $3\leq r&lt;\infty\text{,}$ the two bounds differ by a factor $O_{d,r}(\log^{3}n)\text{,}$ and this gap is the one
-question <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a> leaves open. The lower bound loses a factor $\log n$ throughout the interior, and the upper bound loses a
-factor $\log^{2}n$ for $r\geq 4$ and nothing at $r=3\text{.}$ We conjecture that both losses can be removed.</p>
+<p class="ltx_p">In the interior $d\geq 2\text{,}$ $3\leq r&lt;\infty\text{,}$ the two bounds of <a href="#S1.Thmtheorem1" title="Theorem 1.1 (Movement Exponent). ‣ 1.1 Our Results ‣ 1 Introduction ‣ The Movement Complexity of Sorting" class="ltx_ref"><span class="ltx_text ltx_ref_tag">Theorem</span> <span class="ltx_text ltx_ref_tag">1.1</span></a> differ by a factor $O_{d,r}(\log^{3}n)\text{,}$
+and this gap is the one question the theorem leaves open. The lower bound loses a factor $\log n$ throughout the
+interior, and the upper bound loses a factor $\log^{2}n$ for $r\geq 4$ and nothing at $r=3\text{.}$ We conjecture that both
+losses can be removed.</p>
 </div>
 <div id="S8.Thmtheorem1" class="ltx_theorem ltx_theorem_conjecture">
 <h6 class="ltx_title ltx_runin ltx_title_theorem">
@@ -3297,12 +3313,11 @@ factor $\log^{2}n$ for $r\geq 4$ and nothing at $r=3\text{.}$ We conjecture that
 <h2 class="ltx_title ltx_title_section" id="ai-methodology-statement">AI Methodology Statement</h2>
 
 <div id="Sx1.p1" class="ltx_para">
-<p class="ltx_p">The author used OpenAI’s ChatGPT in Codex and Anthropic’s Claude in Claude Code to help organize and polish the
+<p class="ltx_p">The author used ChatGPT and Codex from OpenAI and Claude Code from Anthropic to help organize and polish the
 exposition of this paper, based on the author’s own drafts. The same tools assisted in surveying the related
-literature, in understanding the current state of research in this area and its gaps, and in flagging possible
-errors in draft proofs. The author formulated and proved all mathematical claims in this paper, and checked,
-revised, and finalized every statement, proof, and reference. The author takes full responsibility for the
-content of the submission.</p>
+literature, in understanding the current state of research in this area, in flagging possible errors in draft
+proofs, and in suggesting simpler proofs of some statements. The author checked, revised, and finalized every
+statement, proof, and reference. The author takes full responsibility for the content of the submission.</p>
 </div>
 </section>
 <section id="bib" class="ltx_bibliography">
@@ -3429,14 +3444,14 @@ Euclidean traveling salesman problem.
 <li id="bib.bib9" class="ltx_bibitem">
 <span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[BHH59]</span>
 <span class="ltx_bibblock">
-J. Beardwood, J. H. Halton, and J. M. Hammersley.
+Jillian Beardwood, J. H. Halton, and J. M. Hammersley.
 
 </span>
 <span class="ltx_bibblock">The shortest path through many points.
 
 </span>
-<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic">Mathematical Proceedings of the Cambridge Philosophical
-Society</span>, 55(4):299–327, 1959.
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic">Proceedings of the Cambridge Philosophical Society</span>,
+55(4):299–327, 1959.
 
 </span>
 </li>
@@ -3559,7 +3574,7 @@ Arnold Filtser.
 <span class="ltx_bibblock">Scattering and sparse partitions, and their applications.
 
 </span>
-<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic">ACM Transactions on Algorithms</span>, 20(4):1–42, 2024.
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic">ACM Transactions on Algorithms</span>, 20(4):30:1–30:42, 2024.
 
 </span>
 <span class="ltx_bibblock">arXiv:2001.04447.
@@ -3676,7 +3691,7 @@ Zhiyi Huang, Sampath Kannan, and Sanjeev Khanna.
 <li id="bib.bib25" class="ltx_bibitem">
 <span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[HKL06]</span>
 <span class="ltx_bibblock">
-Mohammad Taghi Hajiaghayi, Robert D. Kleinberg, and Frank Thomson Leighton.
+Mohammad T. Hajiaghayi, Robert Kleinberg, and Tom Leighton.
 
 </span>
 <span class="ltx_bibblock">Improved lower and upper bounds for universal TSP in planar
@@ -3818,7 +3833,7 @@ Notes in Computer Science</span>, pages 249–264. Springer, 1986.
 <li id="bib.bib34" class="ltx_bibitem">
 <span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[PB89]</span>
 <span class="ltx_bibblock">
-Loren K. Platzman and John J. Bartholdi.
+Loren K. Platzman and John J. Bartholdi, III.
 
 </span>
 <span class="ltx_bibblock">Spacefilling curves and the planar travelling salesman problem.

@@ -101,5 +101,5 @@ jobs:
         # 等 Pages 边缘节点生效，否则抓到的还是上一版 sitemap
         sleep 45
         python3 scripts/indexnow.py \
-          --host sichen-wang.github.io \
+          --host sichenwang.com \
           --key f8a5e0fb67dbd6db01887a1d610da508

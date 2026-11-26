@@ -14,7 +14,7 @@ Search Console 手动 Request Indexing。
 
 用法::
 
-    python3 scripts/indexnow.py --host sichen-wang.github.io --key <key>
+    python3 scripts/indexnow.py --host sichenwang.com --key <key>
     python3 scripts/indexnow.py --host ... --key ... --dry-run   # 只打印不提交
 """
 
@@ -64,7 +64,7 @@ def recent_urls(sitemap: str, hours: float) -> list[str]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--host", required=True, help="站点主机名，如 sichen-wang.github.io")
+    ap.add_argument("--host", required=True, help="站点主机名，如 sichenwang.com")
     ap.add_argument("--key", required=True, help="IndexNow 密钥（对应 static/<key>.txt）")
     ap.add_argument("--hours", type=float, default=24.0, help="变更时间窗口，默认 24 小时")
     ap.add_argument("--limit", type=int, default=1000, help="单次提交上限，协议上限为 10000")

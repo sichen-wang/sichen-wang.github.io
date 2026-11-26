@@ -36,3 +36,10 @@
 - **Model state**: Automated checks and selected desktop/mobile previews had passed, but the user requested a stricter final review
 - **Quote**: 最后再进行一遍最严格地检查，逐页视检确保没有任何问题
 - **Outcome**: adopted; inspected 196 continuous overlapping viewport screenshots through all five papers, then rechecked every repaired formula group, footnotes, figures, algorithms, references, and footers on desktop and mobile alongside independent source and structural audits
+
+## I-006 · Ask where things already run before offering hosting choices
+- **Layer**: execution
+- **Task**: Planning sichenwang.com — apex for the homepage, subdomains for small tools
+- **Model state**: Offered a choice between Cloudflare Workers and GitHub Pages for hosting the tools, assuming they still needed a host
+- **Quote**: 我没懂这个啥意思，我的一些小工具普遍是挂在我的 VPS 上的
+- **Outcome**: adopted; changed the question from where to host the tools to how subdomains reach the existing VPS (DNS records, reverse proxy or tunnel), and asked about the VPS before choosing

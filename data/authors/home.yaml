@@ -34,6 +34,9 @@ links:
   - icon: brands/github
     url: "https://github.com/sichen-wang"
     label: GitHub
+  - icon: brands/linkedin
+    url: "https://www.linkedin.com/in/sichen-wang/"
+    label: LinkedIn
   - icon: academicons/cv
     url: "/uploads/CV_en.pdf"
     label: CV (English)

@@ -35,7 +35,7 @@ tags:
 
 featured: false
 
-# No arXiv identifier, DOI, poster, slides, or conference page supplied yet.
+# No arXiv identifier, DOI, or slides yet.
 # Omit unavailable links so the theme does not render empty buttons.
 links:
   - type: pdf
@@ -43,10 +43,15 @@ links:
     label: Paper
   - type: code
     url: https://github.com/sichen-wang/Online-Isotonic-Regression_Code
+  - type: poster
+    url: poster.pdf
   - type: source
     url: https://openreview.net/forum?id=OZYmFCFi3w
     label: OpenReview
     icon: hero/chat-bubble-left-right
+  - type: event
+    url: https://neurips.cc/virtual/2026/poster/153025
+    label: NeurIPS Virtual
 ---
 
 <article class="ltx_document ltx_authors_1line">

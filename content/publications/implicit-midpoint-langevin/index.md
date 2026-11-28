@@ -45,6 +45,8 @@ links:
   - type: pdf
     url: paper.pdf
     label: Paper
+  - type: poster
+    url: poster.pdf
   - type: preprint
     provider: arxiv
     id: 2611.09980
@@ -53,6 +55,9 @@ links:
     url: https://openreview.net/forum?id=6vWdtoSoVB
     label: OpenReview
     icon: hero/chat-bubble-left-right
+  - type: event
+    url: https://neurips.cc/virtual/2026/poster/155272
+    label: NeurIPS Virtual
 ---
 
 <article class="ltx_document ltx_authors_1line">
